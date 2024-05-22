@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('current_currency_exchange', 8, 2);
             $table->unsignedTinyInteger('source')->default(0); // cash, card or smth else
             $table->string('title');
+            $table->string('slug');
             $table->mediumText('description')->nullable();
             // $table->boolean('is_complex')->default(0);
             
