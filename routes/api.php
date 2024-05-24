@@ -13,12 +13,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user',  function (Request $request) {
         return $request->user();
     });
+
+    Route::apiResource('trips', TripController::class);
+    Route::apiResource('trip-details', TripDetail::class);
+    Route::apiResource('trip-expenses', TripExpense::class);
 });
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-Route::apiResource('trips', TripController::class);
-Route::apiResource('trip-details', TripDetail::class);
-Route::apiResource('trip-expenses', TripExpense::class);
 
