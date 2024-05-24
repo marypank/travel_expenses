@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTripRequest;
+use App\Models\Dto\TripDto;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
@@ -11,15 +13,20 @@ class TripController extends Controller
      */
     public function index()
     {
-        return [];
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTripRequest $request)
     {
-        //
+        var_dump($request->all());
+        $dto = new TripDto(...$request->all());
+        $dto->setUserId(auth()->user()->id);
+        var_dump(111);
+        exit();
+        // return Language::create($data);
     }
 
     /**
@@ -27,7 +34,7 @@ class TripController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // return Language::find($id);
     }
 
     /**
@@ -35,7 +42,7 @@ class TripController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // return tap(Language::find($id))->update($data)->fresh();
     }
 
     /**
