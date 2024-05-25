@@ -19,6 +19,8 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('slug');
+            // $table->decimal('budget', 8, 2)->nullable();
+            // $table->unsignedMediumInteger('currency_id'); // api
             $table->date('date_to');
             $table->date('date_from');
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

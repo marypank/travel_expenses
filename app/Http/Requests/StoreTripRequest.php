@@ -35,8 +35,9 @@ class StoreTripRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'min:16'],
             'slug' => ['required', 'string', 'min:16'],
-            'dateFrom' => 'date',
-            'dateTo' => 'date',
+            'budget' => ['decimal:2,4'],
+            'dateFrom' => ['date'],
+            'dateTo' => ['date'],
         ];
     }
 }

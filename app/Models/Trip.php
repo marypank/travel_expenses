@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Trip extends BaseModel
+use Illuminate\Database\Eloquent\Model;
+
+class Trip extends Model
 {
     /** @var string $table */
     protected $table = 'trips';
