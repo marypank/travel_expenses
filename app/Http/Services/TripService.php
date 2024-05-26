@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use App\Models\Dto\TripDto;
-use App\Models\Trip;
 use App\Repositories\TripRepository;
 
 class TripService extends BaseService
@@ -20,13 +19,12 @@ class TripService extends BaseService
     {
         // todo: dont like that dates go in strings not like dates
         // todo: custom Exception#
-        // todo: I DONT LIKE SET MODEL THING!!!!!!
         if (!$tripDto->getUserId()) {
             // new Exception
         }
 
         try {
-            $trip = $this->tripRepository->setModel(new Trip())->create($tripDto->toArray());
+            $trip = $this->tripRepository->create($tripDto->toArray());
 
             if (!$trip) {
                 throw new \Exception("not created");
