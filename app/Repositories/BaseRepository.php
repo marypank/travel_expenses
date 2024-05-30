@@ -8,13 +8,13 @@ abstract class BaseRepository implements DefaultRepositoryInterface
 {
     /* public function all(array $params = []): Collection
     {
-        // todo: Почему тут ошибка, если у Lanuage, например, нет ошибки в этом случае
+        // todo: Почему тут ошибка, если у Trip, например, нет ошибки в этом случае
         return $this->model()::all();
     } */
 
     protected abstract function model();
 
-    public function findById(int|string $id): Model
+    public function findById(int|string $id): ?Model
     {
         return $this->model()::find($id);
     }
