@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Dto\TripDto;
 use App\Repositories\TripRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TripService extends BaseService
 {
@@ -32,5 +33,28 @@ class TripService extends BaseService
         } catch (\Exception $ex) {
             throw new \Exception($ex->getMessage());
         }
+    }
+
+    public function findById(int $id)
+    {
+        // todo: а что насчет ебFнjй политики, которая не должна позволять найти не свой пост
+        $trip = $this->tripRepository->findById($id);
+
+        if (!$trip) { // todo: refactor later
+            throw new NotFoundHttpException("RecordNotFound");
+        }
+
+        return $trip;
+    }
+
+    public function findBySlug(string $slug)
+    {
+        $trip = $this->tripRepository->findBySlug($slug);
+
+        if (!$trip) { // todo: refactor later
+            throw new NotFoundHttpException("RecordNotFound");
+        }
+
+        return $trip;
     }
 }

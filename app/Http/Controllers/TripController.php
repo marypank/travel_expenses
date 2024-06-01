@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SlugTripRequest;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
@@ -45,14 +46,21 @@ class TripController extends Controller
 
     public function show(Trip $trip)
     {
-        // todo: снова же нужен нормальный возврат с data и message, как остальные
-        // todo: maybe remake to slug, not id?
+        // todo: think how i can get dependency injection here and to catch NotFoundHttpException before middleware??
+
+        return new TripResource($trip);
+    }
+
+    public function showBySlug(SlugTripRequest $request)
+    {
+        $trip = $this->tripService->findBySlug($request->slug);
+
         return new TripResource($trip);
     }
 
     public function update(Request $request, Trip $trip)
     {
-        // return tap(Language::find($id))->update($data)->fresh();
+        // return tap(Trip::find($id))->update($data)->fresh();
     }
 
     public function destroy(Trip $trip)

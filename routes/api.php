@@ -14,6 +14,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    // Route::group(['prefix'=> ''], function () {});
+
+    Route::get('/trips/show-by-slug', [TripController::class, 'showBySlug']);
+
     Route::apiResource('trips', TripController::class);
     Route::apiResource('trip-details', TripDetail::class);
     Route::apiResource('trip-expenses', TripExpense::class);

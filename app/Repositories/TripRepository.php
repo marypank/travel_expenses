@@ -12,4 +12,9 @@ class TripRepository extends BaseRepository
     {
         return new Trip();
     }
+
+    public function findBySlug(string $slug): ?Trip
+    {
+        return Trip::where('slug', $slug)->first();
+    }
 }
