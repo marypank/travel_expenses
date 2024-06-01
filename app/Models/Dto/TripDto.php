@@ -99,8 +99,7 @@ class TripDto extends BaseDto
             'date_to' => $this->getDateTo(),
         ];
 
-        if ($this->getId())
-        {
+        if (isset($this->id)) {
             $data['id'] = $this->getId();
         }
 
