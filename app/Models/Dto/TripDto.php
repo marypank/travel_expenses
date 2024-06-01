@@ -2,9 +2,10 @@
 
 namespace App\Models\Dto;
 
-class TripDto
+class TripDto extends BaseDto
 {
     private ?int $userId;
+    private int $id;
 
     public function __construct(
         private string $title,
@@ -26,6 +27,18 @@ class TripDto
     public function getUserId(): ?int
     {
         return $this->userId;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getTitle(): string
@@ -78,12 +91,19 @@ class TripDto
 
     public function toArray(): array
     {
-        return [
+        $data = [
             'user_id' => $this->getUserId(),
             'title' => $this->getTitle(),
             'slug' => $this->getSlug(),
             'date_from' => $this->getDateFrom(),
             'date_to' => $this->getDateTo(),
         ];
+
+        if ($this->getId())
+        {
+            $data['id'] = $this->getId();
+        }
+
+        return $data;
     }
 }
