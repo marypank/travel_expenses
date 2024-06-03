@@ -17,7 +17,7 @@ class TripDto extends BaseDto
         //
     }
 
-    public function setUserId(int $userId): self
+    public function setUserId(?int $userId): self
     {
         $this->userId = $userId;
 
@@ -103,6 +103,6 @@ class TripDto extends BaseDto
             $data['id'] = $this->getId();
         }
 
-        return $data;
+        return $this->removeEmptyValues($data);
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Models\Dto;
 
-abstract class BaseDto
+abstract class BaseDto implements BaseDtoInterface
 {
-    public abstract function toArray(): array;
+    protected function removeEmptyValues(array $data): array
+    {
+        return array_filter($data, fn($value) => !is_null($value) && $value !== '');
+    }
 }
