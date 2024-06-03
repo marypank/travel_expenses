@@ -26,9 +26,21 @@ class TripController extends Controller
         //
     }
 
+    public function getTripsByUser(Request $request)
+    {
+        $dto = new TripDto(...$request->all());
+        
+        // add to dto statuses, userId and so on
+        // $this->tripService->getTripsByUser($dto);
+
+        // return collection
+    }
+
     public function store(StoreTripRequest $request)
     {
         // todo: make middleware return json or baseController about json return
+        // должно получится, что отдаем массив или коллекцию или модель,
+        // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
         $dto = new TripDto(...$request->all());
         $dto->setUserId(auth()->user()->id);
 
@@ -65,6 +77,8 @@ class TripController extends Controller
 
     public function destroy(Trip $trip)
     {
-        //
+        $this->tripService->delete($trip->id);
+
+        return response()->noContent(Response::HTTP_NO_CONTENT);
     }
 }
