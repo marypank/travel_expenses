@@ -2,8 +2,10 @@
 
 namespace App\Http\Services;
 
+use App\Models\Dto\SearchTripDto;
 use App\Models\Trip;
 use App\Repositories\TripRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TripService extends BaseService
@@ -22,6 +24,15 @@ class TripService extends BaseService
         }
 
         return $trip;
+    }
+
+    public function getTripsByUser(SearchTripDto $dto): Collection
+    {
+        if (!$dto->getUserId()) {
+            // todo: throw exception - later when i do searchByParams
+        }
+
+        return $this->mainRepository->searchByUser($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
     }
 
 }

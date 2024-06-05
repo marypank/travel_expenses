@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetTripsByUserRequest;
 use App\Http\Requests\SlugTripRequest;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
+use App\Models\Dto\SearchTripDto;
 use App\Models\Dto\TripDto;
 use App\Models\Trip;
 use Illuminate\Http\Request;
@@ -26,14 +28,13 @@ class TripController extends Controller
         //
     }
 
-    public function getTripsByUser(Request $request)
+    public function getTripsByUser(GetTripsByUserRequest $request)
     {
-        $dto = new TripDto(...$request->all());
+        $dto = new SearchTripDto(...$request->all());
         
-        // add to dto statuses, userId and so on
-        // $this->tripService->getTripsByUser($dto);
+        $trips = $this->tripService->getTripsByUser($dto);
 
-        // return collection
+        return TripResource::collection($trips);
     }
 
     public function store(StoreTripRequest $request)
@@ -41,6 +42,7 @@ class TripController extends Controller
         // todo: make middleware return json or baseController about json return
         // должно получится, что отдаем массив или коллекцию или модель,
         // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
+        // todo: заменить userId с auth на request
         $dto = new TripDto(...$request->all());
         $dto->setUserId(auth()->user()->id);
 
