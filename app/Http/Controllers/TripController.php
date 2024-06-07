@@ -42,9 +42,7 @@ class TripController extends Controller
         // todo: make middleware return json or baseController about json return
         // должно получится, что отдаем массив или коллекцию или модель,
         // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
-        // todo: заменить userId с auth на request
         $dto = new TripDto(...$request->all());
-        $dto->setUserId(auth()->user()->id);
 
         try {
             $this->tripService->create($dto);
