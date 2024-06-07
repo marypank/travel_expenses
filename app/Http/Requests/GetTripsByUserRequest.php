@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Enum\TripStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class GetTripsByUserRequest extends FormRequest
 {
@@ -16,7 +18,7 @@ class GetTripsByUserRequest extends FormRequest
     {
         return [
             'userId' => ['required', 'numeric', 'exists:users,id'],
-            'status' => ['numeric', 'nullable'],
+            'status' => ['numeric', 'nullable', Rule::enum(TripStatusEnum::class)],
             'dateTo' => ['date', 'nullable'],
             'dateFrom' => ['date', 'nullable'],
         ];

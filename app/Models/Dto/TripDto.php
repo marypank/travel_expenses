@@ -4,7 +4,8 @@ namespace App\Models\Dto;
 
 class TripDto extends BaseDto
 {
-    private int $id;
+    private ?int $id = null;
+    private int $status = 0;
 
     public function __construct(
         private string $title,
@@ -89,14 +90,28 @@ class TripDto extends BaseDto
         return $this;
     }
 
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         $data = [
+            // 'id' => $this->getId(),
             'user_id' => $this->getUserId(),
             'title' => $this->getTitle(),
             'slug' => $this->getSlug(),
             'date_from' => $this->getDateFrom(),
             'date_to' => $this->getDateTo(),
+            'status' => $this->getStatus(),
         ];
 
         if (isset($this->id)) {

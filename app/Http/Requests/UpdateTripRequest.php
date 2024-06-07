@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Enum\TripStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
-class StoreTripRequest extends FormRequest
+class UpdateTripRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,7 +16,7 @@ class StoreTripRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        $this->merge([
+        !$this->title ?: $this->merge([
             'slug' => Str::slug($this->title),
         ]);
     }
@@ -23,10 +25,10 @@ class StoreTripRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => ['required', 'numeric', 'exists:users,id'],
-            'title' => ['required', 'string', 'min:16'],
-            'slug' => ['required', 'string', 'min:16'],
+            'title' => ['string', 'min:16'],
+            'slug' => ['string', 'min:16'],
             // 'budget' => ['decimal:2,4'],
+            'status' => ['numeric', Rule::enum(TripStatusEnum::class)],
             'dateFrom' => ['date'],
             'dateTo' => ['date'],
         ];
