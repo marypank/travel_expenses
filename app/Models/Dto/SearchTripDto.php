@@ -71,7 +71,7 @@ class SearchTripDto extends BaseDto
         return $this;
     }
 
-    public function toArray(): array
+    public function toArray($withEmptyValues = false): array
     {
         $data = [
             'user_id' => $this->getUserId(),
@@ -80,6 +80,6 @@ class SearchTripDto extends BaseDto
             'date_to' => $this->getDateTo(),
         ];
 
-        return $this->removeEmptyValues($data);
+        return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     }
 }

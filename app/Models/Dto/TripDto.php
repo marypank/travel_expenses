@@ -2,20 +2,34 @@
 
 namespace App\Models\Dto;
 
+use App\Models\Enum\TripStatusEnum;
+
 class TripDto extends BaseDto
 {
-    private ?int $id = null;
-    private int $status = 0;
+    private ?string $title;
 
-    public function __construct(
-        private string $title,
-        private string $slug,
-        private string $dateFrom,
-        private string $dateTo,
-        private int $userId
+    private ?string $slug;
+
+    private ?string $dateFrom;
+
+    private ?string $dateTo;
+
+    private ?int $userId;
+
+    private ?int $id = null;
+
+    private ?int $status;
+
+    public function __construct(array $request
     )
     {
-        //
+        $this->title = $request['title'] ?? null;
+        $this->slug = $request['slug'] ?? null;
+        $this->dateFrom = $request['dateFrom'] ?? null;
+        $this->dateTo = $request['dateTo'] ?? null;
+        $this->userId = $request['userId'] ?? null;
+        $this->id = $request['id'] ?? null;
+        $this->status = $request['status'] ?? null;
     }
 
     public function setUserId(int $userId): self
@@ -25,7 +39,7 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -37,12 +51,12 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -54,7 +68,7 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -66,7 +80,7 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function getDateFrom(): string
+    public function getDateFrom(): ?string
     {
         return $this->dateFrom;
     }
@@ -78,7 +92,7 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function getDateTo(): string
+    public function getDateTo(): ?string
     {
         return $this->dateTo;
     }
@@ -90,7 +104,7 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -102,10 +116,10 @@ class TripDto extends BaseDto
         return $this;
     }
 
-    public function toArray(): array
+    public function toArray($withEmptyValues = false): array
     {
         $data = [
-            // 'id' => $this->getId(),
+            'id' => $this->getId(),
             'user_id' => $this->getUserId(),
             'title' => $this->getTitle(),
             'slug' => $this->getSlug(),
@@ -114,10 +128,6 @@ class TripDto extends BaseDto
             'status' => $this->getStatus(),
         ];
 
-        if (isset($this->id)) {
-            $data['id'] = $this->getId();
-        }
-
-        return $this->removeEmptyValues($data);
+        return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     }
 }

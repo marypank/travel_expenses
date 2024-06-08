@@ -4,5 +4,5 @@ namespace App\Models\Dto;
 
 interface BaseDtoInterface
 {
-    public function toArray(): array;
+    public function toArray($withEmptyValues = false): array;
 }

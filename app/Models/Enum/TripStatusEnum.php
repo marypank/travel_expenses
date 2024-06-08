@@ -4,7 +4,7 @@ namespace App\Models\Enum;
 
 enum TripStatusEnum: int
 {
-    case INIT = 0;
+    case AWAIT = 0;
 
     case IN_PROGRESS = 1;
 
