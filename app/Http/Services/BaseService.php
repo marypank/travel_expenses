@@ -33,8 +33,6 @@ abstract class BaseService implements DefaultServiceInterface
             // new Exception
         }
 
-        // $dto->setStatus(TripStatusEnum::AWAIT->value);
-
         try {
             $model = $this->mainRepository->create($dto->toArray());
 
@@ -63,11 +61,12 @@ abstract class BaseService implements DefaultServiceInterface
         $this->mainRepository->delete($id);
     }
 
-    public function update(BaseDtoInterface $dto): ?Model
+    public function update(BaseDtoInterface $dto): Model
     {
-        // check id?? 
-        $model = $this->mainRepository->update($dto->getId(), $dto->toArray());
+        if (!$dto->getId()) {
+            // new Exception
+        }
 
-        return $model;
+        return $this->mainRepository->update($dto->getId(), $dto->toArray());
     }
 }

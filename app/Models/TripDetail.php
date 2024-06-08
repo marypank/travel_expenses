@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class TripDetail extends BaseModel
+use Illuminate\Database\Eloquent\Model;
+
+class TripDetail extends Model
 {
     /** @var string $table */
     protected $table = 'trip_details';
@@ -13,7 +15,8 @@ class TripDetail extends BaseModel
         'date_to',
         'date_from',
         'country_id',
-        'city_id'
+        'city_id',
+        'status',
     ];
 
     /** @var array $casts */
