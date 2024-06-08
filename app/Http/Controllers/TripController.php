@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GetTripsByUserRequest;
 use App\Http\Requests\SlugTripRequest;
 use App\Http\Requests\StoreTripRequest;
+use App\Http\Requests\UpdateTripRequest;
 use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
 use App\Models\Dto\SearchTripDto;
 use App\Models\Dto\TripDto;
+use App\Models\Enum\TripStatusEnum;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,9 +44,10 @@ class TripController extends Controller
         // todo: make middleware return json or baseController about json return
         // должно получится, что отдаем массив или коллекцию или модель,
         // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
-        $dto = new TripDto(...$request->all());
+        $dto = new TripDto($request->all());
 
         try {
+            $dto->setStatus(TripStatusEnum::AWAIT->value); // todo: это должно быть в сервисе
             $this->tripService->create($dto);
         } catch (\Exception $ex) {
             return response()->json([
@@ -70,9 +73,14 @@ class TripController extends Controller
         return new TripResource($trip);
     }
 
-    public function update(Request $request, Trip $trip)
+    public function update(UpdateTripRequest $request, Trip $trip)
     {
-        // return tap(Trip::find($id))->update($data)->fresh();
+        $dto = new TripDto($request->all());
+
+        $dto->setId($trip->id);
+        $trip = $this->tripService->update($dto);
+
+        return new TripResource($trip);
     }
 
     public function destroy(Trip $trip)

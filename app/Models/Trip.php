@@ -16,6 +16,7 @@ class Trip extends Model
         'slug',
         'date_to',
         'date_from',
+        'status',
     ];
 
     /** @var array $casts */

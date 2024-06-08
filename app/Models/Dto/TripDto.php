@@ -2,8 +2,6 @@
 
 namespace App\Models\Dto;
 
-use App\Models\Enum\TripStatusEnum;
-
 class TripDto extends BaseDto
 {
     private ?string $title;
@@ -20,8 +18,7 @@ class TripDto extends BaseDto
 
     private ?int $status;
 
-    public function __construct(array $request
-    )
+    public function __construct(array $request)
     {
         $this->title = $request['title'] ?? null;
         $this->slug = $request['slug'] ?? null;

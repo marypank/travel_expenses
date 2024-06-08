@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Dto\BaseDtoInterface;
+use App\Models\Enum\TripStatusEnum;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -24,16 +25,18 @@ abstract class BaseService implements DefaultServiceInterface
         return new Collection();
     }
 
-    public function create(BaseDtoInterface $tripDto): void
+    public function create(BaseDtoInterface $dto): void
     {
         // todo: dont like that dates go in strings not like dates
         // todo: custom Exception
-        if (!$tripDto->getUserId()) {
+        if (!$dto->getUserId()) { // todo: does everything has userId?
             // new Exception
         }
 
+        // $dto->setStatus(TripStatusEnum::AWAIT->value);
+
         try {
-            $model = $this->mainRepository->create($tripDto->toArray());
+            $model = $this->mainRepository->create($dto->toArray());
 
             if (!$model) {
                 throw new \Exception("not created");
