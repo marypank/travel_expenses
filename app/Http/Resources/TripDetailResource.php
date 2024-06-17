@@ -22,7 +22,7 @@ class TripDetailResource extends JsonResource
                     'name' => '',
                 ],
             ],
-            'slug' => $this->slug,
+            // 'slug' => $this->slug,
             'dateFrom' => $this->date_from,
             'dateTo' => $this->date_to,
             'status' => $this->status,
