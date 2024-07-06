@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::group(['prefix'=> 'currency'], function () {
         Route::get('/', [CurrencyController::class, 'index']);
+        Route::get('/{id}', [CurrencyController::class, 'show']);
     });
 });
 

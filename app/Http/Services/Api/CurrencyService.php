@@ -36,4 +36,11 @@ class CurrencyService
 
         return $collection;
     }
+
+    public function getById(int $id): ?CurrencyDto
+    {
+        $currencies = $this->all();
+
+        return $currencies->first(fn ($item) => $item->getCode() === $id);
+    }
 }

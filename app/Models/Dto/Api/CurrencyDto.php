@@ -16,10 +16,15 @@ class CurrencyDto extends BaseDto
     )
     {}
 
+    public function getCode(): int
+    {
+        return $this->NumCode;
+    }
+
     public function toArray($withEmptyValues = false): array
     {
         $data = [
-            'id' => (int)$this->ID,
+            'id' => $this->ID,
             'code' => (int)$this->NumCode,
             'strCode' => $this->CharCode,
             'nominal' => $this->Nominal,
