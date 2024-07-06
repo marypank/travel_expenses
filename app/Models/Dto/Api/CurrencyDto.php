@@ -18,7 +18,7 @@ class CurrencyDto extends BaseDto
 
     public function getCode(): int
     {
-        return $this->NumCode;
+        return (int)$this->NumCode;
     }
 
     public function toArray($withEmptyValues = false): array
