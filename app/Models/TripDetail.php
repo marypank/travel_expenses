@@ -12,6 +12,9 @@ class TripDetail extends Model
     /** @var array $fillable */
     protected $fillable = [
         'trip_id',
+        'title',
+        'slug',
+        'description',
         'date_to',
         'date_from',
         'country_id',

@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Enum\SourceExpenseEnum;
+use Illuminate\Database\Eloquent\Model;
 
-class TripExpense extends BaseModel
+class TripExpense extends Model
 {
     /** @var string $table */
     protected $table = 'trip_expenses';
@@ -16,7 +17,6 @@ class TripExpense extends BaseModel
         'current_currency_exchange',
         'source',
         'title',
-        'slug',
         'description',
         'parent_id',
     ];
