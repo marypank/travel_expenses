@@ -45,6 +45,7 @@ class TripDetailController extends Controller
 
     public function show(TripDetail $tripDetail)
     {
+        // todo: show with details like how much already spend, how much left (money, days, ets)
         return new TripDetailResource($tripDetail);
     }
 

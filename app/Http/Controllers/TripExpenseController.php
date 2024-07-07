@@ -14,7 +14,12 @@ class TripExpenseController extends Controller
 
     public function index()
     {
-        //
+        // 1. показать все траты по tripId (и внутри траты по parent_id)
+        // 2. показать траты внутри трат (по parent_id)
+        // 3. Обновление
+        // 4. Сохранение
+        // 5. Удаление родительского вместе с дочерними
+        // 6. Удаление дочернего
     }
 
     public function store(Request $request)
