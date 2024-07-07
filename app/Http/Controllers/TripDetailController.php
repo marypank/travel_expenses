@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTripRequest;
+use App\Http\Requests\StoreTripDetailRequest;
 use App\Http\Requests\UpdateTripDetailRequest;
 use App\Http\Resources\TripDetailResource;
 use App\Http\Services\TripDetailService;
 use App\Models\Dto\TripDetailDto;
 use App\Models\Dto\UpdateTripDetailDto;
 use App\Models\TripDetail;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripDetailController extends Controller
@@ -27,11 +26,12 @@ class TripDetailController extends Controller
         //
     }
 
-    public function store(StoreTripRequest $request)
+    public function store(StoreTripDetailRequest $request)
     {
         $dto = new TripDetailDto($request->all());
 
         try {
+            // todo: проверка, что выбранная дата начала не мб меньше, чем у трипа и дата конца не мб больше, чем у трипа
             $this->tripDetailService->create($dto);
         } catch (\Exception $ex) {
             return response()->json([

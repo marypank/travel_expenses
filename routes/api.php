@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExternalApi\CurrencyController;
-use App\Models\TripDetail;
-use App\Models\TripExpense;
+use App\Http\Controllers\TripDetailController;
+use App\Http\Controllers\TripExpenseController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
@@ -21,8 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/trips/get-trips-by-user', [TripController::class, 'getTripsByUser']);
 
     Route::apiResource('trips', TripController::class);
-    Route::apiResource('trip-details', TripDetail::class);
-    Route::apiResource('trip-expenses', TripExpense::class);
+    Route::apiResource('trip-details', TripDetailController::class);
+    Route::apiResource('trip-expenses', TripExpenseController::class);
 
     Route::group(['prefix'=> 'currency'], function () {
         Route::get('/', [CurrencyController::class, 'index']);

@@ -8,7 +8,7 @@ class TripDetailService extends BaseService
 {
     public function __construct(TripDetailRepository $tripDetailRepository)
     {
-        parent::__construct($$tripDetailRepository);
+        parent::__construct($tripDetailRepository);
     }
 
 }
