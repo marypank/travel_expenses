@@ -4,6 +4,11 @@ namespace App\Models\Dto;
 
 abstract class TripDetailDtoBase extends BaseDto
 {
+    /* todo: protected static const REQUIRED_FIELDS = [
+        'update' => [],
+        'create' => []
+    ]; */
+
     protected ?int $id = null;
 
     protected ?int $tripId;
