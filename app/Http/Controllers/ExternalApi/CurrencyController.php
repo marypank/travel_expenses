@@ -17,7 +17,7 @@ class CurrencyController extends Controller
         $this->currencyService = $currencyService;
     }
 
-    public function index(Request $request)
+    public function index()
     {
         $result = $this->currencyService->all();
 
