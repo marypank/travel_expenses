@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripDetailRequest;
 use App\Http\Resources\TripDetailResource;
 use App\Http\Services\TripDetailService;
 use App\Models\Dto\TripDetailDto;
+use App\Models\Dto\UpdateTripDetailDto;
 use App\Models\TripDetail;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +27,20 @@ class TripDetailController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(StoreTripRequest $request)
     {
-        //
+        $dto = new TripDetailDto($request->all());
+
+        try {
+            $this->tripDetailService->create($dto);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'data' => [],
+                'message' => $ex->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->noContent(Response::HTTP_CREATED);
     }
 
     public function show(TripDetail $tripDetail)
@@ -37,7 +50,7 @@ class TripDetailController extends Controller
 
     public function update(UpdateTripDetailRequest $request, TripDetail $tripDetail)
     {
-        $dto = new TripDetailDto($request->all());
+        $dto = new UpdateTripDetailDto($request->all());
 
         $dto->setId($tripDetail->id);
         $trip = $this->tripDetailService->update($dto);
