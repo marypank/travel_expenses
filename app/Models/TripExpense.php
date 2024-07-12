@@ -24,6 +24,7 @@ class TripExpense extends Model
         'image'
     ];
 
+    // todo: fix, вместо 9.99 пишет в базу 9.00
     /** @var array $casts */
     protected $casts = [
         'current_currency_exchange' => 'decimal:2', // todo: is that right?
