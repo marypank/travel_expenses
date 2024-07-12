@@ -19,6 +19,7 @@ class TripExpense extends Model
         'title',
         'description',
         'parent_id',
+        'pay_date',
     ];
 
     /** @var array $casts */
@@ -27,6 +28,7 @@ class TripExpense extends Model
         'source' => SourceExpenseEnum::class,
         'date_to' => 'date',
         'date_from' => 'date',
+        'pay_date' => 'date',
     ];
 
     // todo: check if its correct later
