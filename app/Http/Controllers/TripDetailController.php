@@ -51,6 +51,7 @@ class TripDetailController extends Controller
 
     public function update(UpdateTripDetailRequest $request, TripDetail $tripDetail)
     {
+        // todo: ???
         $dto = new UpdateTripDetailDto($request->all());
 
         $dto->setId($tripDetail->id);

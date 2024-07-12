@@ -8,7 +8,7 @@ class TripExpenseDto extends BaseDto
 
     protected ?int $tripDetailId;
 
-    protected string $title;
+    protected ?string $title;
 
     protected ?string $description;
 
@@ -39,6 +39,18 @@ class TripExpenseDto extends BaseDto
         $this->payDate = $params['payDate'] ?? null;
         $this->image = $params['image'] ?? null;
         $this->price = $params['price'] ?? null;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function toArray($withEmptyValues = false): array

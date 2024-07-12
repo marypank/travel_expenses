@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchTripExpenseRequest;
 use App\Http\Requests\StoreTripExpenseRequest;
+use App\Http\Requests\UpdateTripRequest;
 use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
 use App\Models\Dto\TripExpenseDto;
@@ -19,16 +21,14 @@ class TripExpenseController extends Controller
         $this->tripExpenseService = $tripExpenseService;
     }
 
-    public function index(Request $request)
+    public function index(SearchTripExpenseRequest $request)
     {
-        // [] 1. показать все траты по tripId (и внутри траты по parent_id)
-        // [+] 2. показать траты внутри трат (по parent_id)
-        // [] 3. Обновление
-        // [+] 4. Сохранение
-        // [+] 5. Удаление родительского вместе с дочерними
-        // [+] 6. Удаление дочернего
+        // todo: dto
+        // todo: мне кажется, что не надо все выводить подряд. Если это дочерние, то надо вложить, а из общего выпилить
+        $result = $this->tripExpenseService->search($request->all());
 
         // todo: потом сменить метод, а этот отчистить
+        return TripExpenseResource::collection($result);
     }
 
     public function store(StoreTripExpenseRequest $request)
@@ -55,9 +55,14 @@ class TripExpenseController extends Controller
         return new TripExpenseResource($tripExpense);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateTripRequest $request, TripExpense $tripExpense)
     {
-        //
+        $dto = new TripExpenseDto($request->all());
+
+        $dto->setId($tripExpense->id);
+        $trip = $this->tripExpenseService->update($dto);
+
+        return new TripExpenseResource($trip);
     }
 
     public function destroy(TripExpense $tripExpense)

@@ -24,6 +24,7 @@ class TripExpenseResource extends JsonResource
             'payDate' => $this->pay_date,
             'image' => $this->image,
             'price' => $this->price,
+            // todo: if update children dont need
             'children' => self::collection($this->children),
         ];
     }

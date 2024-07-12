@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Trip extends Model
 {
@@ -24,4 +25,9 @@ class Trip extends Model
         'date_to' => 'date',
         'date_from' => 'date',
     ];
+
+    public function expenses(): HasManyThrough
+    {
+        return $this->hasManyThrough(TripExpense::class, TripDetail::class);
+    }
 }
