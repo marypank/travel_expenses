@@ -19,14 +19,16 @@ class TripExpenseController extends Controller
         $this->tripExpenseService = $tripExpenseService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         // [] 1. показать все траты по tripId (и внутри траты по parent_id)
         // [+] 2. показать траты внутри трат (по parent_id)
         // [] 3. Обновление
         // [+] 4. Сохранение
-        // [] 5. Удаление родительского вместе с дочерними
-        // [] 6. Удаление дочернего
+        // [+] 5. Удаление родительского вместе с дочерними
+        // [+] 6. Удаление дочернего
+
+        // todo: потом сменить метод, а этот отчистить
     }
 
     public function store(StoreTripExpenseRequest $request)
@@ -60,6 +62,8 @@ class TripExpenseController extends Controller
 
     public function destroy(TripExpense $tripExpense)
     {
-        //
+        $this->tripExpenseService->delete($tripExpense->id);
+
+        return response()->noContent(Response::HTTP_NO_CONTENT);
     }
 }
