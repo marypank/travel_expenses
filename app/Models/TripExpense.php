@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Enum\SourceExpenseEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TripExpense extends Model
 {
@@ -36,12 +38,12 @@ class TripExpense extends Model
     ];
 
     // todo: check if its correct later
-    public function parent()
+    public function parent(): HasOne
     {
         return $this->hasOne(TripExpense::class, 'id', 'parent_id');
     }
 
-    public function children()
+    public function children(): HasMany
     {
         return $this->hasMany(TripExpense::class, 'parent_id', 'id');
     }

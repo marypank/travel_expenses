@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTripExpenseRequest;
+use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
 use App\Models\Dto\TripExpenseDto;
 use App\Models\TripExpense;
@@ -21,7 +22,7 @@ class TripExpenseController extends Controller
     public function index()
     {
         // [] 1. показать все траты по tripId (и внутри траты по parent_id)
-        // [] 2. показать траты внутри трат (по parent_id)
+        // [+] 2. показать траты внутри трат (по parent_id)
         // [] 3. Обновление
         // [+] 4. Сохранение
         // [] 5. Удаление родительского вместе с дочерними
@@ -46,9 +47,10 @@ class TripExpenseController extends Controller
         return response()->noContent(Response::HTTP_CREATED);
     }
 
-    public function show(string $id)
+    public function show(TripExpense $tripExpense)
     {
-        //
+        // todo: request, with relation or without
+        return new TripExpenseResource($tripExpense);
     }
 
     public function update(Request $request, string $id)
