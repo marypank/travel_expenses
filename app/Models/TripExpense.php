@@ -20,6 +20,8 @@ class TripExpense extends Model
         'description',
         'parent_id',
         'pay_date',
+        'price',
+        'image'
     ];
 
     /** @var array $casts */
@@ -29,6 +31,7 @@ class TripExpense extends Model
         'date_to' => 'date',
         'date_from' => 'date',
         'pay_date' => 'date',
+        'price' => 'decimal:2',
     ];
 
     // todo: check if its correct later
