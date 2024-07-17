@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SearchTripExpenseRequest;
-use App\Http\Requests\StoreTripExpenseRequest;
-use App\Http\Requests\UpdateTripRequest;
+use App\Http\Requests\TripExpense\SearchTripExpenseRequest;
+use App\Http\Requests\TripExpense\StoreTripExpenseRequest;
+use App\Http\Requests\TripExpense\UpdateTripExpenseRequest;
 use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
 use App\Models\Dto\TripExpenseDto;
 use App\Models\TripExpense;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripExpenseController extends Controller
@@ -55,7 +54,7 @@ class TripExpenseController extends Controller
         return new TripExpenseResource($tripExpense);
     }
 
-    public function update(UpdateTripRequest $request, TripExpense $tripExpense)
+    public function update(UpdateTripExpenseRequest $request, TripExpense $tripExpense)
     {
         $dto = new TripExpenseDto($request->all());
 
