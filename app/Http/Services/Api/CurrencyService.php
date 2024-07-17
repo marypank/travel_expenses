@@ -4,35 +4,40 @@ namespace App\Http\Services\Api;
 
 use App\Models\Dto\Api\CurrencyDto;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 
 class CurrencyService
 {
-    // todo: чуть позже сделать настройку переключения. Один сервис с данными от ЦБ РФ, другой - какой-то общий, где все курсы
+    // todo: мб (?) чуть позже сделать настройку переключения. Один сервис с данными от ЦБ РФ, другой - какой-то общий, где все курсы
+    private const FILE_PATH = 'https://www.cbr-xml-daily.ru/daily_json.js';
 
-    private const FILE_PATH = ''; // todo: здесь будет ссылка на файл
+    private $client;
 
     public function __construct()
     {
-        //
+        $this->client = new Client();
     }
 
     public function all(): Collection
     {
         // todo: REDIS cache
-        $result = Storage::disk('local')->get('money.json');
+        // todo: а если ошибка, что?
+        // todo: вынести
+        $response = $this->client->get(self::FILE_PATH);
+        $content = $response->getBody()->getContents();
 
         $collection = new Collection();
-        if (!$result) {
+        if (!$content) {
             $collection;
         }
 
-        $result = json_decode($result, true);
+        $result = json_decode($content, true);
         $valutes = $result['Valute'];
 
         foreach ($valutes as $valute) {
             $collection->add(new CurrencyDto(...$valute));
         }
+        $this->addRussianValute($collection);
 
         return $collection;
     }
@@ -42,5 +47,19 @@ class CurrencyService
         $currencies = $this->all();
 
         return $currencies->first(fn ($item) => $item->getCode() === $id);
+    }
+
+    private function addRussianValute(Collection &$collection)
+    {
+        $rusRuble = [
+            'ID' => 'R000',
+            'NumCode' => '643',
+            'CharCode' => 'RUB',
+            'Nominal' => 1,
+            'Name' => 'Росссийский рубль',
+            'Value' => 1,
+            'Previous' => 1,
+        ];
+        $collection->prepend(new CurrencyDto(...$rusRuble));
     }
 }
