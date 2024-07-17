@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GetTripsByUserRequest;
-use App\Http\Requests\SlugTripRequest;
-use App\Http\Requests\StoreTripRequest;
-use App\Http\Requests\UpdateTripRequest;
+use App\Http\Requests\Trip\GetTripsByUserRequest;
+use App\Http\Requests\Trip\SlugTripRequest;
+use App\Http\Requests\Trip\StoreTripRequest;
+use App\Http\Requests\Trip\UpdateTripRequest;
 use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
 use App\Models\Dto\SearchTripDto;
 use App\Models\Dto\TripDto;
 use App\Models\Trip;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripController extends Controller
