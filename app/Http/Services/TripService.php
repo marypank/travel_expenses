@@ -7,12 +7,30 @@ use App\Models\Trip;
 use App\Repositories\TripRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Models\Dto\BaseDtoInterface;
+use App\Models\Enum\TripStatusEnum;
 
 class TripService extends BaseService
 {
     public function __construct(TripRepository $tripRepository)
     {
         parent::__construct($tripRepository);
+    }
+
+    public function create(BaseDtoInterface $dto): void
+    {
+        // todo: проверки
+        $dto->setStatus(TripStatusEnum::AWAIT->value);
+        
+        try {
+            $model = $this->mainRepository->create($dto->toArray());
+
+            if (!$model) {
+                throw new \Exception("not created");
+            }
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
     }
 
     public function findBySlug(string $slug): ?Trip

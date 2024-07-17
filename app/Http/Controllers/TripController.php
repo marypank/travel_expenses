@@ -10,7 +10,6 @@ use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
 use App\Models\Dto\SearchTripDto;
 use App\Models\Dto\TripDto;
-use App\Models\Enum\TripStatusEnum;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +23,10 @@ class TripController extends Controller
     {
         $this->tripService = $tripService;
     }
+
+    // todo: make middleware return json or baseController about json return
+    // должно получится, что отдаем массив или коллекцию или модель,
+    // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
 
     public function index()
     {
@@ -41,13 +44,9 @@ class TripController extends Controller
 
     public function store(StoreTripRequest $request)
     {
-        // todo: make middleware return json or baseController about json return
-        // должно получится, что отдаем массив или коллекцию или модель,
-        // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
         $dto = new TripDto($request->all());
 
         try {
-            $dto->setStatus(TripStatusEnum::AWAIT->value); // todo: это должно быть в сервисе
             $this->tripService->create($dto);
         } catch (\Exception $ex) {
             return response()->json([
