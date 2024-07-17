@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTripDetailRequest;
-use App\Http\Requests\UpdateTripDetailRequest;
+use App\Http\Requests\TripDetail\StoreTripDetailRequest;
+use App\Http\Requests\TripDetail\UpdateTripDetailRequest;
 use App\Http\Resources\TripDetailResource;
 use App\Http\Services\TripDetailService;
 use App\Models\Dto\TripDetailDto;
