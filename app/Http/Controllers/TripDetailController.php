@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TripDetail\SearchTripDetailRequest;
 use App\Http\Requests\TripDetail\StoreTripDetailRequest;
 use App\Http\Requests\TripDetail\UpdateTripDetailRequest;
 use App\Http\Resources\TripDetailResource;
 use App\Http\Services\TripDetailService;
+use App\Models\Dto\SearchTripDetailDto;
 use App\Models\Dto\TripDetailDto;
 use App\Models\Dto\UpdateTripDetailDto;
 use App\Models\TripDetail;
@@ -21,9 +23,11 @@ class TripDetailController extends Controller
         $this->tripDetailService = $tripDetailService;
     }
 
-    public function index()
+    public function index(SearchTripDetailRequest $request)
     {
-        //
+        $dto = new SearchTripDetailDto(...$request->all());
+
+        // todo: search
     }
 
     public function store(StoreTripDetailRequest $request)
