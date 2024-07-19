@@ -18,7 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::group(['prefix'=> ''], function () {});
 
     Route::get('/trips/show-by-slug', [TripController::class, 'showBySlug']);
-    Route::get('/trips/get-trips-by-user', [TripController::class, 'getTripsByUser']);
 
     Route::apiResource('trips', TripController::class);
     Route::apiResource('trip-details', TripDetailController::class);

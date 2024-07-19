@@ -44,13 +44,11 @@ class TripService extends BaseService
         return $trip;
     }
 
-    public function getTripsByUser(SearchTripDto $dto): Collection
+    public function search(SearchTripDto $dto): Collection
     {
-        if (!$dto->getUserId()) {
-            // todo: throw exception - later when i do searchByParams
-        }
+        $dto->setUserId(auth()->user()->id);
 
-        return $this->mainRepository->searchByUser($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
+        return $this->mainRepository->search($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
     }
 
 }

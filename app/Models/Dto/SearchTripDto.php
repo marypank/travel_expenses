@@ -10,14 +10,11 @@ class SearchTripDto extends BaseDto
     private ?string $dateTo = null;
 
     public function __construct(
-        int $userId,
         ?int $status = null,
         ?string $dateFrom = null,
         ?string $dateTo = null
-        // todo: later make ?int $userId and title/slug (make universal usage to serachByParams) - если сделать, будет ошибка
     )
     {
-        $this->userId = $userId;
         $this->status = $status;
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;

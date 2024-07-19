@@ -17,12 +17,7 @@ class TripRepository extends BaseRepository
         return Trip::where('slug', $slug)->first();
     }
 
-    /* public function searchByParams(): Collection
-    {
-        return new Collection();
-    } */
-
-    public function searchByUser(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
+    public function search(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
     {
         $trip = Trip::where('user_id', $userId);
 

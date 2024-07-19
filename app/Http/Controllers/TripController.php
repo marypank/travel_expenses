@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Trip\GetTripsByUserRequest;
+use App\Http\Requests\Trip\SearchTripRequest;
 use App\Http\Requests\Trip\SlugTripRequest;
 use App\Http\Requests\Trip\StoreTripRequest;
 use App\Http\Requests\Trip\UpdateTripRequest;
@@ -27,16 +27,11 @@ class TripController extends Controller
     // должно получится, что отдаем массив или коллекцию или модель,
     // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
 
-    public function index()
-    {
-        //
-    }
-
-    public function getTripsByUser(GetTripsByUserRequest $request)
+    public function index(SearchTripRequest $request)
     {
         $dto = new SearchTripDto(...$request->all());
         
-        $trips = $this->tripService->getTripsByUser($dto);
+        $trips = $this->tripService->search($dto);
 
         return TripResource::collection($trips);
     }

@@ -30,7 +30,7 @@ class UpdateTripRequest extends FormRequest
             // 'budget' => ['decimal:2,4'],
             'status' => ['numeric', Rule::enum(TripStatusEnum::class)],
             'dateFrom' => ['date'],
-            'dateTo' => ['date'],
+            'dateTo' => ['date', 'after_or_equal:dateFrom'],
         ];
     }
 }
