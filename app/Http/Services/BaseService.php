@@ -4,7 +4,6 @@ namespace App\Http\Services;
 
 use App\Models\Dto\BaseDtoInterface;
 use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
