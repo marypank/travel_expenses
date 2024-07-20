@@ -29,7 +29,7 @@ class StoreTripDetailRequest extends FormRequest
             'dateFrom' => ['required', 'date'],
             'dateTo' => ['required', 'date'],
             'description' => ['string', 'nullable'],
-            'status' => ['number'],
+            'status' => ['numeric'],
             'countryId' => ['required', 'numeric'],
             'cityId' => ['required', 'numeric'],
         ];

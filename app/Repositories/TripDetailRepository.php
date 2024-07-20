@@ -2,13 +2,20 @@
 
 namespace App\Repositories;
 
+use App\Models\Trip;
 use App\Models\TripDetail;
 
 class TripDetailRepository extends BaseRepository
 {
+
     public function model()
     {
         return new TripDetail();
+    }
+
+    public function getParentTrip(int $tripId): Trip
+    {
+        return (new TripRepository())->findById($tripId);
     }
 
     public function search(
@@ -19,7 +26,7 @@ class TripDetailRepository extends BaseRepository
         ?int $countryId = null,
         ?int $cityId = null)
     {
-        $details = TripDetail::where('trip_id', $tripId);
+        $details = $this->model()::where('trip_id', $tripId);
 
         if ($status) {
             $details = $details->where('status', $status);

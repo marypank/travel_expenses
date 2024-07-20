@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Dto;
+namespace App\Models\Dto\TripDetail;
 
 final class TripDetailDto extends TripDetailDtoBase
 {

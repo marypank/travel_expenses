@@ -2,8 +2,7 @@
 
 namespace App\Http\Services;
 
-use App\Models\Dto\BaseDtoInterface;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Dto\Base\BaseDtoInterface;
 use Illuminate\Database\Eloquent\Model;
 
 interface DefaultServiceInterface

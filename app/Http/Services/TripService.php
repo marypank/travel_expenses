@@ -2,12 +2,12 @@
 
 namespace App\Http\Services;
 
-use App\Models\Dto\SearchTripDto;
+use App\Models\Dto\Trip\SearchTripDto;
 use App\Models\Trip;
 use App\Repositories\TripRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Models\Dto\BaseDtoInterface;
+use App\Models\Dto\Base\BaseDtoInterface;
 use App\Models\Enum\TripStatusEnum;
 
 class TripService extends BaseService

@@ -7,9 +7,9 @@ use App\Http\Requests\TripDetail\StoreTripDetailRequest;
 use App\Http\Requests\TripDetail\UpdateTripDetailRequest;
 use App\Http\Resources\TripDetailResource;
 use App\Http\Services\TripDetailService;
-use App\Models\Dto\SearchTripDetailDto;
-use App\Models\Dto\TripDetailDto;
-use App\Models\Dto\UpdateTripDetailDto;
+use App\Models\Dto\TripDetail\SearchTripDetailDto;
+use App\Models\Dto\TripDetail\TripDetailDto;
+use App\Models\Dto\TripDetail\UpdateTripDetailDto;
 use App\Models\TripDetail;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,7 +37,6 @@ class TripDetailController extends Controller
         $dto = new TripDetailDto($request->all());
 
         try {
-            // todo: проверка, что выбранная дата начала не мб меньше, чем у трипа и дата конца не мб больше, чем у трипа
             $this->tripDetailService->create($dto);
         } catch (\Exception $ex) {
             return response()->json([

@@ -2,7 +2,6 @@
 
 namespace App\Http\Services;
 
-use App\Models\TripDetail;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
 

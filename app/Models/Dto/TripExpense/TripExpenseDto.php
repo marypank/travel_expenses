@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models\Dto;
+namespace App\Models\Dto\TripExpense;
+
+use App\Models\Dto\Base\BaseDto;
 
 class TripExpenseDto extends BaseDto
 {

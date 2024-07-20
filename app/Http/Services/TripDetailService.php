@@ -2,16 +2,36 @@
 
 namespace App\Http\Services;
 
-use App\Models\Dto\SearchTripDetailDto;
+use App\Models\Dto\TripDetail\SearchTripDetailDto;
 use App\Models\Enum\TripStatusEnum;
 use App\Repositories\TripDetailRepository;
 use Illuminate\Database\Eloquent\Collection;
+use App\Models\Dto\Base\BaseDtoInterface;
+use Carbon\Carbon;
 
 class TripDetailService extends BaseService
 {
     public function __construct(TripDetailRepository $tripDetailRepository)
     {
         parent::__construct($tripDetailRepository);
+    }
+
+    public function create(BaseDtoInterface $dto): void
+    {
+        $trip = $this->mainRepository->getParentTrip($dto->getTripId());
+        if (Carbon::parse($dto->getDateFrom()) < $trip->date_from || Carbon::parse($dto->getDateTo()) > $trip->date_to) {
+            throw new \Exception("dates doesnt match"); // todo: custom
+        }
+
+        try {
+            $model = $this->mainRepository->create($dto->toArray());
+
+            if (!$model) {
+                throw new \Exception("not created");
+            }
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
     }
 
     public function search(SearchTripDetailDto $dto): Collection

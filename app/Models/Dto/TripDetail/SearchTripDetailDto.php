@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models\Dto;
+namespace App\Models\Dto\TripDetail;
+
+use App\Models\Dto\Base\BaseDto;
 
 class SearchTripDetailDto extends BaseDto
 {

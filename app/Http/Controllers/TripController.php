@@ -8,8 +8,8 @@ use App\Http\Requests\Trip\StoreTripRequest;
 use App\Http\Requests\Trip\UpdateTripRequest;
 use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
-use App\Models\Dto\SearchTripDto;
-use App\Models\Dto\TripDto;
+use App\Models\Dto\Trip\SearchTripDto;
+use App\Models\Dto\Trip\TripDto;
 use App\Models\Trip;
 use Symfony\Component\HttpFoundation\Response;
 

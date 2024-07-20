@@ -1,46 +1,46 @@
 <?php
 
-namespace App\Models\Dto;
+namespace App\Models\Dto\Trip;
 
-abstract class TripDetailDtoBase extends BaseDto
+use App\Models\Dto\Base\BaseDto;
+
+class TripDto extends BaseDto
 {
-    /* todo: protected static const REQUIRED_FIELDS = [
-        'update' => [],
-        'create' => []
-    ]; */
+    private ?string $title;
 
-    protected ?int $id = null;
+    private ?string $slug;
 
-    protected ?int $tripId;
+    private ?string $dateFrom;
 
-    protected ?string $title;
+    private ?string $dateTo;
 
-    protected ?string $slug;
+    private ?int $userId;
 
-    protected ?string $dateFrom;
+    private ?int $id = null;
 
-    protected ?string $dateTo;
+    private ?int $status;
 
-    protected ?string $description;
-
-    protected ?int $status;
-
-    protected ?int $cityId;
-
-    protected ?int $countryId;
-
-    protected abstract function defineFields(): array;
-
-    public function setCityId(int $cityId): self
+    public function __construct(array $request)
     {
-        $this->cityId = $cityId;
+        $this->title = $request['title'] ?? null;
+        $this->slug = $request['slug'] ?? null;
+        $this->dateFrom = $request['dateFrom'] ?? null;
+        $this->dateTo = $request['dateTo'] ?? null;
+        $this->userId = $request['userId'] ?? null;
+        $this->id = $request['id'] ?? null;
+        $this->status = $request['status'] ?? null;
+    }
+
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
 
-    public function getCityId(): ?int
+    public function getUserId(): ?int
     {
-        return $this->cityId;
+        return $this->userId;
     }
 
     public function setId(int $id): self
@@ -115,45 +115,17 @@ abstract class TripDetailDtoBase extends BaseDto
         return $this;
     }
 
-    public function getTripId(): ?int
-    {
-        return $this->tripId;
-    }
-
-    public function setTripId(?int $tripId): self
-    {
-        $this->tripId = $tripId;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $descr): self
-    {
-        $this->description = $descr;
-
-        return $this;
-    }
-
-    public function setCountryId(?string $countryId): self
-    {
-        $this->countryId = $countryId;
-
-        return $this;
-    }
-
-    public function getCountryId(): ?int
-    {
-        return $this->countryId;
-    }
-
     public function toArray($withEmptyValues = false): array
     {
-        $data = $this->defineFields();
+        $data = [
+            'id' => $this->getId(),
+            'user_id' => $this->getUserId(),
+            'title' => $this->getTitle(),
+            'slug' => $this->getSlug(),
+            'date_from' => $this->getDateFrom(),
+            'date_to' => $this->getDateTo(),
+            'status' => $this->getStatus(),
+        ];
 
         return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     }
