@@ -8,7 +8,7 @@ class SearchTripDetailDto extends BaseDto
 
     private ?int $status = null;
     
-    private ?string $title = null;
+    // private ?string $title = null;
     
     private ?string $dateFrom = null;
     
@@ -23,7 +23,6 @@ class SearchTripDetailDto extends BaseDto
         ?string $dateFrom = null,
         ?string $dateTo = null,
         ?int $status = null,
-        ?string $title = null,
         ?int $countryId = null,
         ?int $cityId = null
     )
@@ -32,7 +31,6 @@ class SearchTripDetailDto extends BaseDto
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
         $this->status = $status;
-        $this->title = $title;
         $this->countyId = $countryId;
         $this->cityid = $cityId;
     }
@@ -85,7 +83,7 @@ class SearchTripDetailDto extends BaseDto
         return $this;
     }
 
-    public function getTitle(): ?string
+    /* public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -95,7 +93,7 @@ class SearchTripDetailDto extends BaseDto
         $this->title = $title;
 
         return $this;
-    }
+    } */
 
     public function getCountryId(): ?int
     {
@@ -126,7 +124,6 @@ class SearchTripDetailDto extends BaseDto
         $data = [
             'trip_id' => $this->getTripId(),
             'status'=> $this->getStatus(),
-            'title' => $this->getTitle(),
             'date_from' => $this->getDateFrom(),
             'date_to' => $this->getDateTo(),
             'country_id' => $this->getCountryId(),

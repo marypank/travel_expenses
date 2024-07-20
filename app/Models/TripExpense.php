@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Enum\SourceExpenseEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -46,5 +47,10 @@ class TripExpense extends Model
     public function children(): HasMany
     {
         return $this->hasMany(TripExpense::class, 'parent_id', 'id');
+    }
+
+    public function detail(): BelongsTo
+    {
+        return $this->belongsTo(TripDetail::class);
     }
 }

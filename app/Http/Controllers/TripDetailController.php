@@ -27,7 +27,9 @@ class TripDetailController extends Controller
     {
         $dto = new SearchTripDetailDto(...$request->all());
 
-        // todo: search
+        $result = $this->tripDetailService->search($dto);
+
+        return TripDetailResource::collection($result);
     }
 
     public function store(StoreTripDetailRequest $request)
@@ -49,7 +51,6 @@ class TripDetailController extends Controller
 
     public function show(TripDetail $tripDetail)
     {
-        // todo: show with details like how much already spend, how much left (money, days, ets)
         return new TripDetailResource($tripDetail);
     }
 

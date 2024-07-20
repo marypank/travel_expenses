@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TripDetail extends Model
 {
@@ -27,4 +28,9 @@ class TripDetail extends Model
         'date_to' => 'date',
         'date_from' => 'date',
     ];
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(TripExpense::class);
+    }
 }
