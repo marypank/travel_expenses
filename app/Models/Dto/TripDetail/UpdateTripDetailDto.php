@@ -7,9 +7,9 @@ class UpdateTripDetailDto extends TripDetailDtoBase
 
     public function __construct(array $request)
     {
-        // todo: а почему нельзя апдейтить остальное, что здесь проихсодит????
-        // $this->title = $request['title'] ?? null;
-        // $this->slug = $request['slug'] ?? null;
+        $this->title = $request['title'] ?? null;
+        $this->slug = $request['slug'] ?? null;
+        $this->description = $request['description'] ?? null;
         $this->dateFrom = $request['dateFrom'] ?? null;
         $this->dateTo = $request['dateTo'] ?? null;
         $this->id = $request['id'] ?? null;
@@ -25,6 +25,11 @@ class UpdateTripDetailDto extends TripDetailDtoBase
             'date_from' => $this->getDateFrom(),
             'date_to' => $this->getDateTo(),
             'status' => $this->getStatus(),
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription(),
+            'country_id' => $this->getCountryId(),
+            'city_id' => $this->getCityId(),
+            'slug' => $this->getSlug(),
         ];
     }
 }

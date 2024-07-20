@@ -25,7 +25,7 @@ class TripDetailController extends Controller
 
     public function index(SearchTripDetailRequest $request)
     {
-        $dto = new SearchTripDetailDto(...$request->all());
+        $dto = new SearchTripDetailDto(...$request->all()); // todo: а действительно все работает, если передать только пару аргументов
 
         $result = $this->tripDetailService->search($dto);
 
@@ -55,11 +55,9 @@ class TripDetailController extends Controller
 
     public function update(UpdateTripDetailRequest $request, TripDetail $tripDetail)
     {
-        // todo: ???
         $dto = new UpdateTripDetailDto($request->all());
 
-        $dto->setId($tripDetail->id);
-        $trip = $this->tripDetailService->update($dto);
+        $trip = $this->tripDetailService->update($dto, $tripDetail->id, $tripDetail->trip->id);
 
         return new TripDetailResource($trip);
     }

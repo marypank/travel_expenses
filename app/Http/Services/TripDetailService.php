@@ -8,6 +8,7 @@ use App\Repositories\TripDetailRepository;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Dto\Base\BaseDtoInterface;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class TripDetailService extends BaseService
 {
@@ -18,9 +19,10 @@ class TripDetailService extends BaseService
 
     public function create(BaseDtoInterface $dto): void
     {
-        $trip = $this->mainRepository->getParentTrip($dto->getTripId());
-        if (Carbon::parse($dto->getDateFrom()) < $trip->date_from || Carbon::parse($dto->getDateTo()) > $trip->date_to) {
-            throw new \Exception("dates doesnt match"); // todo: custom
+        $this->checkDatesOfParentTripOrThrowError($dto->getDateFrom(), $dto->getDateTo(), $dto->getTripId());
+
+        if ($dto->getStatus()) {
+            $this->checkStatusOrThrowError($dto->getStatus());
         }
 
         try {
@@ -39,8 +41,8 @@ class TripDetailService extends BaseService
         if (!$dto->getTripId()) {
             throw new \Exception('tripId required'); // todo: custom
         }
-        if (!in_array($dto->getStatus(), array_column(TripStatusEnum::cases(), 'value'))) {
-            throw new \Exception('status not defined'); // todo: custom
+        if ($dto->getStatus()) {
+            $this->checkStatusOrThrowError($dto->getStatus());
         }
 
         $result = $this->mainRepository->search(
@@ -53,6 +55,37 @@ class TripDetailService extends BaseService
         );
 
         return $result;
+    }
+
+    public function update(BaseDtoInterface $dto, int $id = null, int $tripId = null): Model
+    {
+        if (!$id) {
+            throw new \Exception('id required'); // todo: custom
+        }
+        $dto->setId($id);
+
+        if ($dto->getStatus()) {
+            $this->checkStatusOrThrowError($dto->getStatus());
+        }
+        $this->checkDatesOfParentTripOrThrowError($dto->getDateFrom(), $dto->getDateTo(), $tripId);
+
+        return $this->mainRepository->update($dto->getId(), $dto->toArray());
+    }
+
+    private function checkDatesOfParentTripOrThrowError(?string $dateFrom = null, ?string $dateTo = null, int $tripId)
+    {
+        $trip = $this->mainRepository->getParentTrip($tripId);
+
+        if (($dateFrom && Carbon::parse($dateFrom) < $trip->date_from) || ($dateTo && Carbon::parse($dateTo) > $trip->date_to)) {
+            throw new \Exception("dates doesnt match"); // todo: custom
+        }
+    }
+
+    private function checkStatusOrThrowError(int $status)
+    {
+        if (!in_array($status, array_column(TripStatusEnum::cases(), 'value'))) {
+            throw new \Exception('status not defined'); // todo: custom
+        }
     }
 
 }
