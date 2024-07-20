@@ -7,7 +7,7 @@ use App\Http\Requests\TripExpense\StoreTripExpenseRequest;
 use App\Http\Requests\TripExpense\UpdateTripExpenseRequest;
 use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
-use App\Models\Dto\TripExpenseDto;
+use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\TripExpense;
 use Symfony\Component\HttpFoundation\Response;
 
