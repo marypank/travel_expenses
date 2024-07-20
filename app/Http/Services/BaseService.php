@@ -18,12 +18,6 @@ abstract class BaseService implements DefaultServiceInterface
         $this->mainRepository = $mainRepository;
     }
 
-    public function findAll(array $params = []): Collection
-    {
-        // todo: make
-        return new Collection();
-    }
-
     public function create(BaseDtoInterface $dto): void
     {
         // todo: dont like that dates go in strings not like dates
@@ -43,11 +37,10 @@ abstract class BaseService implements DefaultServiceInterface
 
     public function findById(int $id): ?Model
     {
-        // todo: а что насчет ебFнjй политики, которая не должна позволять найти не свой пост
         $model = $this->mainRepository->findById($id);
 
-        if (!$model) { // todo: refactor later
-            throw new NotFoundHttpException("RecordNotFound");
+        if (!$model) {
+            throw new NotFoundHttpException("RecordNotFound"); // todo: refactor later
         }
 
         return $model;

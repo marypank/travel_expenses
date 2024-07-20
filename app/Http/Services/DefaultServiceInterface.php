@@ -10,7 +10,6 @@ interface DefaultServiceInterface
 {
     // todo: combine with repointerface
     // todo: remake what return create and update methods???
-    public function findAll(array $params = []): Collection;
     
     public function findById(int $id): ?Model;
 
