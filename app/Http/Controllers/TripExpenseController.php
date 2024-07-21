@@ -26,7 +26,6 @@ class TripExpenseController extends Controller
         $dto = new SearchTripExpenseDto(...$request->all());
         $result = $this->tripExpenseService->search($dto);
 
-        // todo: потом сменить метод, а этот отчистить
         return TripExpenseResource::collection($result);
     }
 
