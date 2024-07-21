@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Dto\TripExpense\SearchTripExpenseDto;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -12,24 +13,11 @@ class TripExpenseService extends BaseService
         parent::__construct($tripDetailRepository);
     }
 
-    public function search(array $params): Collection
+    public function search(SearchTripExpenseDto $dto): Collection
     {
-        if (!isset($params['userId']) && !isset($params['tripDetailId']) && !isset($params['tripId'])) {
-            throw new \Exception('params required'); // todo: remake
-        }
+        $tripExpenses = $this->mainRepository->search($dto->getTripDetailId());
 
-        // todo: убрать это
-        if (isset($params['tripDetailId'])) {
-            return $this->mainRepository->searchByDetails($params['tripDetailId']);
-        } else if (isset($params['userId'])) {
-            //
-        } else if (isset($params['tripId'])) {
-            //
-        } else {
-
-        }
-
-        return new Collection();
+        return $tripExpenses->filter(fn($val, $key) => is_null($val->parent_id));
     }
 
 }

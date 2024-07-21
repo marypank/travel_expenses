@@ -7,6 +7,7 @@ use App\Http\Requests\TripExpense\StoreTripExpenseRequest;
 use App\Http\Requests\TripExpense\UpdateTripExpenseRequest;
 use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
+use App\Models\Dto\TripExpense\SearchTripExpenseDto;
 use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\TripExpense;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,8 @@ class TripExpenseController extends Controller
 
     public function index(SearchTripExpenseRequest $request)
     {
-        // todo: dto
-        // todo: мне кажется, что не надо все выводить подряд. Если это дочерние, то надо вложить, а из общего выпилить
-        $result = $this->tripExpenseService->search($request->all());
+        $dto = new SearchTripExpenseDto(...$request->all());
+        $result = $this->tripExpenseService->search($dto);
 
         // todo: потом сменить метод, а этот отчистить
         return TripExpenseResource::collection($result);

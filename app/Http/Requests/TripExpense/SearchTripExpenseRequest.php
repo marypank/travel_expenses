@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\TripExpense;
 
+use App\Models\Enum\SourceExpenseEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SearchTripExpenseRequest extends FormRequest
 {
@@ -15,9 +17,10 @@ class SearchTripExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => ['numeric', 'exists:users,id'],
-            'tripDetailId' => ['numeric', 'exists:trip_details,id'],
-            'tripId' => ['numeric', 'exists:trips,id'],
+            'tripDetailId' => ['required', 'numeric', 'exists:trip_details,id'],
+            'source' => [Rule::enum(SourceExpenseEnum::class)],
+            'parentId' => ['numeric', 'exists:trip_expenses,id'],
+            'payDate' => ['date'],
         ];
     }
 }

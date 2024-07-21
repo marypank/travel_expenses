@@ -12,21 +12,19 @@ class TripExpenseRepository extends BaseRepository
         return new TripExpense();
     }
 
-    // todo: не тут должно быть
-    public function searchByUser(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
+    public function search(int $detailId, ?int $source = null, ?int $parentId = null, ?string $payDate = null): Collection
     {
-        return new Collection();
-    }
+        $tripExpenses = TripExpense::with('children')->where('trip_detail_id', $detailId);
 
-    // todo: не тут должно быть
-    public function searchByTrip(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
-    {
-        return new Collection();
-    }
-
-    public function searchByDetails(int $detailId): Collection
-    {
-        $tripExpenses = TripExpense::where('trip_detail_id', $detailId);
+        if ($source) {
+            //
+        }
+        if ($parentId) {
+            //
+        }
+        if ($payDate) {
+            //
+        }
 
         return $tripExpenses->orderBy('created_at','desc')->get();
     }
