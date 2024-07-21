@@ -25,7 +25,7 @@ class TripDetailController extends Controller
 
     public function index(SearchTripDetailRequest $request)
     {
-        $dto = new SearchTripDetailDto(...$request->all()); // todo: а действительно все работает, если передать только пару аргументов
+        $dto = new SearchTripDetailDto(...$request->all());
 
         $result = $this->tripDetailService->search($dto);
 
