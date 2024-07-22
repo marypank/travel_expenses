@@ -21,6 +21,7 @@ class SearchTripExpenseRequest extends FormRequest
             'source' => [Rule::enum(SourceExpenseEnum::class)],
             'parentId' => ['numeric', 'exists:trip_expenses,id'],
             'payDate' => ['date'],
+            'withChildren' => ['boolean']
         ];
     }
 }

@@ -11,11 +11,14 @@ class CurrencyService
     // todo: мб (?) чуть позже сделать настройку переключения. Один сервис с данными от ЦБ РФ, другой - какой-то общий, где все курсы
     private const FILE_PATH = 'https://www.cbr-xml-daily.ru/daily_json.js';
 
-    private $client;
+    private Client $client;
+
+    private Collection $currencyData;
 
     public function __construct()
     {
         $this->client = new Client();
+        $this->currencyData = new Collection();
     }
 
     public function all(): Collection
@@ -44,9 +47,9 @@ class CurrencyService
 
     public function getById(int $id): ?CurrencyDto
     {
-        $currencies = $this->all();
+        $this->currencyData = $this->currencyData->isEmpty() ? $this->all() : $this->currencyData;
 
-        return $currencies->first(fn ($item) => $item->getCode() === $id);
+        return $this->currencyData->first(fn ($item) => $item->getCode() === $id);
     }
 
     private function addRussianValute(Collection &$collection)

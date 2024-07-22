@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Models\Dto\Api;
-use App\Models\Dto\BaseDto;
+
+use App\Models\Dto\Base\BaseDto;
 
 class CurrencyDto extends BaseDto
 {
@@ -19,6 +20,21 @@ class CurrencyDto extends BaseDto
     public function getCode(): int
     {
         return (int)$this->NumCode;
+    }
+
+    public function getName(): string
+    {
+        return $this->Name;
+    }
+
+    public function getStrCode(): string
+    {
+        return $this->CharCode;
+    }
+
+    public function getNominal(): int
+    {
+        return $this->Nominal;
     }
 
     public function toArray($withEmptyValues = false): array

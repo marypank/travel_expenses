@@ -12,9 +12,10 @@ class TripExpenseRepository extends BaseRepository
         return new TripExpense();
     }
 
-    public function search(int $detailId, ?int $source = null, ?int $parentId = null, ?string $payDate = null): Collection
+    public function search(int $detailId, ?bool $withChildren = false, ?int $source = null, ?int $parentId = null, ?string $payDate = null): Collection
     {
-        $tripExpenses = TripExpense::with('children')->where('trip_detail_id', $detailId);
+        $tripExpenses = $withChildren ? $this->model() : $this->model(); // todo: not working withoutEagerLoads, without, etc
+        $tripExpenses = $tripExpenses->where('trip_detail_id', $detailId);
 
         if ($source) {
             //

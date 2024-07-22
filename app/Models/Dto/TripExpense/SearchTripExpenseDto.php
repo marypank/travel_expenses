@@ -6,16 +6,24 @@ use App\Models\Dto\Base\BaseDto;
 
 class SearchTripExpenseDto extends TripExpenseDtoBase
 {
+    private bool $withChildren = false;
+
     public function __construct(
         int $tripDetailId,
         ?int $source = null,
         ?string $payDate = null,
-        ?int $parentId = null)
+        ?int $parentId = null,
+        ?bool $withChildren = false)
     {
         $this->tripDetailId = $tripDetailId;
         $this->source = $source;
         $this->payDate = $payDate;
         $this->parentId = $parentId;
+    }
+    
+    public function getWithChildren(): bool
+    {
+        return $this->withChildren;
     }
 
     function defineFields(): array

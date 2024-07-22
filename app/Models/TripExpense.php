@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TripExpense extends Model
 {
+    // todo: private ExpenseCurrency $currency;
+
     /** @var string $table */
     protected $table = 'trip_expenses';
 
@@ -38,7 +40,6 @@ class TripExpense extends Model
         'price' => 'decimal:2',
     ];
 
-    // todo: check if its correct later
     public function parent(): HasOne
     {
         return $this->hasOne(TripExpense::class, 'id', 'parent_id');
@@ -53,4 +54,17 @@ class TripExpense extends Model
     {
         return $this->belongsTo(TripDetail::class);
     }
+
+    // todo
+    /* public function setCurrency(ExpenseCurrency $expenseCurrecy): self
+    {
+        $this->currency = $expenseCurrecy;
+
+        return $this;
+    }
+
+    public function getCurrency(): ExpenseCurrency
+    {
+        return $this->currency;
+    } */
 }
