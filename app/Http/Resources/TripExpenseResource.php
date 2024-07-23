@@ -13,15 +13,15 @@ class TripExpenseResource extends JsonResource
         return [
             'id' => $this->id,
             'tripDetailId' => $this->trip_detail_id,
-            // todo: 'currency' => $this->currency->toArray(),
-            'source' => $this->source, // todo: string enum needed
+            'currency' => $this->currency->toArray(),
+            'sourceType' => $this->sourceType,
             'title' => $this->title,
             'description' => $this->description,
             'parentId' => $this->parent_id,
-            // 'parent' => new self($this->parent), // todo  read ECONNRESET
+            // ??? 'parent' => new self($this->parent), // todo  read ECONNRESET
             'payDate' => $this->pay_date,
             'image' => $this->image,
-            'children' => $this->children ? self::collection($this->children) : null,
+            'children' => $this->withChildren ? self::collection($this->children) : null, // todo: не работает нифига загрузка без релейшнв
         ];
     }
 }

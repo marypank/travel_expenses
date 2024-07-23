@@ -43,6 +43,7 @@ class ExpenseCurrency extends BaseDto
 
     private static function calculatePrice(int $nominal, float $currentRate, float $price): float
     {
+        // todo: не работает, если номинал не 1
         return $nominal * $currentRate * $price;
     }
 

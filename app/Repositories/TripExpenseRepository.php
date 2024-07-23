@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\TripExpense;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class TripExpenseRepository extends BaseRepository
 {
@@ -15,7 +16,8 @@ class TripExpenseRepository extends BaseRepository
 
     public function search(int $detailId, ?bool $withChildren = false, ?int $source = null, ?int $parentId = null, ?string $payDate = null): Collection
     {
-        $tripExpenses = $withChildren ? $this->model() : $this->model(); // todo: not working withoutEagerLoads, without, etc
+        // todo: not working withoutEagerLoads, without, etc. ASK OPINION
+        $tripExpenses = $withChildren ? $this->model()->with('children') : $this->model();
         $tripExpenses = $tripExpenses->where('trip_detail_id', $detailId);
 
         if ($source) {
