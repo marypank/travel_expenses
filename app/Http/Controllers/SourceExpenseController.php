@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\SourceExpenseService;
+use App\Http\Services\Enum\SourceExpenseService;
 
 class SourceExpenseController extends Controller
 {

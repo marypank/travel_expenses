@@ -8,9 +8,17 @@ enum TripStatusEnum: int
 
     case IN_PROGRESS = 1;
 
-    case TRASH = 2;
+    case FINISHED = 2;
 
     case CANCEL = 3;
 
-    case ARCHIVE = 4; // todo: ???
+    // case ARCHIVE = 4;
+
+    public const RUS_NAMES = [
+        self::AWAIT->value => 'Новый',
+        self::IN_PROGRESS->value => 'В процессе',
+        self::FINISHED->value => 'Завершен',
+        self::CANCEL->value => 'Отменен',
+        // self::ARCHIVE->value => 'Архив',
+    ];
 }
