@@ -37,14 +37,13 @@ class ExpenseCurrency extends BaseDto
             $currentRate,
             $currencyDto->getStrCode(),
             $price,
-            self::calculatePrice($currencyDto->getNominal(), $currentRate, $price)
+            self::calculatePrice($currentRate, $price)
         );
     }
 
-    private static function calculatePrice(int $nominal, float $currentRate, float $price): float
+    private static function calculatePrice(float $currentRate, float $price): float
     {
-        // todo: не работает, если номинал не 1
-        return $nominal * $currentRate * $price;
+        return $currentRate * $price;
     }
 
     public function toArray($withEmptyValues = false): array
