@@ -29,6 +29,7 @@ class TripExpenseController extends Controller
         return TripExpenseResource::collection($result);
     }
 
+    // todo: refactor
     public function store(StoreTripExpenseRequest $request)
     {
         // todo: обработка эксепшона, мол, поле не найдено или пустое? и отправка на фронт
@@ -47,12 +48,14 @@ class TripExpenseController extends Controller
         return response()->noContent(Response::HTTP_CREATED);
     }
 
+    // todo: refactor
     public function show(TripExpense $tripExpense)
     {
         // todo: request, with relation or without
         return new TripExpenseResource($tripExpense);
     }
 
+    // todo: refactor
     public function update(UpdateTripExpenseRequest $request, TripExpense $tripExpense)
     {
         $dto = new TripExpenseDto($request->all());
