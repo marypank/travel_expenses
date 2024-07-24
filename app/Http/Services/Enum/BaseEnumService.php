@@ -6,6 +6,7 @@ abstract class BaseEnumService implements DefaultEnumServiceInterface
 {
     // todo: мне это не нравится
     protected abstract static function enumClass();
+    public abstract function getDefault(): array;
 
     public function all(): array
     {
@@ -21,7 +22,7 @@ abstract class BaseEnumService implements DefaultEnumServiceInterface
     {
         $item = static::enumClass()::tryFrom($id);
         if (!$item) {
-            return [];
+            return $this->getDefault();
         }
 
         return $this->getItem($item);

@@ -10,16 +10,13 @@ use App\Http\Services\TripExpenseService;
 use App\Models\Dto\TripExpense\SearchTripExpenseDto;
 use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\TripExpense;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripExpenseController extends Controller
 {
-    private TripExpenseService $tripExpenseService;
-
-    public function __construct(TripExpenseService $tripExpenseService)
-    {
-        $this->tripExpenseService = $tripExpenseService;
-    }
+    public function __construct(private TripExpenseService $tripExpenseService)
+    {}
 
     public function index(SearchTripExpenseRequest $request)
     {
@@ -48,10 +45,10 @@ class TripExpenseController extends Controller
         return response()->noContent(Response::HTTP_CREATED);
     }
 
-    // todo: refactor
-    public function show(TripExpense $tripExpense)
+    public function show(TripExpense $tripExpense, Request $request)
     {
-        // todo: request, with relation or without
+        $this->tripExpenseService->modfifyForShow($tripExpense, (bool)$request->input('withChildren'));
+
         return new TripExpenseResource($tripExpense);
     }
 

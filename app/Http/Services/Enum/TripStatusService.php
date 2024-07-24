@@ -10,4 +10,9 @@ class TripStatusService extends BaseEnumService
     {
         return TripStatusEnum::class;
     }
+
+    public function getDefault(): array
+    {
+        return [];
+    }
 }

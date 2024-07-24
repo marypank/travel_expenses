@@ -6,7 +6,6 @@ use App\Http\Services\Api\CurrencyService;
 use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\AdditionalModel\ExpenseCurrency;
 use App\Models\Dto\TripExpense\SearchTripExpenseDto;
-use App\Models\Enum\SourceExpenseEnum;
 use App\Models\TripExpense;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,17 +27,36 @@ class TripExpenseService extends BaseService
         $tripExpenses = $this->mainRepository->search($dto->getTripDetailId(), $dto->getWithChildren());
 
         $tripExpenses = $tripExpenses->each(function (TripExpense $tripExpense) use ($dto) {
-            $valute = $this->currencyService->getById($tripExpense->currency_id);
-
-            $tripExpense->currency = ExpenseCurrency::getCurrent($valute, $tripExpense->current_currency_exchange, $tripExpense->price);
-
-            $tripExpense->withChildren = $dto->getWithChildren();
-
-            $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName']
-                ?? $this->sourceExpenseService->getDefault()['rusName'];
+            $this->setUpTripExpense($tripExpense, $dto->getWithChildren());
         });
 
         return $tripExpenses->filter(fn(TripExpense $val) => is_null($val->parent_id));
+    }
+
+    public function modfifyForShow(TripExpense $tripExpense, bool $withChildren): TripExpense
+    {
+        // todo: если есть реальные дочерние элементы, currency = null, так что надо сделать запрос with('children')
+        // а потом пройтись $tripExpenses->each у дочерних и вызвать setUpTripExpense, мне кажется, это долго
+        // $this->mainRepository->getChildren($tripExpense);
+
+        $this->setUpTripExpense($tripExpense, $withChildren);
+
+        if ($withChildren) {
+            // $tripExpense->with('children');
+        }
+
+        return $tripExpense;
+    }
+
+    private function setUpTripExpense(TripExpense $tripExpense, bool $withChildren): void
+    {
+        $valute = $this->currencyService->getById($tripExpense->currency_id);
+        
+        $tripExpense->currency = ExpenseCurrency::getCurrent($valute, $tripExpense->current_currency_exchange, $tripExpense->price);
+
+        $tripExpense->withChildren = $withChildren;
+        
+        $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName'];
     }
 
 }
