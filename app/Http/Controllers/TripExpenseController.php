@@ -9,6 +9,7 @@ use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
 use App\Models\Dto\TripExpense\SearchTripExpenseDto;
 use App\Models\Dto\TripExpense\TripExpenseDto;
+use App\Models\Dto\TripExpense\UpdateTripExpenseDto;
 use App\Models\TripExpense;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,13 +53,11 @@ class TripExpenseController extends Controller
         return new TripExpenseResource($tripExpense);
     }
 
-    // todo: refactor
     public function update(UpdateTripExpenseRequest $request, TripExpense $tripExpense)
     {
-        $dto = new TripExpenseDto($request->all());
+        $dto = new UpdateTripExpenseDto($tripExpense->id, ...$request->all());
 
-        $dto->setId($tripExpense->id);
-        $trip = $this->tripExpenseService->update($dto);
+        $trip = $this->tripExpenseService->updateExpense($dto, $tripExpense->parent);
 
         return new TripExpenseResource($trip);
     }

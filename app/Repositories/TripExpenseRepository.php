@@ -30,7 +30,7 @@ class TripExpenseRepository extends BaseRepository
             //
         }
 
-        return $tripExpenses->orderBy('created_at','desc')->get();
+        return $tripExpenses->orderBy('pay_date','desc')->get();
     }
     
 }

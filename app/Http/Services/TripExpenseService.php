@@ -6,9 +6,13 @@ use App\Http\Services\Api\CurrencyService;
 use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\AdditionalModel\ExpenseCurrency;
 use App\Models\Dto\TripExpense\SearchTripExpenseDto;
+use App\Models\Dto\TripExpense\TripExpenseDto;
+use App\Models\Dto\TripExpense\UpdateTripExpenseDto;
+use App\Models\Enum\SourceExpenseEnum;
 use App\Models\TripExpense;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class TripExpenseService extends BaseService
 {
@@ -54,6 +58,38 @@ class TripExpenseService extends BaseService
         $tripExpense->withChildren = $withChildren;
         
         $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName'];
+    }
+
+    // todo: update is not compatible, so rewtire SMTH
+    public function updateExpense(UpdateTripExpenseDto $dto, TripExpense $parentExpense = null): TripExpenseDto
+    {
+        // todo: проверить если есть pay date и родитель или новый родитель
+        var_dump(214214);
+        exit();
+        // todo: проверка, что у этого parentId тот же tripDetailid, что и у этого
+        // А еще чтобы дата родительского была равна измененной
+        if ($dto->getParentId()) {
+            $parent = $this->mainRepository->findById($dto->getParentId());
+            
+
+            // if ($dto->getPayDate()) {
+                //
+            //}
+        }
+        if ($dto->getPayDate()) {
+            //
+        }
+
+        exit();
+        // return $this->mainRepository->update($dto->getId(), $dto->toArray());
+    }
+
+    // todo: in source service
+    private function checkSourceOrThrowError(int $source)
+    {
+        if (!in_array($source, array_column(SourceExpenseEnum::cases(), 'value'))) {
+            throw new \Exception('source not defined'); // todo: custom
+        }
     }
 
 }

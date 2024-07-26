@@ -81,6 +81,7 @@ class TripDetailService extends BaseService
         }
     }
 
+    // todo: in status service
     private function checkStatusOrThrowError(int $status)
     {
         if (!in_array($status, array_column(TripStatusEnum::cases(), 'value'))) {

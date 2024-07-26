@@ -16,7 +16,7 @@ abstract class TripExpenseDtoBase extends BaseDto
 
     protected ?int $source = null;
 
-    protected ?string $currencyId = null;
+    protected ?int $currencyId = null;
 
     protected ?int $currentCurrencyExchange = null;
 
