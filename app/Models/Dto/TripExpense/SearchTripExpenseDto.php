@@ -19,6 +19,7 @@ class SearchTripExpenseDto extends TripExpenseDtoBase
         $this->source = $source;
         $this->payDate = $payDate;
         $this->parentId = $parentId;
+        $this->withChildren = $withChildren;
     }
     
     public function getWithChildren(): bool
