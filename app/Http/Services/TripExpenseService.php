@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TripExpenseService extends BaseService
 {
-
     public function __construct(
         TripExpenseRepository $tripDetailRepository,
         private CurrencyService $currencyService,
@@ -35,14 +34,12 @@ class TripExpenseService extends BaseService
 
     public function modfifyForShow(TripExpense $tripExpense, bool $withChildren): TripExpense
     {
-        // todo: если есть реальные дочерние элементы, currency = null, так что надо сделать запрос with('children')
-        // а потом пройтись $tripExpenses->each у дочерних и вызвать setUpTripExpense, мне кажется, это долго
-        // $this->mainRepository->getChildren($tripExpense);
-
         $this->setUpTripExpense($tripExpense, $withChildren);
 
         if ($withChildren) {
-            // $tripExpense->with('children');
+            $tripExpense->children->each(function (TripExpense $te) use ($withChildren) {
+                $this->setUpTripExpense($te, $withChildren);
+            });
         }
 
         return $tripExpense;
