@@ -57,7 +57,7 @@ class TripExpenseController extends Controller
     {
         $dto = new UpdateTripExpenseDto($tripExpense->id, ...$request->all());
 
-        $trip = $this->tripExpenseService->updateExpense($dto, $tripExpense->parent);
+        $trip = $this->tripExpenseService->updateExpense($tripExpense, $dto);
 
         return new TripExpenseResource($trip);
     }

@@ -60,8 +60,11 @@ class TripExpenseService extends BaseService
         $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName'];
     }
 
-    // todo: update is not compatible, so rewtire SMTH
-    public function updateExpense(UpdateTripExpenseDto $dto, TripExpense $parentExpense = null): TripExpenseDto
+    // Также если у parent трипа оплата наличкой, нельзя в дочернем указать картой
+    // Дата может быть раньше, но не позже окончания трипа
+
+    // todo: update is not compatible, so rewtire (todo in notion about separation interfaces and base classes)
+    public function updateExpense(TripExpense $tripExpense, UpdateTripExpenseDto $dto): TripExpenseDto
     {
         // todo: проверить если есть pay date и родитель или новый родитель
         var_dump(214214);
@@ -70,6 +73,8 @@ class TripExpenseService extends BaseService
         // А еще чтобы дата родительского была равна измененной
         if ($dto->getParentId()) {
             $parent = $this->mainRepository->findById($dto->getParentId());
+
+            // $parent->trip_detail_id
             
 
             // if ($dto->getPayDate()) {
@@ -90,6 +95,11 @@ class TripExpenseService extends BaseService
         if (!in_array($source, array_column(SourceExpenseEnum::cases(), 'value'))) {
             throw new \Exception('source not defined'); // todo: custom
         }
+    }
+
+    private function checkDate()
+    {
+        //
     }
 
 }
