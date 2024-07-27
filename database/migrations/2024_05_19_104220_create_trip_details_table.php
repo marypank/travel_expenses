@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('trip_id');
             $table->foreign('trip_id')->references('id')->on('trips')->cascadeOnDelete();
-            $table->date('date_to');
             $table->date('date_from');
+            $table->date('date_to');
 
             $table->unsignedBigInteger('country_id'); // api
             $table->unsignedBigInteger('city_id'); // api
