@@ -12,7 +12,7 @@ use App\Models\Enum\SourceExpenseEnum;
 use App\Models\TripExpense;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class TripExpenseService extends BaseService
 {
@@ -60,46 +60,40 @@ class TripExpenseService extends BaseService
         $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName'];
     }
 
-    // Также если у parent трипа оплата наличкой, нельзя в дочернем указать картой
-    // Дата может быть раньше, но не позже окончания трипа
-
     // todo: update is not compatible, so rewtire (todo in notion about separation interfaces and base classes)
     public function updateExpense(TripExpense $tripExpense, UpdateTripExpenseDto $dto): TripExpenseDto
     {
-        // todo: проверить если есть pay date и родитель или новый родитель
-        var_dump(214214);
-        exit();
-        // todo: проверка, что у этого parentId тот же tripDetailid, что и у этого
-        // А еще чтобы дата родительского была равна измененной
+        $parent = $tripExpense->parent;
         if ($dto->getParentId()) {
             $parent = $this->mainRepository->findById($dto->getParentId());
-
-            // $parent->trip_detail_id
             
-
-            // if ($dto->getPayDate()) {
-                //
-            //}
-        }
-        if ($dto->getPayDate()) {
-            //
+            if ($parent->trip_detail_id !== $tripExpense->trip_detail_id) {
+                throw new \Exception('trip must be the same'); // todo: custom
+            }
         }
 
-        exit();
-        // return $this->mainRepository->update($dto->getId(), $dto->toArray());
+        if (!is_null($dto->getSource()) && $parent && $dto->getSource() !== $parent->source->value) {
+            throw new \Exception('child source doesnt match parent source'); // todo: custom
+        }
+
+        if ($dto->getPayDate() && $parent && $this->checkDateParentMismatch($dto->getPayDate(), $parent->pay_date)) {
+            throw new \Exception('pay date should be like parent date'); // todo: custom
+        }
+
+        return $this->mainRepository->update($dto->getId(), $dto->toArray());
     }
 
     // todo: in source service
     private function checkSourceOrThrowError(int $source)
     {
         if (!in_array($source, array_column(SourceExpenseEnum::cases(), 'value'))) {
-            throw new \Exception('source not defined'); // todo: custom
+            // throw new \Exception('source not defined'); // todo: custom
         }
     }
 
-    private function checkDate()
+    private function checkDateParentMismatch(string $date, Carbon $parentDate): bool
     {
-        //
+        return Carbon::parse($date) > $parentDate || Carbon::parse($date) < $parentDate;
     }
 
 }
