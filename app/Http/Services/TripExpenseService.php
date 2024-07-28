@@ -25,6 +25,20 @@ class TripExpenseService extends BaseService
         parent::__construct($tripDetailRepository);
     }
 
+    // todo: update is not compatible, so rewtire (todo in notion about separation interfaces and base classes)
+    public function createExpense(TripExpenseDto $dto): void
+    {
+        try {
+            $model = $this->mainRepository->create($dto->toArray());
+
+            if (!$model) {
+                throw new \Exception("not created");
+            }
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
+    }
+
     public function search(SearchTripExpenseDto $dto): Collection
     {
         $tripExpenses = $this->mainRepository->search($dto->getTripDetailId(), $dto->getWithChildren());

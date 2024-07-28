@@ -19,14 +19,13 @@ class StoreTripExpenseRequest extends FormRequest
         return [
             'tripDetailId' => ['required', 'numeric'],
             'currencyId' => ['required', 'numeric'],
-            'current' => ['required'], // todo: add decimal rule, error "decimal:2" - The price field must have 2 decimal places
+            'current' => ['required', 'decimal:2'],
             'source' => [Rule::enum(SourceExpenseEnum::class)],
             'title' => ['required', 'string'],
             'description' => ['string', 'nullable'],
             'parentId' => ['exists:trip_expenses,id', 'nullable'],
             'payDate' => ['required', 'date'],
-            'image' => ['string'],
-            'price' => ['required'], // todo: add decimal rule
+            'price' => ['required', 'decimal:2'],
      ];
     }
 }

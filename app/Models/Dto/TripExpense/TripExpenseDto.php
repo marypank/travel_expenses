@@ -2,63 +2,33 @@
 
 namespace App\Models\Dto\TripExpense;
 
-use App\Models\Dto\Base\BaseDto;
-
-class TripExpenseDto extends BaseDto
+class TripExpenseDto extends TripExpenseDtoBase
 {
-    protected ?int $id = null;
-
-    protected ?int $tripDetailId;
-
-    protected ?string $title;
-
-    protected ?string $description;
-
-    protected int $source;
-
-    protected ?string $currencyId;
-
-    protected ?int $currentCurrencyExchange;
-
-    protected ?int $parentId;
-
-    protected ?string $payDate;
-
-    protected ?string $image;
-
-    protected ?float $price;
-
-    public function __construct(array $params)
+    public function __construct(
+        int $tripDetailId,
+        int $currencyId,
+        float $current,
+        int $source,
+        string $title,
+        string $payDate,
+        float $price,
+        ?int $parentId = null,
+        ?string $description = null)
     {
-        $this->id = $params['id'] ?? null;
-        $this->tripDetailId = $params['tripDetailId'] ?? null;
-        $this->source = $params['source'] ?? null;
-        $this->currencyId = $params['currencyId'] ?? null;
-        $this->currentCurrencyExchange = $params['current'] ?? null;
-        $this->title = $params['title'] ?? null;
-        $this->description = $params['description'] ?? null;
-        $this->parentId = $params['parentId'] ?? null;
-        $this->payDate = $params['payDate'] ?? null;
-        $this->image = $params['image'] ?? null;
-        $this->price = $params['price'] ?? null;
+        $this->tripDetailId = $tripDetailId;
+        $this->source = $source;
+        $this->currencyId = $currencyId;
+        $this->currentCurrencyExchange = $current;
+        $this->title = $title;
+        $this->description = $description;
+        $this->parentId = $parentId;
+        $this->payDate = $payDate;
+        $this->price = $price;
     }
 
-    public function setId(int $id): self
+    function defineFields(): array
     {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function toArray($withEmptyValues = false): array
-    {
-        $data = [
-            // 'id' => $this->id,
+        return [
             'trip_detail_id' => $this->tripDetailId,
             'source' => $this->source,
             'currency_id' => $this->currencyId,
@@ -68,9 +38,6 @@ class TripExpenseDto extends BaseDto
             'parent_id' => $this->parentId,
             'pay_date' => $this->payDate,
             'price' => $this->price,
-            'image' => $this->image,
         ];
-
-        return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     }
 }

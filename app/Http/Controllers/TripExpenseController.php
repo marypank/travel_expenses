@@ -27,15 +27,12 @@ class TripExpenseController extends Controller
         return TripExpenseResource::collection($result);
     }
 
-    // todo: refactor
     public function store(StoreTripExpenseRequest $request)
     {
-        // todo: обработка эксепшона, мол, поле не найдено или пустое? и отправка на фронт
-        $dto = new TripExpenseDto($request->all());
+        $dto = new TripExpenseDto(...$request->all());
 
         try {
-            // todo: проверок никаких нифига ет
-            $this->tripExpenseService->create($dto);
+            $this->tripExpenseService->createExpense($dto);
         } catch (\Exception $ex) {
             return response()->json([
                 'data' => [],
