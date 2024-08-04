@@ -4,9 +4,9 @@ namespace App\Http\Services\Enum;
 
 use App\Models\Enum\TripStatusEnum;
 
-class TripStatusService extends BaseEnumService
+class TripStatusService
 {
-    protected static function enumClass()
+    /* protected static function enumClass()
     {
         return TripStatusEnum::class;
     }
@@ -14,5 +14,15 @@ class TripStatusService extends BaseEnumService
     public function getDefault(): array
     {
         return [];
+    } */
+
+    public function getByValue(int $value): TripStatusEnum
+    {
+        return TripStatusEnum::tryFrom($value);
+    }
+
+    public function getDefault(): TripStatusEnum
+    {
+        return TripStatusEnum::AWAIT;
     }
 }

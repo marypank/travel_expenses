@@ -10,22 +10,24 @@ abstract class BaseEnumService implements DefaultEnumServiceInterface
 
     public function all(): array
     {
-        $result = [];
+        return [];
+        /* $result = [];
         foreach (static::enumClass()::cases() as $item) {
             $result[] = $this->getItem($item);
         }
 
-        return $result;
+        return $result; */
     }
 
     public function getById(int $id): array
     {
-        $item = static::enumClass()::tryFrom($id);
+        return [];
+        /* $item = static::enumClass()::tryFrom($id);
         if (!$item) {
             return $this->getDefault();
         }
 
-        return $this->getItem($item);
+        return $this->getItem($item); */
     }
 
     protected function getItem($item): array

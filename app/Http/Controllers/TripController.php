@@ -28,6 +28,7 @@ class TripController extends Controller
     // должно получится, что отдаем массив или коллекцию или модель,
     // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
 
+    // todo: remake
     public function index(SearchTripRequest $request)
     {
         $dto = new SearchTripDto(...$request->all());
@@ -37,9 +38,10 @@ class TripController extends Controller
         return TripResource::collection($trips);
     }
 
+    // todo: remake
     public function store(StoreTripRequest $request)
     {
-        $dto = new TripDto($request->all());
+        $dto = new TripDto(...$request->all());
 
         try {
             $this->tripService->create($dto);
@@ -53,13 +55,14 @@ class TripController extends Controller
         return response()->noContent(Response::HTTP_CREATED);
     }
 
+    // todo: remake
     public function show(Trip $trip)
     {
         // todo: think how i can get dependency injection here and to catch NotFoundHttpException before middleware??
-
         return new TripResource($trip);
     }
 
+    // todo: remake
     public function showBySlug(SlugTripRequest $request)
     {
         $trip = $this->tripService->findBySlug($request->slug);
@@ -67,6 +70,7 @@ class TripController extends Controller
         return new TripResource($trip);
     }
 
+    // todo: remake
     public function update(UpdateTripRequest $request, Trip $trip)
     {
         $dto = new UpdateTripDto($request->all());
@@ -77,6 +81,7 @@ class TripController extends Controller
         return new TripResource($trip);
     }
 
+    // todo: remake
     public function destroy(Trip $trip)
     {
         $this->tripService->delete($trip->id);

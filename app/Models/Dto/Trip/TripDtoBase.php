@@ -3,6 +3,8 @@
 namespace App\Models\Dto\Trip;
 
 use App\Models\Dto\Base\BaseDto;
+use App\Models\Enum\TripStatusEnum;
+use Carbon\Carbon;
 
 abstract class TripDtoBase extends BaseDto
 {
@@ -10,26 +12,27 @@ abstract class TripDtoBase extends BaseDto
 
     protected ?string $slug;
 
-    protected ?string $dateFrom;
+    protected Carbon $dateFrom;
 
-    protected ?string $dateTo;
+    protected Carbon $dateTo;
 
     protected ?int $userId;
 
     protected ?int $id = null;
 
-    protected ?int $status;
+    protected TripStatusEnum $status;
 
-    public function __construct(array $request)
-    {
-        $this->title = $request['title'] ?? null;
+    // todo: не дожно быть конструктора тут
+    // public function __construct(array $request)
+    // {
+        /* $this->title = $request['title'] ?? null;
         $this->slug = $request['slug'] ?? null;
         $this->dateFrom = $request['dateFrom'] ?? null;
         $this->dateTo = $request['dateTo'] ?? null;
         $this->userId = $request['userId'] ?? null;
         $this->id = $request['id'] ?? null;
-        $this->status = $request['status'] ?? null;
-    }
+        $this->status = $request['status'] ?? null; */
+    // }
 
     public function setUserId(int $userId): self
     {
@@ -79,7 +82,7 @@ abstract class TripDtoBase extends BaseDto
         return $this;
     }
 
-    public function getDateFrom(): ?string
+    /* public function getDateFrom(): Carbon
     {
         return $this->dateFrom;
     }
@@ -91,7 +94,7 @@ abstract class TripDtoBase extends BaseDto
         return $this;
     }
 
-    public function getDateTo(): ?string
+    public function getDateTo(): Carbon
     {
         return $this->dateTo;
     }
@@ -103,17 +106,17 @@ abstract class TripDtoBase extends BaseDto
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): TripStatusEnum
     {
         return $this->status;
-    }
+    } */
 
-    public function setStatus(int $status): self
+    /* public function setStatus(int $status): self
     {
         $this->status = $status;
 
         return $this;
-    }
+    } */
 
     /* public function toArray($withEmptyValues = false): array
     {
@@ -137,5 +140,10 @@ abstract class TripDtoBase extends BaseDto
         $data = $this->defineFields();
 
         return $withEmptyValues ? $data : $this->removeEmptyValues($data);
+    }
+
+    protected function toCarbonDate(string $date): Carbon
+    {
+        return Carbon::parse($date);
     }
 }

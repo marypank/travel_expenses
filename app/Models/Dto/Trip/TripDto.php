@@ -2,30 +2,38 @@
 
 namespace App\Models\Dto\Trip;
 
+use App\Http\Services\Enum\TripStatusService;
 
 class TripDto extends TripDtoBase
 {
-    public function __construct(array $request)
+    public function __construct(
+        int $userId,
+        string $title,
+        string $slug,
+        string $dateFrom,
+        string $dateTo,
+        int $status = null)
     {
-        $this->title = $request['title'] ?? null;
-        $this->slug = $request['slug'] ?? null;
-        $this->dateFrom = $request['dateFrom'] ?? null;
-        $this->dateTo = $request['dateTo'] ?? null;
-        $this->userId = $request['userId'] ?? null;
-        $this->id = $request['id'] ?? null;
-        $this->status = $request['status'] ?? null;
+        $this->userId = $userId;
+        $this->title = $title;
+        $this->slug = $slug;
+
+        $this->dateFrom = $this->toCarbonDate($dateFrom);
+        $this->dateTo = $this->toCarbonDate($dateTo);
+
+        $tripStatusService = new TripStatusService();
+        $this->status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
     }
 
     public function defineFields(): array
     {
         return [
-            'id' => $this->getId(),
-            'user_id' => $this->getUserId(),
-            'title' => $this->getTitle(),
-            'slug' => $this->getSlug(),
-            'date_from' => $this->getDateFrom(),
-            'date_to' => $this->getDateTo(),
-            'status' => $this->getStatus(),
+            'user_id' => $this->userId,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'date_from' => $this->dateFrom,
+            'date_to' => $this->dateTo,
+            'status' => $this->status,
         ];
     }
 }
