@@ -2,9 +2,7 @@
 
 namespace App\Models\Dto\Trip;
 
-use App\Models\Dto\Base\BaseDto;
-
-class SearchTripDto extends BaseDto
+class SearchTripDto extends TripDtoBase
 {
     private int $userId;
     private ?int $status = null;
@@ -70,7 +68,7 @@ class SearchTripDto extends BaseDto
         return $this;
     }
 
-    public function toArray($withEmptyValues = false): array
+    public function defineFields(): array
     {
         $data = [
             'user_id' => $this->getUserId(),
@@ -79,6 +77,8 @@ class SearchTripDto extends BaseDto
             'date_to' => $this->getDateTo(),
         ];
 
-        return $withEmptyValues ? $data : $this->removeEmptyValues($data);
+        return [
+            //
+        ];
     }
 }

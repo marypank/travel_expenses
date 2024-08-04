@@ -10,6 +10,7 @@ use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
 use App\Models\Dto\Trip\SearchTripDto;
 use App\Models\Dto\Trip\TripDto;
+use App\Models\Dto\Trip\UpdateTripDto;
 use App\Models\Trip;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,7 +69,7 @@ class TripController extends Controller
 
     public function update(UpdateTripRequest $request, Trip $trip)
     {
-        $dto = new TripDto($request->all());
+        $dto = new UpdateTripDto($request->all());
 
         $dto->setId($trip->id);
         $trip = $this->tripService->update($dto);
