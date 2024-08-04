@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Trip;
 
+use App\Models\Enum\TripStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreTripRequest extends FormRequest
 {
@@ -28,6 +30,7 @@ class StoreTripRequest extends FormRequest
             'slug' => ['required', 'string', 'min:16'],
             'dateFrom' => ['required', 'date'],
             'dateTo' => ['required', 'date', 'after_or_equal:dateFrom'],
+            'status' => [Rule::enum(TripStatusEnum::class)],
         ];
     }
 }
