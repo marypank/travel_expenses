@@ -25,7 +25,7 @@ class TripDto extends TripDtoBase
         $this->status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
     }
 
-    public function defineFields(): array
+    protected function defineFields(): array
     {
         return [
             'user_id' => $this->userId,

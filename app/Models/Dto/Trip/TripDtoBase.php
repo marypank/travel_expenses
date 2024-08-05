@@ -132,18 +132,4 @@ abstract class TripDtoBase extends BaseDto
 
         return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     } */
-
-    protected abstract function defineFields(): array;
-
-    public function toArray($withEmptyValues = false): array
-    {
-        $data = $this->defineFields();
-
-        return $withEmptyValues ? $data : $this->removeEmptyValues($data);
-    }
-
-    protected function toCarbonDate(string $date): Carbon
-    {
-        return Carbon::parse($date);
-    }
 }
