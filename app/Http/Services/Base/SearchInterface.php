@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 interface SearchInterface
 {
-    public function search(): Collection;
+    /**
+     * @param mixed $params
+     * @return Collection
+     */
+    public function search($params): Collection;
 
-    public function getById(): ?Model;
+    /**
+     * @param int $id
+     * @return void
+     */
+    public function getById(int $id): ?Model;
 }

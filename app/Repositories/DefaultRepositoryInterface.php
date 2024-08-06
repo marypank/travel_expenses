@@ -1,18 +1,25 @@
 <?php
 
 namespace App\Repositories;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
 
-interface DefaultRepositoryInterface
+use App\Http\Services\Base\CrudInterface;
+use App\Http\Services\Base\SearchInterface;
+
+interface DefaultRepositoryInterface extends SearchInterface, CrudInterface
 {
-    // public function all(array $params = []): Collection;
-    public function findById(int|string $id): ?Model;
+    // todo: prolly remove
+    /* public function search(array $params = []): Collection;
 
-    public function create(array $data): Model;
+    public function update(int $id, array $data = []): Model; */
 
-    public function delete(int|string $id): void;
+    /* public function search(array $params = null): Collection;
 
-    public function update(int|string $id, array $data);
+    public function getById(int $id = null): ?Model;
+
+    public function create(array $data = null): Model;
+
+    public function delete(int $id = null): void;
+
+    public function update(int $id = null, array $data = null): Model; */  
 
 }
