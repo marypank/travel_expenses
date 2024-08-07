@@ -17,7 +17,12 @@ abstract class BaseService implements DefaultServiceInterface
         $this->mainRepository = $mainRepository;
     }
 
-    public function create(BaseDtoInterface $dto): void
+    /**
+     * @param BaseDtoInterface $dto
+     * @throws \Exception
+     * @return Model
+     */
+    public function create($dto): Model
     {
         // todo: dont like that dates go in strings not like dates
         // todo: custom Exception
@@ -29,14 +34,16 @@ abstract class BaseService implements DefaultServiceInterface
             if (!$model) {
                 throw new \Exception("not created");
             }
+
+            return $model;
         } catch (\Exception $ex) {
             throw new \Exception($ex->getMessage());
         }
     }
 
-    public function findById(int $id): ?Model
+    public function getById(int $id): ?Model
     {
-        $model = $this->mainRepository->findById($id);
+        $model = $this->mainRepository->getById($id);
 
         if (!$model) {
             throw new NotFoundHttpException("RecordNotFound"); // todo: refactor later
@@ -45,15 +52,18 @@ abstract class BaseService implements DefaultServiceInterface
         return $model;
     }
 
-    public function delete(int|string $id): void
+    /**
+     * @param int $id
+     * @param BaseDtoInterface $dto
+     * @return Model
+     */
+    public function update(int $id, $dto): Model
     {
-        $this->mainRepository->delete($id);
+        return $this->mainRepository->update($id, $dto->toArray());
     }
 
-    public function update(BaseDtoInterface $dto): Model
+    public function delete(int $id): void
     {
-        // todo: toArray and checkes
-
-        return $this->mainRepository->update($dto->getId(), $dto->toArray());
+        $this->mainRepository->delete($id);
     }
 }
