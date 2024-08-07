@@ -23,6 +23,7 @@ class CurrencyService
 
     public function all(): Collection
     {
+        // todo: добавить id как ключи, чтобы искать было легче
         // todo: REDIS cache
         // todo: а если ошибка, что?
         // todo: вынести
