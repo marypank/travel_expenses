@@ -14,12 +14,12 @@ class TripRepository extends BaseRepository
 
     public function findBySlug(string $slug): ?Trip
     {
-        return Trip::where('slug', $slug)->first();
+        return $this->model()::where('slug', $slug)->first();
     }
 
     public function search(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
     {
-        $trip = Trip::where('user_id', $userId);
+        $trip = $this->model()::where('user_id', $userId);
 
         if ($status) {
             $trip = $trip->where('status', $status);
@@ -33,4 +33,10 @@ class TripRepository extends BaseRepository
         
         return $trip->orderBy('date_from','desc')->get();
     }
+
+    // todo: попробовать реализовать конструктор типа такого. подумать как можно не реализовать передачу инициализированного объекта
+    /* public function byStatus(Trip $trip, int $status)
+    {
+        return $trip->where('status', $status);
+    } */
 }

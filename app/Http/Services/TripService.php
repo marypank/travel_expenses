@@ -10,11 +10,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TripService extends BaseService
 {
-    public function __construct(TripRepository $tripRepository)
+    public function __construct(TripRepository $mainRepository)
     {
-        parent::__construct($tripRepository);
+        parent::__construct($mainRepository);
     }
 
+    /**
+     * @param string $slug
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return Trip|null
+     */
     public function findBySlug(string $slug): ?Trip
     {
         $trip = $this->mainRepository->findBySlug($slug);
@@ -26,7 +31,11 @@ class TripService extends BaseService
         return $trip;
     }
 
-    public function search(SearchTripDto $dto): Collection
+    /**
+     * @param SearchTripDto $dto
+     * @return Collection
+     */
+    public function search($dto): Collection
     {
         $dto->setUserId(auth()->user()->id);
 
