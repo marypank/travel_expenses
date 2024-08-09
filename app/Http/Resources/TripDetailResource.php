@@ -20,7 +20,7 @@ class TripDetailResource extends JsonResource
             'expensesCount' => $this->expenses_count,
             'dateFrom' => $this->date_from,
             'dateTo' => $this->date_to,
-            'country' => [
+            'country' => [ // todo: вынести в отдельный ресурс
                 'id' => $this->country_id,
                 'name' => '',
                 'city' => [

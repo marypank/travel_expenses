@@ -19,6 +19,7 @@ class TripResource extends JsonResource
             'userId' => $this->user_id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'tripsCount' => count($this->details),
             'dateFrom' => $this->date_from,
             'dateTo' => $this->date_to,
             'status' => $this->status,

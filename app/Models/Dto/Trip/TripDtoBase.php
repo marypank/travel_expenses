@@ -8,6 +8,10 @@ use Carbon\Carbon;
 
 abstract class TripDtoBase extends BaseDto
 {
+    protected int $id;
+
+    protected int $userId;
+    
     protected ?string $title;
 
     protected ?string $slug;
@@ -15,10 +19,6 @@ abstract class TripDtoBase extends BaseDto
     protected Carbon $dateFrom;
 
     protected Carbon $dateTo;
-
-    protected ?int $userId;
-
-    protected ?int $id = null;
 
     protected TripStatusEnum $status;
 
@@ -46,7 +46,7 @@ abstract class TripDtoBase extends BaseDto
         return $this->userId;
     }
 
-    public function setId(int $id): self
+    /* public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -56,7 +56,7 @@ abstract class TripDtoBase extends BaseDto
     public function getId(): ?int
     {
         return $this->id;
-    }
+    } */
 
     public function getTitle(): ?string
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Dto\Trip\SearchTripDto;
+use App\Models\Dto\Trip\TripDto;
 use App\Models\Trip;
 use App\Repositories\TripRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +18,7 @@ class TripService extends BaseService
 
     /**
      * @param string $slug
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      * @return Trip|null
      */
     public function findBySlug(string $slug): ?Trip
@@ -39,7 +40,8 @@ class TripService extends BaseService
     {
         $dto->setUserId(auth()->user()->id);
 
-        return $this->mainRepository->search($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
+        return new Collection();
+        // return $this->mainRepository->search($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
     }
 
 }

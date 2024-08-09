@@ -17,9 +17,10 @@ class TripRepository extends BaseRepository
         return $this->model()::where('slug', $slug)->first();
     }
 
-    public function search(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
+    // public function search(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
+    public function search($data): Collection
     {
-        $trip = $this->model()::where('user_id', $userId);
+        /* $trip = $this->model()::where('user_id', $userId);
 
         if ($status) {
             $trip = $trip->where('status', $status);
@@ -31,7 +32,8 @@ class TripRepository extends BaseRepository
             $trip = $trip->where('date_to', '<=', $dateTo);
         }
         
-        return $trip->orderBy('date_from','desc')->get();
+        return $trip->orderBy('date_from','desc')->get(); */
+        return new Collection();
     }
 
     // todo: попробовать реализовать конструктор типа такого. подумать как можно не реализовать передачу инициализированного объекта
