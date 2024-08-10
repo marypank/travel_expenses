@@ -16,9 +16,9 @@ abstract class TripDtoBase extends BaseDto
 
     protected ?string $slug;
 
-    protected Carbon $dateFrom;
+    protected ?Carbon $dateFrom = null;
 
-    protected Carbon $dateTo;
+    protected ?Carbon $dateTo = null;
 
     protected TripStatusEnum $status;
 
@@ -70,7 +70,7 @@ abstract class TripDtoBase extends BaseDto
         return $this;
     } */
 
-    public function getDateFrom(): Carbon
+    public function getDateFrom(): ?Carbon
     {
         return $this->dateFrom;
     }
@@ -82,7 +82,7 @@ abstract class TripDtoBase extends BaseDto
         return $this;
     } */
 
-    public function getDateTo(): Carbon
+    public function getDateTo(): ?Carbon
     {
         return $this->dateTo;
     }
