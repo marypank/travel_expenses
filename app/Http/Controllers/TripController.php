@@ -23,6 +23,8 @@ class TripController extends Controller
     {
         $this->tripService = $tripService;
     }
+    // todo: надо вызывать не all, а validated, также можно сделать метод у них getDto()
+    // создание dto можно перенести в фабрику
 
     // todo: make middleware return json or baseController about json return
     // должно получится, что отдаем массив или коллекцию или модель,
