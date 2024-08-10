@@ -25,6 +25,7 @@ class TripController extends Controller
     }
     // todo: надо вызывать не all, а validated, также можно сделать метод у них getDto()
     // создание dto можно перенести в фабрику
+    // todo: может быть посмотреть можно ли использовать шаблон Адаптер, а не CrudInterface (который я удалила)
 
     // todo: make middleware return json or baseController about json return
     // должно получится, что отдаем массив или коллекцию или модель,
