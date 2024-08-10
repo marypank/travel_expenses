@@ -12,7 +12,7 @@ class CountryController extends Controller
         // ::all()
     }
 
-    public function show(Request $request)
+    public function show(int $id)
     {
         // byId
     }

@@ -22,7 +22,7 @@ abstract class BaseService implements DefaultServiceInterface
      * @throws \Exception
      * @return Model
      */
-    public function create($dto): Model
+    public function create(BaseDtoInterface $dto): Model
     {
         // todo: dont like that dates go in strings not like dates
         // todo: custom Exception
@@ -52,15 +52,14 @@ abstract class BaseService implements DefaultServiceInterface
         return $model;
     }
 
-    // todo: remove at the end
     /**
-     * @param int $id
+     * @param Model $model
      * @param BaseDtoInterface $dto
      * @return Model
      */
-    public function update(int $id, $dto): Model
+    public function update(Model $model, BaseDtoInterface $dto): Model
     {
-        return $this->mainRepository->update($id, $dto->toArray());
+        return $this->mainRepository->update($model->id, $dto->toArray());
     }
 
     public function delete(int $id): void

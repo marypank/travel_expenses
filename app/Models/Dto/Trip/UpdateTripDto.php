@@ -2,6 +2,7 @@
 
 namespace App\Models\Dto\Trip;
 
+use App\Http\Services\Base\DateHelper;
 use App\Http\Services\Enum\TripStatusService;
 
 class UpdateTripDto extends TripDtoBase
@@ -19,9 +20,9 @@ class UpdateTripDto extends TripDtoBase
         $this->slug = $slug;
 
         if ($dateFrom)
-            $this->dateFrom = $this->toCarbonDate($dateFrom);
+            $this->dateFrom = DateHelper::toCarbonDate($dateFrom);
         if ($dateTo)
-            $this->dateTo = $this->toCarbonDate($dateTo);
+            $this->dateTo = DateHelper::toCarbonDate($dateTo);
 
         if ($status) {
             $tripStatusService = new TripStatusService();

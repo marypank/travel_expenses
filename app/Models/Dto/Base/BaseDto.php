@@ -13,12 +13,6 @@ abstract class BaseDto implements BaseDtoInterface
         return array_filter($data, fn($value) => !is_null($value) && $value !== '');
     }
 
-    // todo: maybe trait
-    protected function toCarbonDate(string $date): Carbon
-    {
-        return Carbon::parse($date);
-    }
-
     public function toArray($withEmptyValues = false): array
     {
         $data = $this->defineFields();
