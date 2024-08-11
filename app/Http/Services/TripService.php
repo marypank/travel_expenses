@@ -29,7 +29,7 @@ class TripService extends BaseService
     {
         $trip = $this->mainRepository->findBySlug($slug);
 
-        if (!$trip) { // todo: refactor later
+        if (!$trip) { // todo: custom
             throw new NotFoundHttpException("RecordNotFound");
         }
 

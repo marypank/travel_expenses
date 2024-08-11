@@ -41,7 +41,6 @@ class TripController extends Controller
         return TripResource::collection($trips);
     }
 
-    // remake 2
     public function store(StoreTripRequest $request)
     {
         $dto = TripDto::create(...$request->all());
