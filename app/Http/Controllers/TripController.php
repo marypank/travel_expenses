@@ -44,7 +44,7 @@ class TripController extends Controller
     // remake 2
     public function store(StoreTripRequest $request)
     {
-        $dto = new TripDto(...$request->all());
+        $dto = TripDto::create(...$request->all());
 
         try {
             $this->tripService->create($dto);
