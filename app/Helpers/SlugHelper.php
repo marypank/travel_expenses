@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use Transliterator;
-
 class SlugHelper
 {
     // doesnt need now

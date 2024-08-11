@@ -2,32 +2,48 @@
 
 namespace App\Models\Dto\Trip;
 
-use App\Http\Services\Base\DateHelper;
+use App\Helpers\DateHelper;
 use App\Http\Services\Enum\TripStatusService;
+use App\Models\Enum\TripStatusEnum;
+use Carbon\Carbon;
 
 class UpdateTripDto extends TripDtoBase
 {
-    public function __construct(
+    private function __construct(
+        int $id,
+        ?string $title,
+        ?string $slug,
+        ?TripStatusEnum $status,
+        ?Carbon $dateFrom,
+        ?Carbon $dateTo)
+    {
+        $this->id = $id;
+        $this->title = $title;
+        $this->slug = $slug;
+        $this->dateFrom = $dateFrom;
+        $this->dateTo = $dateTo;
+        $this->status = $status;
+    }
+
+    public static function create(
         int $id,
         string $title = null,
         string $slug = null,
         int $status = null,
         string $dateFrom = null,
-        string $dateTo= null)
+        string $dateTo = null): UpdateTripDto
     {
-        $this->id = $id;
-        $this->title = $title;
-        $this->slug = $slug;
-
+        // todo: Make a wrapper class or adapter or factory to exclude logic from the dto (for dates, statuses, ect)
         if ($dateFrom)
-            $this->dateFrom = DateHelper::toCarbonDate($dateFrom);
+            $dateFrom = DateHelper::toCarbonDate($dateFrom);
         if ($dateTo)
-            $this->dateTo = DateHelper::toCarbonDate($dateTo);
-
-        if ($status) {
+            $dateTo = DateHelper::toCarbonDate($dateTo);
+        if (!is_null($status)) {
             $tripStatusService = new TripStatusService();
-            $this->status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
+            $status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
         }
+
+        return new self($id, $title, $slug, $status, $dateFrom, $dateTo);
     }
 
     protected function defineFields(): array

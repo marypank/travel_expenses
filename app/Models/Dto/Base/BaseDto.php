@@ -19,4 +19,10 @@ abstract class BaseDto implements BaseDtoInterface
 
         return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     }
+
+    /* protected function defineStatusEnum(?int $status)
+    {
+        if (!$status) {}
+
+    } */
 }

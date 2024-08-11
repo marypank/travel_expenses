@@ -41,6 +41,7 @@ class TripController extends Controller
         return TripResource::collection($trips);
     }
 
+    // remake 2
     public function store(StoreTripRequest $request)
     {
         $dto = new TripDto(...$request->all());
@@ -70,10 +71,9 @@ class TripController extends Controller
         return new TripResource($trip);
     }
 
-    // todo: remake 3
     public function update(UpdateTripRequest $request, Trip $trip)
     {
-        $dto = new UpdateTripDto($trip->id, ...$request->all());
+        $dto = UpdateTripDto::create($trip->id, ...$request->all());
 
         $trip = $this->tripService->update($trip, $dto);
 

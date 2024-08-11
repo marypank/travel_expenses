@@ -2,11 +2,12 @@
 
 namespace App\Http\Services;
 
-use App\Http\Services\Base\DateHelper;
+use App\Helpers\DateHelper;
 use App\Models\Dto\Base\BaseDtoInterface;
 use App\Models\Dto\Trip\SearchTripDto;
 use App\Models\Dto\Trip\UpdateTripDto;
 use App\Models\Trip;
+use App\Models\TripDetail;
 use App\Repositories\TripRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -54,16 +55,25 @@ class TripService extends BaseService
      */
     public function update(Model $trip, BaseDtoInterface $dto): Model
     {
-        // todo: compare dates
-        if ($dto->getDateFrom() && !DateHelper::checkDateParentMismatch($dto->getDateFrom(), $trip->date_from)) {
-            var_dump(123);
+        if ($dto->getDateFrom()) {
+            if (DateHelper::isChildDateGreater($dto->getDateFrom(), $trip->date_to)) {
+                throw new \Exception('DateFrom must not be great than DateTo'); // todo: custom
+            }
+            if ($trip->details->where('date_from', '<', $dto->getDateFrom())->count()) {
+                throw new \Exception('DateFrom must be less than child dates'); // todo: custom
+            }
         }
-        if ($dto->getDateTo() && !DateHelper::checkDateParentMismatch($dto->getDateTo(), $trip->date_to)) {
-            var_dump(123);
-        }
-        exit();
+        if ($dto->getDateTo()) {
+            if (DateHelper::isChildDateLess($dto->getDateTo(), $trip->date_from)) {
+                throw new \Exception('DateTo must be greater than DateFrom'); // todo: custom
+            }
 
-        // return $this->mainRepository->update($trip->id, $dto->toArray());
+            if ($trip->details->where('date_to', '>', $dto->getDateTo())->count()) {
+                throw new \Exception('chchchch'); // todo: custom
+            }
+        }
+
+        return $this->mainRepository->update($trip->id, $dto->toArray());
     }
 
 }
