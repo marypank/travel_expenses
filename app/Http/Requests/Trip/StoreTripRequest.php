@@ -26,8 +26,8 @@ class StoreTripRequest extends FormRequest
     {
         return [
             'userId' => ['required', 'numeric', 'exists:users,id'],
-            'title' => ['required', 'string', 'min:16'],
-            'slug' => ['required', 'string', 'min:16'],
+            'title' => ['required', 'string', 'min:8'],
+            'slug' => ['required', 'string', 'min:8'],
             'dateFrom' => ['required', 'date'],
             'dateTo' => ['required', 'date', 'after_or_equal:dateFrom'],
             'status' => [Rule::enum(TripStatusEnum::class)],
