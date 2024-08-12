@@ -7,7 +7,6 @@ use App\Models\Dto\Base\BaseDtoInterface;
 use App\Models\Dto\Trip\SearchTripDto;
 use App\Models\Dto\Trip\UpdateTripDto;
 use App\Models\Trip;
-use App\Models\TripDetail;
 use App\Repositories\TripRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -42,8 +41,6 @@ class TripService extends BaseService
      */
     public function search($dto): Collection
     {
-        $dto->setUserId(auth()->user()->id);
-
         return new Collection();
         // return $this->mainRepository->search($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
     }

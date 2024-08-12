@@ -2,83 +2,52 @@
 
 namespace App\Models\Dto\Trip;
 
+use App\Helpers\DateHelper;
+use App\Http\Services\Enum\TripStatusService;
+use App\Models\Enum\TripStatusEnum;
+use Carbon\Carbon;
+
 class SearchTripDto extends TripDtoBase
 {
-    private int $userId;
-    private ?int $status = null;
-    private ?string $dateFrom = null;
-    private ?string $dateTo = null;
-
+    // unused
     public function __construct(
-        ?int $status = null,
-        ?string $dateFrom = null,
-        ?string $dateTo = null
+        int $userId,
+        ?TripStatusEnum $status,
+        ?Carbon $dateFrom,
+        ?Carbon $dateTo
     )
     {
-        $this->status = $status;
-        $this->dateFrom = $dateFrom;
-        $this->dateTo = $dateTo;
-    }
-
-    public function setUserId(int $userId): self
-    {
         $this->userId = $userId;
-
-        return $this;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function setStatus(?int $status): self
-    {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getStatus(): ?int
-    {
-        return $this->status;
-    }
-
-    public function getDateFrom(): ?string
-    {
-        return $this->dateFrom;
-    }
-
-    public function setDateFrom(?string $dateFrom): self
-    {
         $this->dateFrom = $dateFrom;
-
-        return $this;
-    }
-
-    public function getDateTo(): ?string
-    {
-        return $this->dateTo;
-    }
-
-    public function setDateTo(?string $dateTo): self
-    {
         $this->dateTo = $dateTo;
+    }
 
-        return $this;
+    public static function create(
+        int $userId,
+        int $status = null,
+        string $dateFrom = null,
+        string $dateTo = null): SearchTripDto
+    {
+        if ($dateFrom)
+            $dateFrom = DateHelper::toCarbonDate($dateFrom);
+        if ($dateTo)
+            $dateTo = DateHelper::toCarbonDate($dateTo);
+        if (!is_null($status)) {
+            $tripStatusService = new TripStatusService();
+            $status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
+        }
+
+        return new self($userId, $status, $dateFrom, $dateTo);
     }
 
     public function defineFields(): array
     {
-        $data = [
-            'user_id' => $this->getUserId(),
-            'status'=> $this->getStatus(),
-            'date_from' => $this->getDateFrom(),
-            'date_to' => $this->getDateTo(),
-        ];
-
         return [
-            //
+            'user_id' => $this->userId,
+            'status'=> $this->status,
+            'date_from' => $this->dateFrom,
+            'date_to' => $this->dateTo,
         ];
     }
 }

@@ -14,17 +14,16 @@ class TripResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        var_dump($this->status);
         return [
             'id' => $this->id,
-            'userId' => $this->user_id,
+            // 'userId' => $this->user_id,
             'title' => $this->title,
             'slug' => $this->slug,
             'tripsCount' => count($this->details),
             'dateFrom' => $this->date_from,
             'dateTo' => $this->date_to,
-            'status' => $this->status,
-            // 'created' => $this->created_at,
-            // 'updated' => $this->updated_at,
+            'status' => $this->status, // todo: think if i need tern in into resourse
         ];
     }
 }

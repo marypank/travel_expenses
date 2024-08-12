@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enum\TripStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -25,6 +26,7 @@ class Trip extends Model
     protected $casts = [
         'date_to' => 'date',
         'date_from' => 'date',
+        'status' => TripStatusEnum::class
     ];
 
     public function expenses(): HasManyThrough

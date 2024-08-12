@@ -18,9 +18,9 @@ class SearchTripRequest extends FormRequest
     {
         return [
             // 'userId' => ['required', 'numeric', 'exists:users,id'],
-            'status' => ['numeric', 'nullable', Rule::enum(TripStatusEnum::class)],
-            'dateTo' => ['date', 'nullable', 'after_or_equal:dateFrom'],
-            'dateFrom' => ['date', 'nullable'],
+            'status' => ['numeric', Rule::enum(TripStatusEnum::class)],
+            'dateTo' => ['date', 'after_or_equal:dateFrom'],
+            'dateFrom' => ['date'],
         ];
     }
 }

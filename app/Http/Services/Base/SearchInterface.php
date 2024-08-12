@@ -18,4 +18,10 @@ interface SearchInterface
      * @return void
      */
     public function getById(int $id): ?Model;
+
+    /**
+     * @param int $id
+     * @return Collection
+     */
+    public function all(int $id): Collection;
 }

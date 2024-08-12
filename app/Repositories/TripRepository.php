@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TripRepository extends BaseRepository
 {
+    // todo: try Trip::class
     public function model()
     {
         return new Trip();
@@ -15,6 +16,14 @@ class TripRepository extends BaseRepository
     public function findBySlug(string $slug): ?Trip
     {
         return $this->model()::where('slug', $slug)->first();
+    }
+
+    public function all(int $id): Collection
+    {
+        return $this->model()
+            ->where('user_id', $id)
+            ->orderBy('date_from')
+            ->get();
     }
 
     // public function search(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection

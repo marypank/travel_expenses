@@ -23,27 +23,21 @@ class TripController extends Controller
     {
         $this->tripService = $tripService;
     }
-    // todo: надо вызывать не all, а validated, также можно сделать метод у них getDto()
-    // создание dto можно перенести в фабрику
-    // todo: может быть посмотреть можно ли использовать шаблон Адаптер, а не CrudInterface (который я удалила)
 
     // todo: make middleware return json or baseController about json return
     // должно получится, что отдаем массив или коллекцию или модель,
     // а middleware в зависимости от того модель это или коллекция оборачивает это в соотвествующий ресурс??
 
-    // todo: remake 4
-    public function index(SearchTripRequest $request)
-    {
-        $dto = new SearchTripDto(...$request->all());
-        
-        $trips = $this->tripService->search($dto);
+    public function index()
+    {   
+        $trips = $this->tripService->all(auth()->user()->id);
 
         return TripResource::collection($trips);
     }
 
     public function store(StoreTripRequest $request)
     {
-        $dto = TripDto::create(...$request->all());
+        $dto = TripDto::create(...$request->validated());
 
         try {
             $this->tripService->create($dto);
@@ -72,7 +66,7 @@ class TripController extends Controller
 
     public function update(UpdateTripRequest $request, Trip $trip)
     {
-        $dto = UpdateTripDto::create($trip->id, ...$request->all());
+        $dto = UpdateTripDto::create($trip->id, ...$request->validated());
 
         $trip = $this->tripService->update($trip, $dto);
 

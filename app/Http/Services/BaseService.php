@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Dto\Base\BaseDtoInterface;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -53,6 +54,15 @@ abstract class BaseService implements DefaultServiceInterface
     }
 
     /**
+     * @param int $id
+     * @return Collection
+     */
+    public function all(int $id): Collection
+    {
+        return $this->mainRepository->all($id);
+    }
+
+    /**
      * @param Model $model
      * @param BaseDtoInterface $dto
      * @return Model
@@ -62,6 +72,10 @@ abstract class BaseService implements DefaultServiceInterface
         return $this->mainRepository->update($model->id, $dto->toArray());
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function delete(int $id): void
     {
         $this->mainRepository->delete($id);
