@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Helpers\DateHelper;
 use App\Models\Dto\TripDetail\SearchTripDetailDto;
 use App\Models\Enum\TripStatusEnum;
 use App\Repositories\TripDetailRepository;
@@ -27,7 +28,10 @@ class TripDetailService extends BaseService
      */
     public function create(BaseDtoInterface $dto): Model
     {
-        $this->checkDatesOfParentTripOrThrowError($dto->getDateFrom(), $dto->getDateTo(), $dto->getTripId());
+        if ($this->isDatesMismatch($dto->getDateFrom(), $dto->getDateTo(), $dto->getTripId())) {
+            throw new \Exception("Parent and child dates doesnt match"); // todo: custom
+        }
+        // todo: Статусы синхронизировать с родительским трипом, но потом
 
         try {
             $model = $this->mainRepository->create($dto->toArray());
@@ -86,13 +90,15 @@ class TripDetailService extends BaseService
         return $this->mainRepository->update($tripDetail->id, $dto->toArray());
     }
 
-    private function checkDatesOfParentTripOrThrowError(?string $dateFrom = null, ?string $dateTo = null, int $tripId)
+    private function isDatesMismatch(Carbon $dateFrom, Carbon $dateTo, int $tripId)
     {
+        // todo: поверить, что даты с другими trip details не пересекаются, у которых родитель 1
         $trip = $this->mainRepository->getParentTrip($tripId);
 
-        if (($dateFrom && Carbon::parse($dateFrom) < $trip->date_from) || ($dateTo && Carbon::parse($dateTo) > $trip->date_to)) {
-            throw new \Exception("dates doesnt match"); // todo: custom
-        }
+        $dateFromCheck = DateHelper::isChildDateLess($dateFrom, $trip->date_from) || DateHelper::isChildDateGreater($dateFrom, $trip->date_to);
+        $dateToCheck = DateHelper::isChildDateLess($dateTo, $trip->date_from) || DateHelper::isChildDateGreater($dateTo, $trip->date_to);
+
+        return $dateToCheck || $dateFromCheck;
     }
 
 }

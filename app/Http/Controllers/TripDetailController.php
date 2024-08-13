@@ -33,7 +33,6 @@ class TripDetailController extends Controller
         return TripDetailResource::collection($result);
     }
 
-    // remake 1
     public function store(StoreTripDetailRequest $request)
     {
         $dto = TripDetailDto::create($request->all());
@@ -58,11 +57,11 @@ class TripDetailController extends Controller
     // remake 2
     public function update(UpdateTripDetailRequest $request, TripDetail $tripDetail)
     {
-        $dto = new UpdateTripDetailDto($request->all());
+        /* $dto = new UpdateTripDetailDto($request->all());
 
         $trip = $this->tripDetailService->update($dto, $tripDetail->id, $tripDetail->trip->id);
 
-        return new TripDetailResource($trip);
+        return new TripDetailResource($trip); */
     }
 
     public function destroy(TripDetail $tripDetail)

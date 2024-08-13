@@ -38,9 +38,9 @@ final class TripDetailDto extends TripDetailDtoBase
         $dateTo = DateHelper::toCarbonDate($data['dateTo']);
         
         $tripStatusService = new TripStatusService();
-        $status = $data['status'] ? $tripStatusService->getByValue($data['status']) : $tripStatusService->getDefault();
+        $status = isset($data['status']) ? $tripStatusService->getByValue($data['status']) : $tripStatusService->getDefault();
 
-        return new self($data['tripId'], $data['title'], $data['slug'], $dateFrom, $dateTo, $data['description'], $status, $data['countryId'], $data['cityId']);
+        return new self($data['tripId'], $data['title'], $data['slug'], $dateFrom, $dateTo, $data['description'] ?? null, $status, $data['countryId'], $data['cityId']);
     }
 
     protected function defineFields(): array
