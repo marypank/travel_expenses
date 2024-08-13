@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Trip;
 use App\Models\TripDetail;
+use Illuminate\Database\Eloquent\Collection;
 
 class TripDetailRepository extends BaseRepository
 {
@@ -13,22 +14,20 @@ class TripDetailRepository extends BaseRepository
         return new TripDetail();
     }
 
+    /**
+     * @param int $tripId
+     * @return Trip
+     */
     public function getParentTrip(int $tripId): Trip
     {
-        return (new TripRepository())->findById($tripId);
+        return (new TripRepository())->getById($tripId);
     }
 
-    public function search(
-        int $tripId,
-        ?string $dateFrom = null,
-        ?string $dateTo = null,
-        ?int $status = null,
-        ?int $countryId = null,
-        ?int $cityId = null)
+    public function search($data): Collection
     {
-        $details = $this->model()::where('trip_id', $tripId);
+        // $details = $this->model()::where('trip_id', $tripId);
 
-        if ($status) {
+        /* if ($status) {
             $details = $details->where('status', $status);
         }
         if ($dateFrom) {
@@ -42,10 +41,16 @@ class TripDetailRepository extends BaseRepository
         }
         if ($cityId) {
             $details = $details->where('city_id', $cityId);
-        }
+        } */
 
-        $details = $details->withCount('expenses');
+        // $details = $details->withCount('expenses');
 
-        return $details->orderBy('date_from', 'desc')->get();
+        // return $details->orderBy('date_from', 'desc')->get();
+        return new Collection();
+    }
+
+    public function all(int $id): Collection
+    {
+        return new Collection();
     }
 }

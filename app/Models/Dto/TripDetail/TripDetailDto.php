@@ -2,34 +2,59 @@
 
 namespace App\Models\Dto\TripDetail;
 
+use App\Helpers\DateHelper;
+use App\Http\Services\Enum\TripStatusService;
+use App\Models\Enum\TripStatusEnum;
+use Carbon\Carbon;
+
 final class TripDetailDto extends TripDetailDtoBase
 {
-    public function __construct(array $request)
+    private function __construct(
+        int $tripId,
+        string $title,
+        string $slug,
+        Carbon $dateFrom,
+        Carbon $dateTo,
+        ?string $description,
+        TripStatusEnum $status,
+        int $countryId,
+        int $cityId)
     {
-        $this->tripId = $request['tripId'] ?? null;
-        $this->title = $request['title'] ?? null;
-        $this->slug = $request['slug'] ?? null;
-        $this->dateFrom = $request['dateFrom'] ?? null;
-        $this->dateTo = $request['dateTo'] ?? null;
-        $this->description = $request['description'] ?? null;
-        $this->status = $request['status'] ?? null;
-        $this->cityId = $request['cityId'] ?? null;
-        $this->countryId = $request['countryId'] ?? null;
+        $this->tripId = $tripId;
+        $this->title = $title;
+        $this->slug = $slug;
+        $this->dateFrom = $dateFrom;
+        $this->description = $description;
+        $this->dateTo = $dateTo;
+        $this->status = $status;
+        $this->countryId = $countryId;
+        $this->cityId = $cityId;
+    }
+
+    public static function create(array $data): TripDetailDto
+    {
+        // todo: DRY
+        $dateFrom = DateHelper::toCarbonDate($data['dateFrom']);
+        $dateTo = DateHelper::toCarbonDate($data['dateTo']);
+        
+        $tripStatusService = new TripStatusService();
+        $status = $data['status'] ? $tripStatusService->getByValue($data['status']) : $tripStatusService->getDefault();
+
+        return new self($data['tripId'], $data['title'], $data['slug'], $dateFrom, $dateTo, $data['description'], $status, $data['countryId'], $data['cityId']);
     }
 
     protected function defineFields(): array
     {
         return [
-            // 'id' => $this->getId(),
-            'trip_id' => $this->getTripId(),
-            'title' => $this->getTitle(),
-            'slug' => $this->getSlug(),
-            'date_from' => $this->getDateFrom(),
-            'date_to' => $this->getDateTo(),
-            'description' => $this->getDescription(),
-            'status' => $this->getStatus(),
-            'country_id' => $this->getCountryId(),
-            'city_id' => $this->getCityId(),
+            'trip_id' => $this->tripId,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'date_from' => $this->dateFrom,
+            'date_to' => $this->dateTo,
+            'description' => $this->description,
+            'status' => $this->status,
+            'country_id' => $this->countryId,
+            'city_id' => $this->cityId,
         ];
     }
 }

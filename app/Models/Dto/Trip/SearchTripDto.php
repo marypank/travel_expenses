@@ -10,7 +10,7 @@ use Carbon\Carbon;
 class SearchTripDto extends TripDtoBase
 {
     // unused
-    public function __construct(
+    private function __construct(
         int $userId,
         ?TripStatusEnum $status,
         ?Carbon $dateFrom,

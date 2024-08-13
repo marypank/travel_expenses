@@ -23,6 +23,7 @@ class TripDetailController extends Controller
         $this->tripDetailService = $tripDetailService;
     }
 
+    // remake 3
     public function index(SearchTripDetailRequest $request)
     {
         $dto = new SearchTripDetailDto(...$request->all());
@@ -32,9 +33,10 @@ class TripDetailController extends Controller
         return TripDetailResource::collection($result);
     }
 
+    // remake 1
     public function store(StoreTripDetailRequest $request)
     {
-        $dto = new TripDetailDto($request->all());
+        $dto = TripDetailDto::create($request->all());
 
         try {
             $this->tripDetailService->create($dto);
@@ -53,6 +55,7 @@ class TripDetailController extends Controller
         return new TripDetailResource($tripDetail);
     }
 
+    // remake 2
     public function update(UpdateTripDetailRequest $request, TripDetail $tripDetail)
     {
         $dto = new UpdateTripDetailDto($request->all());

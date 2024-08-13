@@ -3,6 +3,8 @@
 namespace App\Models\Dto\TripDetail;
 
 use App\Models\Dto\Base\BaseDto;
+use App\Models\Enum\TripStatusEnum;
+use Carbon\Carbon;
 
 abstract class TripDetailDtoBase extends BaseDto
 {
@@ -11,21 +13,21 @@ abstract class TripDetailDtoBase extends BaseDto
         'create' => []
     ]; */
 
-    protected ?int $id = null;
+    protected int $id;
 
-    protected ?int $tripId;
+    protected int $tripId;
 
     protected ?string $title;
 
     protected ?string $slug;
 
-    protected ?string $dateFrom;
+    protected ?Carbon $dateFrom;
 
-    protected ?string $dateTo;
+    protected ?Carbon $dateTo;
 
     protected ?string $description;
 
-    protected ?int $status;
+    protected ?TripStatusEnum $status;
 
     protected ?int $cityId;
 
@@ -33,28 +35,14 @@ abstract class TripDetailDtoBase extends BaseDto
 
     protected abstract function defineFields(): array;
 
-    public function setCityId(int $cityId): self
-    {
-        $this->cityId = $cityId;
-
-        return $this;
-    }
-
-    public function getCityId(): ?int
-    {
-        return $this->cityId;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getTripId(): int
+    {
+        return $this->tripId;
     }
 
     public function getTitle(): ?string
@@ -62,47 +50,25 @@ abstract class TripDetailDtoBase extends BaseDto
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function getDescription(): ?string
     {
-        $this->title = $title;
-
-        return $this;
+        return $this->description;
     }
+
 
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getDateFrom(): ?string
+    public function getDateFrom(): ?Carbon
     {
         return $this->dateFrom;
     }
 
-    public function setDateFrom(string $dateFrom): self
-    {
-        $this->dateFrom = $dateFrom;
-
-        return $this;
-    }
-
-    public function getDateTo(): ?string
+    public function getDateTo(): ?Carbon
     {
         return $this->dateTo;
-    }
-
-    public function setDateTo(string $dateTo): self
-    {
-        $this->dateTo = $dateTo;
-
-        return $this;
     }
 
     public function getStatus(): ?int
@@ -110,47 +76,14 @@ abstract class TripDetailDtoBase extends BaseDto
         return $this->status;
     }
 
-    public function setStatus(int $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getTripId(): ?int
-    {
-        return $this->tripId;
-    }
-
-    public function setTripId(?int $tripId): self
-    {
-        $this->tripId = $tripId;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $descr): self
-    {
-        $this->description = $descr;
-
-        return $this;
-    }
-
-    public function setCountryId(?string $countryId): self
-    {
-        $this->countryId = $countryId;
-
-        return $this;
-    }
-
     public function getCountryId(): ?int
     {
         return $this->countryId;
+    }
+
+    public function getCityId(): ?int
+    {
+        return $this->cityId;
     }
 
     public function toArray($withEmptyValues = false): array

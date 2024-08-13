@@ -7,6 +7,9 @@ use App\Models\Enum\TripStatusEnum;
 use App\Repositories\TripDetailRepository;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Dto\Base\BaseDtoInterface;
+use App\Models\Dto\TripDetail\TripDetailDto;
+use App\Models\Dto\TripDetail\UpdateTripDetailDto;
+use App\Models\TripDetail;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,14 +19,15 @@ class TripDetailService extends BaseService
     {
         parent::__construct($tripDetailRepository);
     }
-
-    public function create(BaseDtoInterface $dto): void
+    
+    /**
+     * @param TripDetailDto $dto
+     * @throws \Exception
+     * @return Model
+     */
+    public function create(BaseDtoInterface $dto): Model
     {
         $this->checkDatesOfParentTripOrThrowError($dto->getDateFrom(), $dto->getDateTo(), $dto->getTripId());
-
-        if ($dto->getStatus()) {
-            $this->checkStatusOrThrowError($dto->getStatus());
-        }
 
         try {
             $model = $this->mainRepository->create($dto->toArray());
@@ -31,14 +35,16 @@ class TripDetailService extends BaseService
             if (!$model) {
                 throw new \Exception("not created");
             }
+
+            return $model;
         } catch (\Exception $ex) {
             throw new \Exception($ex->getMessage());
         }
     }
 
-    public function search(SearchTripDetailDto $dto): Collection
+    public function search($dto): Collection
     {
-        if (!$dto->getTripId()) {
+        /* if (!$dto->getTripId()) {
             throw new \Exception('tripId required'); // todo: custom
         }
         if ($dto->getStatus()) {
@@ -54,12 +60,19 @@ class TripDetailService extends BaseService
             $dto->getStatus()
         );
 
-        return $result;
+        return $result; */
+        return new Collection();
     }
 
-    public function update(BaseDtoInterface $dto, int $id = null, int $tripId = null): Model
+    /**
+     * @param TripDetail $tripDetail
+     * @param UpdateTripDetailDto $dto
+     * @return TripDetail
+     */
+    public function update(Model $tripDetail, BaseDtoInterface $dto): Model
+    // public function update(BaseDtoInterface $dto, int $id = null, int $tripId = null): Model
     {
-        if (!$id) {
+        /* if (!$id) {
             throw new \Exception('id required'); // todo: custom
         }
         $dto->setId($id);
@@ -69,7 +82,8 @@ class TripDetailService extends BaseService
         }
         $this->checkDatesOfParentTripOrThrowError($dto->getDateFrom(), $dto->getDateTo(), $tripId);
 
-        return $this->mainRepository->update($dto->getId(), $dto->toArray());
+        return $this->mainRepository->update($dto->getId(), $dto->toArray()); */
+        return $this->mainRepository->update($tripDetail->id, $dto->toArray());
     }
 
     private function checkDatesOfParentTripOrThrowError(?string $dateFrom = null, ?string $dateTo = null, int $tripId)
@@ -78,14 +92,6 @@ class TripDetailService extends BaseService
 
         if (($dateFrom && Carbon::parse($dateFrom) < $trip->date_from) || ($dateTo && Carbon::parse($dateTo) > $trip->date_to)) {
             throw new \Exception("dates doesnt match"); // todo: custom
-        }
-    }
-
-    // todo: in status service
-    private function checkStatusOrThrowError(int $status)
-    {
-        if (!in_array($status, array_column(TripStatusEnum::cases(), 'value'))) {
-            throw new \Exception('status not defined'); // todo: custom
         }
     }
 
