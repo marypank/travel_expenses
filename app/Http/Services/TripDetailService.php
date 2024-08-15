@@ -69,7 +69,7 @@ class TripDetailService extends BaseService
     }
 
     /**
-     * @param Trip $trip
+     * @param TripDetail $trip
      * @param UpdateTripDetailDto $dto
      * @return TripDetail
      */
