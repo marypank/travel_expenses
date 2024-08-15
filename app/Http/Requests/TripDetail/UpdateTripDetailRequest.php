@@ -4,6 +4,7 @@ namespace App\Http\Requests\TripDetail;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UpdateTripDetailRequest extends FormRequest
 {
@@ -23,15 +24,14 @@ class UpdateTripDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tripId' => ['numeric', 'exists:trips,id'],
-            'title' => ['string', 'nullable'],
+            'title' => ['string'],
             'slug' => ['string'],
             'dateFrom' => ['date'],
-            'dateTo' => ['date'],
+            'dateTo' => ['date', 'after_or_equal:dateFrom'],
             'description' => ['string', 'nullable'],
             'status' => ['numeric'],
-            'countryId' => ['numeric'],
-            'cityId' => ['numeric'],
+            'countryId' => ['numeric', Rule::requiredIf($this->cityId)],
+            'cityId' => ['numeric', Rule::requiredIf($this->countryId)],
         ];
     }
 }

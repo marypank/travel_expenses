@@ -48,7 +48,7 @@ class TripService extends BaseService
     /**
      * @param Trip $trip
      * @param UpdateTripDto $dto
-     * @return Model
+     * @return Trip
      */
     public function update(Model $trip, BaseDtoInterface $dto): Model
     {
@@ -66,7 +66,7 @@ class TripService extends BaseService
             }
 
             if ($trip->details->where('date_to', '>', $dto->getDateTo())->count()) {
-                throw new \Exception('chchchch'); // todo: custom
+                throw new \Exception('DateTo must be greater than child dates'); // todo: custom
             }
         }
 

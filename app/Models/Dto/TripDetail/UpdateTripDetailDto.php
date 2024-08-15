@@ -2,26 +2,67 @@
 
 namespace App\Models\Dto\TripDetail;
 
+use App\Helpers\DateHelper;
+use App\Http\Services\Enum\TripStatusService;
+use App\Models\Enum\TripStatusEnum;
+use Carbon\Carbon;
+
 class UpdateTripDetailDto extends TripDetailDtoBase
 {
 
-    public function __construct(array $request)
+    private function __construct(
+        int $id,
+        ?string $title,
+        ?string $slug,
+        ?Carbon $dateFrom,
+        ?Carbon $dateTo,
+        ?string $description,
+        ?TripStatusEnum $status,
+        ?int $countryId,
+        ?int $cityId)
     {
-        $this->title = $request['title'] ?? null;
-        $this->slug = $request['slug'] ?? null;
-        $this->description = $request['description'] ?? null;
-        $this->dateFrom = $request['dateFrom'] ?? null;
-        $this->dateTo = $request['dateTo'] ?? null;
-        $this->id = $request['id'] ?? null;
-        $this->status = $request['status'] ?? null;
-        $this->cityId = $request['cityId'] ?? null;
-        $this->countryId = $request['countryId'] ?? null;
+        $this->id = $id;
+        $this->title = $title;
+        $this->slug = $slug;
+        $this->dateFrom = $dateFrom;
+        $this->description = $description;
+        $this->dateTo = $dateTo;
+        $this->status = $status;
+        $this->countryId = $countryId;
+        $this->cityId = $cityId;
+    }
+
+    public static function create(int $id, array $data): UpdateTripDetailDto
+    {
+        if (isset($data['dateFrom'])) {
+            $dateFrom = DateHelper::toCarbonDate($data['dateFrom']);
+        }
+        if (isset($data['dateTo'])) {
+            $dateTo = DateHelper::toCarbonDate($data['dateTo']);
+        }
+        
+        if (isset($data['status'])) {
+            $tripStatusService = new TripStatusService();
+            $status = $tripStatusService->getByValue($data['status']);
+        }
+
+        return new self(
+            $id,
+            $data['title'] ?? null,
+            $data['slug'] ?? null,
+            $dateFrom ?? null,
+            $dateTo ?? null,
+            $data['description'] ?? null,
+            $status ?? null,
+            $data['countryId'] ?? null,
+            $data['cityId'] ?? null
+        );
     }
 
     protected function defineFields(): array
     {
         return [
-            'id' => $this->getId(),
+            'id' => $this->id,
             'date_from' => $this->getDateFrom(),
             'date_to' => $this->getDateTo(),
             'status' => $this->getStatus(),

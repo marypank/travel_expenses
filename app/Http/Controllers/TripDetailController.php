@@ -57,11 +57,12 @@ class TripDetailController extends Controller
     // remake 2
     public function update(UpdateTripDetailRequest $request, TripDetail $tripDetail)
     {
-        /* $dto = new UpdateTripDetailDto($request->all());
+        $dto = UpdateTripDetailDto::create($tripDetail->id, $request->validated());
 
-        $trip = $this->tripDetailService->update($dto, $tripDetail->id, $tripDetail->trip->id);
+        // $dto, $tripDetail->id, $tripDetail->trip->id
+        // $trip = $this->tripDetailService->update();
 
-        return new TripDetailResource($trip); */
+        // return new TripDetailResource($trip);
     }
 
     public function destroy(TripDetail $tripDetail)
