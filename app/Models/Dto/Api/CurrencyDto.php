@@ -37,9 +37,9 @@ class CurrencyDto extends BaseDto
         return $this->Nominal;
     }
 
-    public function toArray($withEmptyValues = false): array
+    protected function defineFields(): array
     {
-        $data = [
+        return [
             'id' => $this->ID,
             'code' => (int)$this->NumCode,
             'strCode' => $this->CharCode,
@@ -48,7 +48,5 @@ class CurrencyDto extends BaseDto
             'value' => $this->Value,
             'previousValue' => $this->Previous
         ];
-
-        return $withEmptyValues ? $data : $this->removeEmptyValues($data);
     }
 }

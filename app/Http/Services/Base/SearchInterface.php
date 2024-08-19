@@ -15,7 +15,7 @@ interface SearchInterface
 
     /**
      * @param int $id
-     * @return void
+     * @return Model|null
      */
     public function getById(int $id): ?Model;
 

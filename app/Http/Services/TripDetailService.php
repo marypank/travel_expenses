@@ -58,19 +58,13 @@ class TripDetailService extends BaseService
      */
     public function update(Model $tripDetail, BaseDtoInterface $dto): Model
     {
-        // todo: dates check
-        // 1. Дата начала не должна быть меньше, чем дата начала родителя
-        // 2. Дата конца не должна быть больше даты конца родителя
-        // 3. Дата начала не должна быть больше, чем старая дата конца, если нет новой даты конца
-        // 4. Дата конца не должна быть меньше, чем старая дата начала, если нет новой даты начала
-        // не закончила 3 и 4, надо проверить 1 и 2
         if ($dto->getDateFrom()) {
             if (DateHelper::isChildDateLess($dto->getDateFrom(), $tripDetail->trip->date_from)) {
                 throw new \Exception('DateFrom must not be less than paretn DateFrom'); // todo: custom
             }
 
             if (!$dto->getDateTo() && DateHelper::isChildDateGreater($dto->getDateFrom(), $tripDetail->date_to)) {
-                //
+                throw new \Exception('DateFrom must be less than DateTo'); // todo: custom
             }
         }
         if ($dto->getDateTo()) {
@@ -78,8 +72,8 @@ class TripDetailService extends BaseService
                 throw new \Exception('DateTo must not be greater than parent DateTo'); // todo: custom
             }
 
-            if (!$dto->getDateFrom()) {
-                //
+            if (!$dto->getDateFrom() && DateHelper::isChildDateLess($dto->getDateTo(), $tripDetail->date_from)) {
+                throw new \Exception('DateTo must not be less than DateFrom'); // todo: custom
             }
         }
 
