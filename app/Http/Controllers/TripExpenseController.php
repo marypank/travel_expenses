@@ -19,6 +19,7 @@ class TripExpenseController extends Controller
     public function __construct(private TripExpenseService $tripExpenseService)
     {}
 
+    // remake 4
     public function index(SearchTripExpenseRequest $request)
     {
         $dto = new SearchTripExpenseDto(...$request->all());
@@ -27,6 +28,7 @@ class TripExpenseController extends Controller
         return TripExpenseResource::collection($result);
     }
 
+    // remake 1
     public function store(StoreTripExpenseRequest $request)
     {
         $dto = new TripExpenseDto(...$request->all());
@@ -43,6 +45,7 @@ class TripExpenseController extends Controller
         return response()->noContent(Response::HTTP_CREATED);
     }
 
+    // remake 2
     public function show(TripExpense $tripExpense, Request $request)
     {
         $this->tripExpenseService->modfifyForShow($tripExpense, (bool)$request->input('withChildren'));
@@ -50,6 +53,7 @@ class TripExpenseController extends Controller
         return new TripExpenseResource($tripExpense);
     }
 
+    // remake 3
     public function update(UpdateTripExpenseRequest $request, TripExpense $tripExpense)
     {
         $dto = new UpdateTripExpenseDto($tripExpense->id, ...$request->all());

@@ -25,23 +25,9 @@ class TripRepository extends BaseRepository
             ->orderBy('date_from')
             ->get();
     }
-
-    // public function search(int $userId , ?int $status, ?string $dateFrom, ?string $dateTo): Collection
+    
     public function search($data): Collection
     {
-        /* $trip = $this->model()::where('user_id', $userId);
-
-        if ($status) {
-            $trip = $trip->where('status', $status);
-        }
-        if ($dateFrom) {
-            $trip = $trip->where('date_from', '>=', $dateFrom);
-        }
-        if ($dateTo) {
-            $trip = $trip->where('date_to', '<=', $dateTo);
-        }
-        
-        return $trip->orderBy('date_from','desc')->get(); */
         return new Collection();
     }
 

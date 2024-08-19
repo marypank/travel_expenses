@@ -42,7 +42,6 @@ class TripService extends BaseService
     public function search($dto): Collection
     {
         return new Collection();
-        // return $this->mainRepository->search($dto->getUserId(), $dto->getStatus(), $dto->getDateFrom(), $dto->getDateTo());
     }
 
     /**
