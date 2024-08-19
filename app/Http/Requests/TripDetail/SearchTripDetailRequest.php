@@ -18,12 +18,12 @@ class SearchTripDetailRequest extends FormRequest
     {
         return [
             'tripId' => ['required', 'numeric', 'exists:trips,id'],
-            'status' => ['numeric', 'nullable', Rule::enum(TripStatusEnum::class)],
+            /* 'status' => ['numeric', 'nullable', Rule::enum(TripStatusEnum::class)],
             // 'title' => ['string', 'nullable'], 
             'dateTo' => ['date', 'nullable', 'after_or_equal:dateFrom'],
             'dateFrom' => ['date', 'nullable'],
             'countryId' => ['numeric'],
-            'cityId' => ['numeric']
+            'cityId' => ['numeric'] */
         ];
     }
 }

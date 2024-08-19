@@ -11,6 +11,7 @@ use App\Models\Dto\TripDetail\SearchTripDetailDto;
 use App\Models\Dto\TripDetail\TripDetailDto;
 use App\Models\Dto\TripDetail\UpdateTripDetailDto;
 use App\Models\TripDetail;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripDetailController extends Controller
@@ -23,12 +24,9 @@ class TripDetailController extends Controller
         $this->tripDetailService = $tripDetailService;
     }
 
-    // remake 3
     public function index(SearchTripDetailRequest $request)
     {
-        $dto = new SearchTripDetailDto(...$request->all());
-
-        $result = $this->tripDetailService->search($dto);
+        $result = $this->tripDetailService->all($request['tripId']);
 
         return TripDetailResource::collection($result);
     }

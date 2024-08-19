@@ -22,7 +22,7 @@ class TripDetailResource extends JsonResource
             'dateTo' => $this->date_to,
             'location' => [
                 'countryId' => $this->country_id,
-                'cityId' => $this->cityId,
+                'cityId' => $this->city_id,
             ],
         ];
     }
