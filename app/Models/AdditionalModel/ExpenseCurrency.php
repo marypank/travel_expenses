@@ -46,9 +46,9 @@ class ExpenseCurrency extends BaseDto
         return $currentRate * $price;
     }
 
-    public function toArray($withEmptyValues = false): array
+    public function defineFields(): array
     {
-        $data = [
+        return [
             'id' => $this->id,
             'title' => $this->title,
             'code' => $this->code,
@@ -56,8 +56,5 @@ class ExpenseCurrency extends BaseDto
             'price' => $this->price,
             'rusPrice' => $this->rusPrice
         ];
-
-        return $data;
     }
-
 }
