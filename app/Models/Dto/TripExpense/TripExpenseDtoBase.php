@@ -3,18 +3,20 @@
 namespace App\Models\Dto\TripExpense;
 
 use App\Models\Dto\Base\BaseDto;
+use App\Models\Enum\SourceExpenseEnum;
+use Carbon\Carbon;
 
 abstract class TripExpenseDtoBase extends BaseDto
 {
-    protected ?int $id = null;
+    protected int $id;
 
-    protected ?int $tripDetailId = null;
+    protected int $tripDetailId;
 
     protected ?string $title = null;
 
     protected ?string $description = null;
 
-    protected ?int $source = null;
+    protected ?SourceExpenseEnum $source = null;
 
     protected ?int $currencyId = null;
 
@@ -22,24 +24,20 @@ abstract class TripExpenseDtoBase extends BaseDto
 
     protected ?int $parentId = null;
 
-    protected ?string $payDate = null;
-
-    protected ?string $image = null;
+    protected ?Carbon $payDate;
 
     protected ?float $price = null;
 
     protected abstract function defineFields(): array;
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getTripDetailId(): int
+    {
+        return $this->tripDetailId;
     }
 
     public function getTitle(): ?string
@@ -47,55 +45,14 @@ abstract class TripExpenseDtoBase extends BaseDto
         return $this->title;
     }
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(?string $descr): self
-    {
-        $this->description = $descr;
-
-        return $this;
-    }
-
-    public function setTripDetailId(?int $tripDetailId): self
-    {
-        $this->tripDetailId = $tripDetailId;
-
-        return $this;
-    }
-
-    public function getTripDetailId(): ?int
-    {
-        return $this->tripDetailId;
-    }
-
-    // todo: maybe Enum $source
-    public function setSource(int $source): self
-    {
-        $this->source = $source;
-        
-        return $this;
-    }
-
-    public function getSource(): ?int
+    public function getSource(): ?SourceExpenseEnum
     {
         return $this->source;
-    }
-
-    public function setCurrentCurrencyExchange(float $curExch): self
-    {
-        $this->currentCurrencyExchange = $curExch;
-        
-        return $this;
     }
 
     public function getCurrentCurrencyExchange(): ?float
@@ -103,23 +60,9 @@ abstract class TripExpenseDtoBase extends BaseDto
         return $this->currentCurrencyExchange;
     }
 
-    public function setPayDate(string $payDate): self
-    {
-        $this->payDate = $payDate;
-
-        return $this;
-    }
-
-    public function getPayDate(): ?string
+    public function getPayDate(): ?Carbon
     {
         return $this->payDate;
-    }
-
-    public function setCurrencyId(int $currencyId): self
-    {
-        $this->currencyId = $currencyId;
-
-        return $this;
     }
 
     public function getCurrencyId(): ?int
@@ -127,35 +70,9 @@ abstract class TripExpenseDtoBase extends BaseDto
         return $this->currencyId;
     }
 
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setParentId(?int $parentId): self
-    {
-        $this->parentId = $parentId;
-
-        return $this;
-    }
-
     public function getParentId(): ?int
     {
         return $this->parentId;
-    }
-
-    public function setPrice(?float $price): self
-    {
-        $this->price = $price;
-
-        return $this;
     }
 
     public function getPrice(): ?float

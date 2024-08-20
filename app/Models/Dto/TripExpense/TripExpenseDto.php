@@ -2,15 +2,20 @@
 
 namespace App\Models\Dto\TripExpense;
 
+use App\Helpers\DateHelper;
+use App\Http\Services\Enum\SourceExpenseService;
+use App\Models\Enum\SourceExpenseEnum;
+use Carbon\Carbon;
+
 class TripExpenseDto extends TripExpenseDtoBase
 {
-    public function __construct(
+    private function __construct(
         int $tripDetailId,
         int $currencyId,
         float $current,
-        int $source,
+        SourceExpenseEnum $source,
         string $title,
-        string $payDate,
+        Carbon $payDate,
         float $price,
         ?int $parentId = null,
         ?string $description = null)
@@ -24,6 +29,16 @@ class TripExpenseDto extends TripExpenseDtoBase
         $this->parentId = $parentId;
         $this->payDate = $payDate;
         $this->price = $price;
+    }
+
+    public static function create(array $data): TripExpenseDto
+    {   
+        $data['payDate'] = DateHelper::toCarbonDate($data['payDate']);
+
+        $sourceExpenseService = new SourceExpenseService();
+        $data['status'] = isset($data['source']) ? $sourceExpenseService->getByValue($data['source']) : $sourceExpenseService->getDefault();
+
+        return new self(...$data);
     }
 
     function defineFields(): array

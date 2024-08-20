@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Http\Services\Api\CurrencyService;
 use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\AdditionalModel\ExpenseCurrency;
+use App\Models\Dto\Base\BaseDtoInterface;
 use App\Models\Dto\TripExpense\SearchTripExpenseDto;
 use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\Dto\TripExpense\UpdateTripExpenseDto;
@@ -13,6 +14,7 @@ use App\Models\TripExpense;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 
 class TripExpenseService extends BaseService
 {
@@ -25,29 +27,9 @@ class TripExpenseService extends BaseService
         parent::__construct($tripDetailRepository);
     }
 
-    // todo: update is not compatible, so rewtire (todo in notion about separation interfaces and base classes)
-    public function createExpense(TripExpenseDto $dto): void
+    public function search($dto): Collection
     {
-        try {
-            $model = $this->mainRepository->create($dto->toArray());
-
-            if (!$model) {
-                throw new \Exception("not created");
-            }
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
-    }
-
-    public function search(SearchTripExpenseDto $dto): Collection
-    {
-        $tripExpenses = $this->mainRepository->search($dto->getTripDetailId(), $dto->getWithChildren());
-
-        $tripExpenses = $tripExpenses->each(function (TripExpense $tripExpense) use ($dto) {
-            $this->setUpTripExpense($tripExpense, $dto->getWithChildren());
-        });
-
-        return $tripExpenses->filter(fn(TripExpense $val) => is_null($val->parent_id));
+        return new Collection();
     }
 
     public function modfifyForShow(TripExpense $tripExpense, bool $withChildren): TripExpense
@@ -75,11 +57,18 @@ class TripExpenseService extends BaseService
     }
 
     // todo: update is not compatible, so rewtire (todo in notion about separation interfaces and base classes)
-    public function updateExpense(TripExpense $tripExpense, UpdateTripExpenseDto $dto): TripExpenseDto
+    // public function update(TripExpense $tripExpense, UpdateTripExpenseDto $dto): TripExpenseDto
+    /**
+     * @param TripExpense $tripExpense
+     * @param UpdateTripExpenseDto $dto
+     * @throws \Exception
+     * @return TripExpense
+     */
+    public function update(Model $tripExpense, BaseDtoInterface $dto): Model
     {
         $parent = $tripExpense->parent;
         if ($dto->getParentId()) {
-            $parent = $this->mainRepository->findById($dto->getParentId());
+            $parent = $this->mainRepository->getById($dto->getParentId());
             
             if ($parent->trip_detail_id !== $tripExpense->trip_detail_id) {
                 throw new \Exception('trip must be the same'); // todo: custom
@@ -105,6 +94,7 @@ class TripExpenseService extends BaseService
         }
     }
 
+    // todo: remove
     private function checkDateParentMismatch(string $date, Carbon $parentDate): bool
     {
         return Carbon::parse($date) > $parentDate || Carbon::parse($date) < $parentDate;

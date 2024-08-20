@@ -9,7 +9,6 @@ class TripExpenseRepository extends BaseRepository
 {
     public function model()
     {
-        // todo: try TripExpense::class; and it return string and that i can use query
         return new TripExpense();
     }
 

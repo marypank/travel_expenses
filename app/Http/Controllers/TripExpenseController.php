@@ -31,10 +31,11 @@ class TripExpenseController extends Controller
     // remake 1
     public function store(StoreTripExpenseRequest $request)
     {
-        $dto = new TripExpenseDto(...$request->all());
+        $dto = TripExpenseDto::create($request->validated());
 
         try {
-            $this->tripExpenseService->createExpense($dto);
+            // not custom create, cuz there is nothing to make custom (payDate unlike other dates can be random (for example plane tickets))
+            $this->tripExpenseService->create($dto);
         } catch (\Exception $ex) {
             return response()->json([
                 'data' => [],
@@ -56,9 +57,9 @@ class TripExpenseController extends Controller
     // remake 3
     public function update(UpdateTripExpenseRequest $request, TripExpense $tripExpense)
     {
-        $dto = new UpdateTripExpenseDto($tripExpense->id, ...$request->all());
+        $dto = new UpdateTripExpenseDto($tripExpense->id, ...$request->validated());
 
-        $trip = $this->tripExpenseService->updateExpense($tripExpense, $dto);
+        $trip = $this->tripExpenseService->update($tripExpense, $dto);
 
         return new TripExpenseResource($trip);
     }

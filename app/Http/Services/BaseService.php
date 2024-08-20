@@ -25,15 +25,11 @@ abstract class BaseService implements DefaultServiceInterface
      */
     public function create(BaseDtoInterface $dto): Model
     {
-        // todo: dont like that dates go in strings not like dates
-        // todo: custom Exception
-        // todo: toArray and checkes
-
         try {
             $model = $this->mainRepository->create($dto->toArray());
 
             if (!$model) {
-                throw new \Exception("not created");
+                throw new \Exception("not created"); // todo: custom
             }
 
             return $model;
@@ -47,7 +43,7 @@ abstract class BaseService implements DefaultServiceInterface
         $model = $this->mainRepository->getById($id);
 
         if (!$model) {
-            throw new NotFoundHttpException("RecordNotFound"); // todo: refactor later
+            throw new NotFoundHttpException("RecordNotFound"); // todo: custom
         }
 
         return $model;
