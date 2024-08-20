@@ -19,7 +19,7 @@ class ExpenseCurrency extends BaseDto
 
     private float $price;
 
-    public function __construct(int $id, string $title, float $currentRate, string $code, float $price, float $rusPrice)
+    private function __construct(int $id, string $title, float $currentRate, string $code, float $price, float $rusPrice)
     {
         $this->id = $id;
         $this->title = $title;
