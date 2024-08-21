@@ -7,7 +7,6 @@ use App\Http\Requests\TripExpense\StoreTripExpenseRequest;
 use App\Http\Requests\TripExpense\UpdateTripExpenseRequest;
 use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
-use App\Models\Dto\TripExpense\SearchTripExpenseDto;
 use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\Dto\TripExpense\UpdateTripExpenseDto;
 use App\Models\TripExpense;
@@ -22,8 +21,7 @@ class TripExpenseController extends Controller
     // remake 4
     public function index(SearchTripExpenseRequest $request)
     {
-        $dto = new SearchTripExpenseDto(...$request->all());
-        $result = $this->tripExpenseService->search($dto);
+        $result = $this->tripExpenseService->search($request->validated());
 
         return TripExpenseResource::collection($result);
     }
@@ -57,7 +55,7 @@ class TripExpenseController extends Controller
     // remake 3
     public function update(UpdateTripExpenseRequest $request, TripExpense $tripExpense)
     {
-        $dto = new UpdateTripExpenseDto($tripExpense->id, ...$request->validated());
+        $dto = UpdateTripExpenseDto::create($tripExpense->id, ...$request->validated());
 
         $trip = $this->tripExpenseService->update($tripExpense, $dto);
 

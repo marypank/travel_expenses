@@ -24,7 +24,6 @@ class UpdateTripExpenseRequest extends FormRequest
             'description' => ['string', 'nullable'],
             'parentId' => ['exists:trip_expenses,id', 'nullable'],
             'payDate' => ['date'],
-            // todo: work with files 'image' => ['string'],
             'price' => ['decimal:2'],
         ];
     }

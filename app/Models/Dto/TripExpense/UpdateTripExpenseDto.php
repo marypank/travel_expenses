@@ -2,20 +2,24 @@
 
 namespace App\Models\Dto\TripExpense;
 
+use App\Helpers\DateHelper;
+use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\Dto\Base\BaseDto;
+use App\Models\Enum\SourceExpenseEnum;
+use Carbon\Carbon;
 
 class UpdateTripExpenseDto extends TripExpenseDtoBase 
 {
-    public function __construct(
+    private function __construct(
         int $id,
-        ?int $currencyId = null,
-        ?float $currentRate = null,
-        ?int $source = null,
-        ?string $title = null,
-        ?string $description = null,
-        ?int $parentId = null,
-        ?string $payDate = null, 
-        ?float $price = null)
+        ?int $currencyId,
+        ?float $currentRate,
+        ?SourceExpenseEnum $source,
+        ?string $title,
+        ?string $description,
+        ?int $parentId,
+        ?Carbon $payDate, 
+        ?float $price)
     {
         $this->id = $id;
         $this->currencyId = $currencyId;
@@ -24,22 +28,47 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
         $this->title = $title;
         $this->description = $description;
         $this->parentId = $parentId;
-        $this->payDate = $payDate; // todo: convert to DateTime
+        $this->payDate = $payDate;
         $this->price = $price;
+    }
+
+    public static function create(int $id, array $data): UpdateTripExpenseDto
+    {
+        // todo: вероятно, если что-то хочется обновить на нулл (например, описание и родительский айди), то не получится из-за removeEmptyValues
+        if (isset($data['payDate'])) {
+            $data['payDate'] = DateHelper::toCarbonDate($data['payDate']);
+        }
+
+        if (isset($data['status'])) {
+            $sourceExpenseService = new SourceExpenseService();
+            $data['status'] = $sourceExpenseService->getByValue($data['source']);
+        }
+
+        return new self(
+            $id,
+            $data['currencyId'] ?? null,
+            $data['currentRate'] ?? null,
+            $data['source'] ?? null,
+            $data['title'] ?? null,
+            $data['description'] ?? null,
+            $data['parentId'] ?? null,
+            $data['payDate'] ?? null,
+            $data['price'] ?? null
+        );
     }
 
     function defineFields(): array
     {
         return [
-            'id' => $this->getId(),
-            'currency_id' => $this->getCurrencyId(),
-            'current_currency_exchange' => $this->getCurrentCurrencyExchange(),
-            'source' => $this->getSource(), // todo: мб уже сейчас преобразовать в енам, везде
-            'title' => $this->getTitle(),
-            'description' => $this->getDescription(),
-            'parentId' => $this->getParentId(),
-            'payDate' => $this->getPayDate(),
-            'price' => $this->getPrice(),
+            'id' => $this->id,
+            'currency_id' => $this->currencyId,
+            'current_currency_exchange' => $this->currentCurrencyExchange,
+            'source' => $this->source,
+            'title' => $this->title,
+            'description' => $this->description,
+            'parentId' => $this->parentId,
+            'payDate' => $this->payDate,
+            'price' => $this->price,
         ];
     }
 }

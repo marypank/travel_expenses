@@ -6,14 +6,10 @@ use App\Http\Services\Api\CurrencyService;
 use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\AdditionalModel\ExpenseCurrency;
 use App\Models\Dto\Base\BaseDtoInterface;
-use App\Models\Dto\TripExpense\SearchTripExpenseDto;
-use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\Dto\TripExpense\UpdateTripExpenseDto;
-use App\Models\Enum\SourceExpenseEnum;
 use App\Models\TripExpense;
 use App\Repositories\TripExpenseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class TripExpenseService extends BaseService
@@ -27,9 +23,21 @@ class TripExpenseService extends BaseService
         parent::__construct($tripDetailRepository);
     }
 
-    public function search($dto): Collection
+    /**
+     * @param array $data
+     * @return Collection
+     */
+    public function search($data): Collection
     {
-        return new Collection();
+        $withChildren = $data['withChildren'] ?? false;
+
+        $expenses = $this->mainRepository->all($data['tripDetailId']);
+
+        $expenses->each(function ($item) use($withChildren) {
+            $this->modfifyForShow($item, $withChildren);
+        });
+
+        return $expenses;
     }
 
     public function modfifyForShow(TripExpense $tripExpense, bool $withChildren): TripExpense
@@ -56,8 +64,6 @@ class TripExpenseService extends BaseService
         $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName'];
     }
 
-    // todo: update is not compatible, so rewtire (todo in notion about separation interfaces and base classes)
-    // public function update(TripExpense $tripExpense, UpdateTripExpenseDto $dto): TripExpenseDto
     /**
      * @param TripExpense $tripExpense
      * @param UpdateTripExpenseDto $dto
@@ -75,29 +81,11 @@ class TripExpenseService extends BaseService
             }
         }
 
-        if (!is_null($dto->getSource()) && $parent && $dto->getSource() !== $parent->source->value) {
+        if ($dto->getSource() && $parent && $dto->getSource()->value !== $parent->source->value) {
             throw new \Exception('child source doesnt match parent source'); // todo: custom
         }
 
-        if ($dto->getPayDate() && $parent && $this->checkDateParentMismatch($dto->getPayDate(), $parent->pay_date)) {
-            throw new \Exception('pay date should be like parent date'); // todo: custom
-        }
-
         return $this->mainRepository->update($dto->getId(), $dto->toArray());
-    }
-
-    // todo: in source service
-    private function checkSourceOrThrowError(int $source)
-    {
-        if (!in_array($source, array_column(SourceExpenseEnum::cases(), 'value'))) {
-            // throw new \Exception('source not defined'); // todo: custom
-        }
-    }
-
-    // todo: remove
-    private function checkDateParentMismatch(string $date, Carbon $parentDate): bool
-    {
-        return Carbon::parse($date) > $parentDate || Carbon::parse($date) < $parentDate;
     }
 
 }

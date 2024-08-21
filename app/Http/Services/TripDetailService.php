@@ -3,8 +3,6 @@
 namespace App\Http\Services;
 
 use App\Helpers\DateHelper;
-use App\Models\Dto\TripDetail\SearchTripDetailDto;
-use App\Models\Enum\TripStatusEnum;
 use App\Repositories\TripDetailRepository;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Dto\Base\BaseDtoInterface;
