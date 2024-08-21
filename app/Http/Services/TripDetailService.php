@@ -26,6 +26,7 @@ class TripDetailService extends BaseService
      */
     public function create(BaseDtoInterface $dto): Model
     {
+        // todo: isDatesSyncingWithSiblings
         if ($this->isDatesOutOfParentRange($dto->getDateFrom(), $dto->getDateTo(), $dto->getTripId())) {
             throw new \Exception("Parent and child dates doesnt match"); // todo: custom
         }
@@ -56,6 +57,7 @@ class TripDetailService extends BaseService
      */
     public function update(Model $tripDetail, BaseDtoInterface $dto): Model
     {
+        // todo: isDatesSyncingWithSiblings
         if ($dto->getDateFrom()) {
             if (DateHelper::isChildDateLess($dto->getDateFrom(), $tripDetail->trip->date_from)) {
                 throw new \Exception('DateFrom must not be less than paretn DateFrom'); // todo: custom

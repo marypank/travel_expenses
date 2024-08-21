@@ -39,9 +39,9 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
             $data['payDate'] = DateHelper::toCarbonDate($data['payDate']);
         }
 
-        if (isset($data['status'])) {
+        if (isset($data['source'])) {
             $sourceExpenseService = new SourceExpenseService();
-            $data['status'] = $sourceExpenseService->getByValue($data['source']);
+            $data['source'] = $sourceExpenseService->getByValue($data['source']);
         }
 
         return new self(
@@ -66,8 +66,8 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
             'source' => $this->source,
             'title' => $this->title,
             'description' => $this->description,
-            'parentId' => $this->parentId,
-            'payDate' => $this->payDate,
+            'parent_id' => $this->parentId,
+            'pay_date' => $this->payDate,
             'price' => $this->price,
         ];
     }

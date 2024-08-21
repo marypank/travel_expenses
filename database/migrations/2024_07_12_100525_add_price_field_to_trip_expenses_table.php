@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('trip_expenses', function (Blueprint $table) {
             $table->decimal('price', 8, 2)->after('description');
-            $table->string('image')->nullable()->after('pay_date');
         });
     }
 
@@ -24,7 +23,6 @@ return new class extends Migration
     {
         Schema::table('trip_expenses', function (Blueprint $table) {
             $table->dropColumn('price');
-            $table->dropColumn('image');
         });
     }
 };

@@ -6,6 +6,7 @@ use App\Http\Services\Api\CurrencyService;
 use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\AdditionalModel\ExpenseCurrency;
 use App\Models\Dto\Base\BaseDtoInterface;
+use App\Models\Dto\TripExpense\TripExpenseDto;
 use App\Models\Dto\TripExpense\UpdateTripExpenseDto;
 use App\Models\TripExpense;
 use App\Repositories\TripExpenseRepository;
@@ -32,12 +33,38 @@ class TripExpenseService extends BaseService
         $withChildren = $data['withChildren'] ?? false;
 
         $expenses = $this->mainRepository->all($data['tripDetailId']);
+        $expenses = $expenses->filter(function ($item) use($withChildren) {
+            if (!is_null($item->parent_id)) {
+                return false;
+            }
 
-        $expenses->each(function ($item) use($withChildren) {
             $this->modfifyForShow($item, $withChildren);
+            return true;
         });
 
         return $expenses;
+    }
+
+    /**
+     * @param TripExpenseDto $dto
+     * @throws \Exception
+     * @return TripExpense
+     */
+    public function create(BaseDtoInterface $dto): Model
+    {
+        // todo: isTotalАmountOutrange
+        // payDate unlike other dates can be random (for example plane tickets)
+        try {
+            $model = $this->mainRepository->create($dto->toArray());
+
+            if (!$model) {
+                throw new \Exception("not created"); // todo: custom
+            }
+
+            return $model;
+        } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
+        }
     }
 
     public function modfifyForShow(TripExpense $tripExpense, bool $withChildren): TripExpense
@@ -72,6 +99,7 @@ class TripExpenseService extends BaseService
      */
     public function update(Model $tripExpense, BaseDtoInterface $dto): Model
     {
+        // todo: isTotalАmountOutrange
         $parent = $tripExpense->parent;
         if ($dto->getParentId()) {
             $parent = $this->mainRepository->getById($dto->getParentId());
@@ -85,7 +113,15 @@ class TripExpenseService extends BaseService
             throw new \Exception('child source doesnt match parent source'); // todo: custom
         }
 
-        return $this->mainRepository->update($dto->getId(), $dto->toArray());
+        $expense = $this->mainRepository->update($tripExpense->id, $dto->toArray());
+
+        return $this->modfifyForShow($expense, false);
+    }
+
+    private function isTotalАmountOutrange(): bool
+    {
+        // todo: если есть parent_id, считать общую сумму у сиблингов и у родителя. Если превышает, выбрасывать исключение
+        return true;
     }
 
 }

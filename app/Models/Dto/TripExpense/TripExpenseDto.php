@@ -36,7 +36,7 @@ class TripExpenseDto extends TripExpenseDtoBase
         $data['payDate'] = DateHelper::toCarbonDate($data['payDate']);
 
         $sourceExpenseService = new SourceExpenseService();
-        $data['status'] = isset($data['source']) ? $sourceExpenseService->getByValue($data['source']) : $sourceExpenseService->getDefault();
+        $data['source'] = isset($data['source']) ? $sourceExpenseService->getByValue($data['source']) : $sourceExpenseService->getDefault();
 
         return new self(...$data);
     }

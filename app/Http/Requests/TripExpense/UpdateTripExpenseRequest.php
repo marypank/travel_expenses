@@ -18,7 +18,7 @@ class UpdateTripExpenseRequest extends FormRequest
     {
         return [
             'currencyId' => ['numeric'],
-            'current_rate' => ['decimal:2'],
+            'currentRate' => ['decimal:2'],
             'source' => [Rule::enum(SourceExpenseEnum::class)],
             'title' => ['string'],
             'description' => ['string', 'nullable'],

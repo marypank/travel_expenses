@@ -57,4 +57,13 @@ class ExpenseCurrency extends BaseDto
             'rusPrice' => $this->rusPrice
         ];
     }
+
+    public function toArrayForExpense(): array
+    {
+        return [
+            'id' => $this->id,
+            'price' => $this->price,
+            'rusPrice' => $this->rusPrice
+        ];
+    }
 }

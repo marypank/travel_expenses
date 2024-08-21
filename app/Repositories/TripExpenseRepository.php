@@ -12,14 +12,27 @@ class TripExpenseRepository extends BaseRepository
         return new TripExpense();
     }
 
+    /**
+     * @param array $data
+     * @return Collection
+     */
     public function search($data): Collection
     {
         return new Collection();
     }
 
+    /**
+     * @param int $id
+     * @return Collection
+     */
     public function all(int $id): Collection
     {
-        return new Collection();
+        $expenses = $this->model()
+            ->where('trip_detail_id', $id)
+            ->orderBy('pay_date')
+            ->get();
+
+        return $expenses;
     }
     
 }
