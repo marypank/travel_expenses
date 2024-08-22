@@ -46,15 +46,15 @@ final class TripDetailDto extends TripDetailDtoBase
     protected function defineFields(): array
     {
         return [
-            'trip_id' => $this->tripId,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'date_from' => $this->dateFrom,
-            'date_to' => $this->dateTo,
-            'description' => $this->description,
-            'status' => $this->status,
-            'country_id' => $this->countryId,
-            'city_id' => $this->cityId,
+            self::TRIP_ID => $this->tripId,
+            self::TITLE => $this->title,
+            self::SLUG => $this->slug,
+            self::DATE_FROM => $this->dateFrom,
+            self::DATE_TO => $this->dateTo,
+            self::DESCRIPTION => $this->description,
+            self::STATUS => $this->status,
+            self::COUNTRY_ID => $this->countryId,
+            self::CITY_ID => $this->cityId,
         ];
     }
 }

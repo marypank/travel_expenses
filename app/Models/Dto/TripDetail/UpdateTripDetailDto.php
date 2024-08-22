@@ -62,15 +62,15 @@ class UpdateTripDetailDto extends TripDetailDtoBase
     protected function defineFields(): array
     {
         return [
-            'id' => $this->id,
-            'date_from' => $this->getDateFrom(),
-            'date_to' => $this->getDateTo(),
-            'status' => $this->getStatus(),
-            'title' => $this->getTitle(),
-            'description' => $this->getDescription(),
-            'country_id' => $this->getCountryId(),
-            'city_id' => $this->getCityId(),
-            'slug' => $this->getSlug(),
+            self::ID => $this->id,
+            self::TITLE => $this->title,
+            self::SLUG => $this->slug,
+            self::DATE_FROM => $this->dateFrom,
+            self::DATE_TO => $this->dateTo,
+            self::DESCRIPTION => $this->description,
+            self::STATUS => $this->status,
+            self::COUNTRY_ID => $this->countryId,
+            self::CITY_ID => $this->cityId,
         ];
     }
 }

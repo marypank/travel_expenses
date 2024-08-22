@@ -44,15 +44,15 @@ class TripExpenseDto extends TripExpenseDtoBase
     function defineFields(): array
     {
         return [
-            'trip_detail_id' => $this->tripDetailId,
-            'source' => $this->source,
-            'currency_id' => $this->currencyId,
-            'current_currency_exchange' => $this->currentCurrencyExchange,
-            'title' => $this->title,
-            'description' => $this->description,
-            'parent_id' => $this->parentId,
-            'pay_date' => $this->payDate,
-            'price' => $this->price,
+            self::TRIP_DETAIL_ID => $this->tripDetailId,
+            self::SOURCE => $this->source,
+            self::CURRENCY_ID => $this->currencyId,
+            self::CURRENT_CURRENCY_EXCHANGE => $this->currentCurrencyExchange,
+            self::TITLE => $this->title,
+            self::DESCRIPTION => $this->description,
+            self::PARENT_ID => $this->parentId,
+            self::PAY_DATE => $this->payDate,
+            self::PRICE => $this->price,
         ];
     }
 }

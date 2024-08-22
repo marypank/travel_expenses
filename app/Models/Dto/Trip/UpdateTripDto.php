@@ -49,12 +49,12 @@ class UpdateTripDto extends TripDtoBase
     protected function defineFields(): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'date_from' => $this->dateFrom ?? null,
-            'date_to' => $this->dateTo ?? null,
-            'status' => $this->status ?? null,
+            self::ID => $this->id,
+            self::TITLE => $this->title,
+            self::SLUG => $this->slug,
+            self::DATE_FROM => $this->dateFrom ?? null,
+            self::DATE_TO => $this->dateTo ?? null,
+            self::STATUS => $this->status ?? null,
         ];
     }
 }

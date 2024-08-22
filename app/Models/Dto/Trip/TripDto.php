@@ -46,12 +46,12 @@ class TripDto extends TripDtoBase
     protected function defineFields(): array
     {
         return [
-            'user_id' => $this->userId,
-            'title' => $this->title,
-            'slug' => $this->slug,
-            'date_from' => $this->dateFrom,
-            'date_to' => $this->dateTo,
-            'status' => $this->status,
+            self::USER_ID => $this->userId,
+            self::TITLE => $this->title,
+            self::SLUG => $this->slug,
+            self::DATE_FROM => $this->dateFrom,
+            self::DATE_TO => $this->dateTo,
+            self::STATUS => $this->status,
         ];
     }
 }

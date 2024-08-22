@@ -8,6 +8,18 @@ use Carbon\Carbon;
 
 abstract class TripExpenseDtoBase extends BaseDto
 {
+
+    protected const ID = 'id';
+    protected const TRIP_DETAIL_ID = 'trip_detail_id';
+    protected const TITLE = 'title';
+    protected const DESCRIPTION = 'description';
+    protected const PAY_DATE = 'pay_date';
+    protected const SOURCE = 'source';
+    protected const CURRENCY_ID = 'currency_id';
+    protected const CURRENT_CURRENCY_EXCHANGE = 'current_currency_exchange';
+    protected const PARENT_ID = 'parent_id';
+    protected const PRICE = 'price';
+
     protected int $id;
 
     protected int $tripDetailId;

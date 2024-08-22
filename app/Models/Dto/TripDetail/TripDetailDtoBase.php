@@ -13,6 +13,18 @@ abstract class TripDetailDtoBase extends BaseDto
         'create' => []
     ]; */
 
+    protected const ID = 'id';
+    protected const TRIP_ID = 'trip_id';
+    protected const TITLE = 'title';
+    protected const SLUG = 'slug';
+    protected const DATE_FROM = 'date_from';
+    protected const DATE_TO = 'date_to';
+    protected const STATUS = 'status';
+    protected const DESCRIPTION = 'description';
+    protected const COUNTRY_ID = 'country_id';
+    protected const CITY_ID = 'city_id';
+
+
     protected int $id;
 
     protected int $tripId;

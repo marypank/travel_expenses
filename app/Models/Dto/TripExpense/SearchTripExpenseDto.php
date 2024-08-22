@@ -6,6 +6,7 @@ use App\Models\Dto\Base\BaseDto;
 
 class SearchTripExpenseDto extends TripExpenseDtoBase
 {
+    // unused
     private bool $withChildren = false;
 
     public function __construct(

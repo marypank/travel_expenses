@@ -8,6 +8,15 @@ use Carbon\Carbon;
 
 abstract class TripDtoBase extends BaseDto
 {
+    protected const ID = 'id';
+    protected const USER_ID = 'user_id';
+    protected const TITLE = 'title';
+    protected const SLUG = 'slug';
+    protected const DATE_FROM = 'date_from';
+    protected const DATE_TO = 'date_to';
+    protected const STATUS = 'status';
+
+
     protected int $id;
 
     protected int $userId;
