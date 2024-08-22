@@ -16,11 +16,11 @@ class SourceExpenseController extends Controller
 
     public function index()
     {
-        return $this->sourceExpenseService->all();
+        return $this->sourceExpenseService->all(true);
     }
 
     public function show(int $id)
     {
-        return $this->sourceExpenseService->getById($id);
+        return $this->sourceExpenseService->getByValue($id, true);
     }
 }

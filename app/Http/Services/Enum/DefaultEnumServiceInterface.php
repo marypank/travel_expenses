@@ -4,7 +4,9 @@ namespace App\Http\Services\Enum;
 
 interface DefaultEnumServiceInterface
 {
-    public function all(): array;
+    public function all(bool $convertArray = false): array;
 
-    public function getById(int $id): array;
+    public function getByValue(int $id, bool $convertArray = false);
+
+    public function toArray($item): array;
 }

@@ -10,13 +10,7 @@ class SourceExpenseService extends BaseEnumService
     {
         return SourceExpenseEnum::class;
     }
-
-    // todo: переписать getById на getByValue, заменить вызовы getById на getByValue
-    public function getByValue(int $value): SourceExpenseEnum
-    {
-        return SourceExpenseEnum::tryFrom($value);
-    }
-
+    
     public function getDefault(): SourceExpenseEnum
     {
         return SourceExpenseEnum::CASH;

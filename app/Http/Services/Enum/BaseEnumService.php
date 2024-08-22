@@ -5,29 +5,30 @@ namespace App\Http\Services\Enum;
 abstract class BaseEnumService implements DefaultEnumServiceInterface
 {
     protected abstract static function enumClass();
+    
     public abstract function getDefault();
 
-    public function all(): array
+    public function all(bool $convertArray = false): array
     {
         $result = [];
         foreach (static::enumClass()::cases() as $item) {
-            $result[] = $this->getItem($item);
+            $result[] = $convertArray ? $this->toArray($item) : $item;
         }
 
         return $result;
     }
 
-    public function getById(int $id): array
+    public function getByValue(int $id, bool $convertArray = false)
     {
         $item = static::enumClass()::tryFrom($id);
         if (!$item) {
-            return $this->getDefault();
+            $item = $this->getDefault();
         }
 
-        return $this->getItem($item);
+        return $convertArray ? $this->toArray($item) : $item;
     }
 
-    protected function getItem($item): array
+    public function toArray($item): array
     {
         return [
             'id' => $item->value,
