@@ -14,7 +14,7 @@ class TripTagController extends Controller
     public function index(SearchTripTagRequest $request)
     {
         $request = $request->validated();
-        $tags = $this->tripTagService->all(1, $request['forExpenseOnly'] ?? false, $request['canChoose'] ?? null);
+        $tags = $this->tripTagService->all(1, $request['forExpenseOnly'] ?? null, $request['canChoose'] ?? null);
 
         return TripTagResource::collection($tags);
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trip_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->boolean('for_expense_only')->default(0);
             $table->boolean('can_choose')->default(1);
         });

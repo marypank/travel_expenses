@@ -23,21 +23,22 @@ class TripTagRepository extends BaseRepository
 
     /**
      * @param int $id
-     * @param bool $forExpenseOnly
-     * @param bool $canChoose
+     * @param bool|null $forExpenseOnly
+     * @param bool|null $canChoose
      * @return Collection
      */
-    public function all(int $id, bool $forExpenseOnly = false, ?bool $canChoose = true): Collection
+    public function all(int $id, ?bool $forExpenseOnly = false, ?bool $canChoose = true): Collection
     {
-        $tags = $this->model()
-            ->where('can_choose', $canChoose);
+        $tags = $this->model();
 
-        if ($tags == false) {
+        if (!is_null($canChoose) && $canChoose == false) {
             $tags = $tags->where('can_choose', false);
+        } else {
+            $tags = $tags->where('can_choose', true);
         }
-        
-        if ($forExpenseOnly) {
-            $tags = $tags->where('for_expense_only', true);
+
+        if (!is_null($forExpenseOnly)) {
+            $tags = $tags->where('for_expense_only', $forExpenseOnly);
         }
 
         return $tags->get();

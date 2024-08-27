@@ -23,11 +23,11 @@ class TripTagService extends BaseService
 
     /**
      * @param int $id
-     * @param bool $forExpenseOnly
-     * @param bool $canChoose
+     * @param bool|null $forExpenseOnly
+     * @param bool|null $canChoose
      * @return Collection
      */
-    public function all(int $id, bool $forExpenseOnly = false, ?bool $canChoose = true): Collection
+    public function all(int $id, ?bool $forExpenseOnly = false, ?bool $canChoose = true): Collection
     {
         return $this->mainRepository->all($id, $forExpenseOnly, $canChoose);
     }
