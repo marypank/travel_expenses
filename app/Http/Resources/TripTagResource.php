@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TripResource extends JsonResource
+class TripTagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,9 @@ class TripResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            // 'userId' => $this->user_id,
             'title' => $this->title,
-            'slug' => $this->slug,
-            'tripsCount' => count($this->details),
-            'dateFrom' => $this->date_from,
-            'dateTo' => $this->date_to,
-            'status' => $this->status, // todo: think if i need tern in into resourse
+            'forExpenseOnly' => $this->for_expense_only,
+            'canChoose' => $this->can_choose,
         ];
     }
 }

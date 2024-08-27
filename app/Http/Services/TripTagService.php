@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Services;
+
+use App\Repositories\TripTagRepository;
+use Illuminate\Database\Eloquent\Collection;
+
+class TripTagService extends BaseService
+{
+    public function __construct(TripTagRepository $mainRepository)
+    {
+        parent::__construct($mainRepository);
+    }
+
+     /**
+     * @param array $dto
+     * @return Collection
+     */
+    public function search($dto): Collection
+    {
+        return new Collection();
+    }
+
+    /**
+     * @param int $id
+     * @param bool $forExpenseOnly
+     * @param bool $canChoose
+     * @return Collection
+     */
+    public function all(int $id, bool $forExpenseOnly = false, ?bool $canChoose = true): Collection
+    {
+        return $this->mainRepository->all($id, $forExpenseOnly, $canChoose);
+    }
+}
