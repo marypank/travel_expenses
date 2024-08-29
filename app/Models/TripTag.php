@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class TripTag extends Model
 {
@@ -27,5 +28,18 @@ class TripTag extends Model
         'can_choose' => 'boolean',
     ];
 
-    // todo: one to many through trips, trip_details, trip_expenses
+    /* public function trips(): BelongsToMany
+    {
+        return $this->belongsToMany(TripTag::class, 'tags_trips', 'tag_id', 'trip_id');
+    }
+
+    public function details(): BelongsToMany
+    {
+        return $this->belongsToMany(TripTag::class, 'tags_trips', 'tag_id', 'trip_detail_id');
+    }
+
+    public function expenses(): BelongsToMany
+    {
+        return $this->belongsToMany(TripTag::class, 'tags_trips', 'tag_id', 'trip_expense_id');
+    } */
 }

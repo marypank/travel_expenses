@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TripDetail extends Model
@@ -38,5 +39,10 @@ class TripDetail extends Model
     public function trip(): BelongsTo
     {
         return $this->belongsTo(Trip::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(TripTag::class, 'tags_trip_details', 'trip_detail_id', 'tag_id');
     }
 }

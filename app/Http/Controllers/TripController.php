@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Trip\SearchTripRequest;
+use App\Http\Actions\Trip\TripTagAction;
 use App\Http\Requests\Trip\SlugTripRequest;
 use App\Http\Requests\Trip\StoreTripRequest;
+use App\Http\Requests\Trip\TripTagRequest;
 use App\Http\Requests\Trip\UpdateTripRequest;
 use App\Http\Resources\TripResource;
 use App\Http\Services\TripService;
-use App\Models\Dto\Trip\SearchTripDto;
 use App\Models\Dto\Trip\TripDto;
 use App\Models\Dto\Trip\UpdateTripDto;
 use App\Models\Trip;
@@ -78,5 +78,14 @@ class TripController extends Controller
         $this->tripService->delete($trip->id);
 
         return response()->noContent(Response::HTTP_NO_CONTENT);
+    }
+
+    public function tag(TripTagRequest $request)
+    {
+        $request = $request->validated();
+        $action = new TripTagAction();
+        $action->handle($request['id'], $request['tagId'], $request['operation']);
+
+        return response()->noContent(Response::HTTP_CREATED);
     }
 }

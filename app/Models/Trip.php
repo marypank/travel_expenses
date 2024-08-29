@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Enum\TripStatusEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -37,5 +38,10 @@ class Trip extends Model
     public function details(): HasMany
     {
         return $this->hasMany(TripDetail::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(TripTag::class, 'tags_trips', 'trip_id', 'tag_id');
     }
 }
