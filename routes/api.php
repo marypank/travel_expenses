@@ -9,7 +9,7 @@ use App\Http\Controllers\SourceExpenseController;
 use App\Http\Controllers\TripDetailController;
 use App\Http\Controllers\TripExpenseController;
 use App\Http\Controllers\TripStatusController;
-use App\Http\Controllers\TripTagController;
+use App\Http\Controllers\TagController;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/trips/show-by-slug', [TripController::class, 'showBySlug']);
+    Route::post('trips/tag', [TripController::class, 'tag']);
 
     Route::apiResource('trips', TripController::class);
     Route::apiResource('trip-details', TripDetailController::class);
@@ -26,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('source-expenses', SourceExpenseController::class);
     Route::apiResource('currency', CurrencyController::class);
     Route::apiResource('trip-statuses', TripStatusController::class);
-    Route::apiResource('trip-tags', TripTagController::class);
+    Route::apiResource('tags', TagController::class);
 });
 
 Route::post('login', [AuthController::class, 'login']);

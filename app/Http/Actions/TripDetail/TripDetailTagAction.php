@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Actions\Trip;
+namespace App\Http\Actions\TripDetail;
 use App\Http\Actions\BaseTagActionInterface;
 
-class TripTagAction implements BaseTagActionInterface
+class TripDetailTagAction implements BaseTagActionInterface
 {
     public function handle(int $id, int $tagId, ?string $operation)
     {
@@ -11,7 +11,7 @@ class TripTagAction implements BaseTagActionInterface
             return;
         }
 
-        $instns = $operation === self::ADD ? new AddTagToTripAction() : new DeleteTagFromTripAction();
+        $instns = $operation === self::ADD ? new AddTagToTripDetailAction() : new DeleteTagFromTripActionDetail();
         $instns->handle($id, $tagId, null);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Services;
 
-use App\Repositories\TripTagRepository;
+use App\Repositories\TagRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class TripTagService extends BaseService
+class TagService extends BaseService
 {
-    public function __construct(TripTagRepository $mainRepository)
+    public function __construct(TagRepository $mainRepository)
     {
         parent::__construct($mainRepository);
     }

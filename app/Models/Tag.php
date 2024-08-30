@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class TripTag extends Model
+class Tag extends Model
 {
     use HasFactory;
 
     /** @var string $table */
-    protected $table = 'trip_tags';
+    protected $table = 'tags';
 
     public $timestamps = false;
 
@@ -30,16 +29,16 @@ class TripTag extends Model
 
     /* public function trips(): BelongsToMany
     {
-        return $this->belongsToMany(TripTag::class, 'tags_trips', 'tag_id', 'trip_id');
+        return $this->belongsToMany(Trip::class, 'tags_trips', 'tag_id', 'trip_id');
     }
 
     public function details(): BelongsToMany
     {
-        return $this->belongsToMany(TripTag::class, 'tags_trips', 'tag_id', 'trip_detail_id');
+        return $this->belongsToMany(TripDetail::class, 'tags_trips', 'tag_id', 'trip_detail_id');
     }
 
     public function expenses(): BelongsToMany
     {
-        return $this->belongsToMany(TripTag::class, 'tags_trips', 'tag_id', 'trip_expense_id');
+        return $this->belongsToMany(TripExpense::class, 'tags_trips', 'tag_id', 'trip_expense_id');
     } */
 }

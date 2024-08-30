@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Triptag;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Collection;
 
-class TripTagRepository extends BaseRepository
+class TagRepository extends BaseRepository
 {
     public function model()
     {
-        return new Triptag();
+        return new Tag();
     }
 
     /**
