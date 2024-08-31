@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Helpers\DateHelper;
+use App\Http\Services\Base\BaseService;
 use App\Models\Dto\Base\BaseDtoInterface;
 use App\Models\Dto\Trip\SearchTripDto;
 use App\Models\Dto\Trip\UpdateTripDto;

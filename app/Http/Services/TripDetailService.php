@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Helpers\DateHelper;
+use App\Http\Services\Base\BaseService;
 use App\Repositories\TripDetailRepository;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Dto\Base\BaseDtoInterface;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\Services\Base\BaseService;
 use App\Repositories\TagRepository;
 use Illuminate\Database\Eloquent\Collection;
 

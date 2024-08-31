@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Services\Api\CurrencyService;
+use App\Http\Services\Base\BaseService;
 use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\AdditionalModel\ExpenseCurrency;
 use App\Models\Dto\Base\BaseDtoInterface;
@@ -88,7 +89,7 @@ class TripExpenseService extends BaseService
 
         $tripExpense->withChildren = $withChildren;
         
-        $tripExpense->sourceType = $this->sourceExpenseService->getById($tripExpense->source->value)['rusName'];
+        $tripExpense->sourceType = $this->sourceExpenseService->getByValue($tripExpense->source->value, true)['rusName'];
     }
 
     /**

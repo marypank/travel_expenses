@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Http\Services\Base;
 
 use App\Models\Dto\Base\BaseDtoInterface;
 use App\Repositories\BaseRepository;
