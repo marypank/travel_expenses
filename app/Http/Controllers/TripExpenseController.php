@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\TripExpense\TripExpenseTagAction;
 use App\Http\Requests\TripExpense\SearchTripExpenseRequest;
 use App\Http\Requests\TripExpense\StoreTripExpenseRequest;
+use App\Http\Requests\TripExpense\TripExpenseTagRequest;
 use App\Http\Requests\TripExpense\UpdateTripExpenseRequest;
 use App\Http\Resources\TripExpenseResource;
 use App\Http\Services\TripExpenseService;
@@ -62,5 +64,14 @@ class TripExpenseController extends Controller
         $this->tripExpenseService->delete($tripExpense->id);
 
         return response()->noContent(Response::HTTP_NO_CONTENT);
+    }
+
+    public function tag(TripExpenseTagRequest $request)
+    {
+        $request = $request->validated();
+        $action = new TripExpenseTagAction();
+        $action->handle($request['id'], $request['tagId'], $request['operation']);
+
+        return response()->noContent(Response::HTTP_CREATED);
     }
 }
