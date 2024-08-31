@@ -1,20 +1,15 @@
 <?php
 
 namespace App\Http\Actions\Trip;
-use App\Http\Actions\BaseTagActionInterface;
+
+use App\Http\Actions\BaseAddTagAction;
+use App\Repositories\BaseRepository;
 use App\Repositories\TripRepository;
 
-class AddTagToTripAction implements BaseTagActionInterface
+class AddTagToTripAction extends BaseAddTagAction
 {
-    public function handle(int $id, int $tagId, ?string $operation)
+    protected function getRepository(): BaseRepository
     {
-        $tripRepo = new TripRepository();
-        $trip = $tripRepo->getById($id);
-
-        if ($trip->tags()->count() >= self::MAX_RECORDS_FOR_OTHERS) {
-            throw new \Exception("max tags to trip already added");
-        }
-
-        $trip->tags()->attach($tagId);
+        return new TripRepository();
     }
 }

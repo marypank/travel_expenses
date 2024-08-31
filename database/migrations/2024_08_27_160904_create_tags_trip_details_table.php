@@ -17,6 +17,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('trip_detail_id');
             $table->foreign('trip_detail_id')->references('id')->on('trip_details')->cascadeOnDelete();
+
+            $table->unique(['tag_id', 'trip_detail_id'], 'tag_trip_detail_unique');
         });
     }
 

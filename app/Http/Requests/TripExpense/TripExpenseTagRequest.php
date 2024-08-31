@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Trip;
+namespace App\Http\Requests\TripExpense;
 
 use App\Http\Actions\BaseTagAction;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class TripTagRequest extends FormRequest
+class TripExpenseTagRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,7 +17,7 @@ class TripTagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'numeric', 'exists:trips,id'],
+            'id' => ['required', 'numeric', 'exists:trip_expenses,id'],
             'tagId' => ['required', 'exists:tags,id'],
             'operation' => ['required', Rule::in([BaseTagAction::ADD, BaseTagAction::DELETE])]
         ];

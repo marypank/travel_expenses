@@ -18,12 +18,25 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/trips/show-by-slug', [TripController::class, 'showBySlug']);
-    Route::post('trips/tag', [TripController::class, 'tag']);
+    Route::prefix('trips')->group(function () {
+        Route::get('/show-by-slug', [TripController::class, 'showBySlug']);
+        Route::post('/tag', [TripController::class, 'tag']);
 
-    Route::apiResource('trips', TripController::class);
-    Route::apiResource('trip-details', TripDetailController::class);
-    Route::apiResource('trip-expenses', TripExpenseController::class);
+        Route::apiResource('/', TripController::class);
+    });
+
+    Route::prefix('trip-details')->group(function () {
+        Route::post('/tag', [TripDetailController::class, 'tag']);
+
+        Route::apiResource('/', TripDetailController::class);
+    });
+
+    Route::prefix('trip-expenses')->group(function () {
+        Route::post('/tag', [TripExpenseController::class, 'tag']);
+
+        Route::apiResource('/', TripExpenseController::class);
+    });
+
     Route::apiResource('source-expenses', SourceExpenseController::class);
     Route::apiResource('currency', CurrencyController::class);
     Route::apiResource('trip-statuses', TripStatusController::class);

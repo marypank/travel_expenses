@@ -43,6 +43,6 @@ class TripDetail extends Model
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'tags_trip_details', 'trip_detail_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'tags_details', 'trip_detail_id', 'tag_id');
     }
 }

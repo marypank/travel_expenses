@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Actions\TripDetail\TripDetailTagAction;
+use App\Http\Requests\TripDetail\TripDetailTagRequest;
 use App\Http\Requests\TripDetail\SearchTripDetailRequest;
 use App\Http\Requests\TripDetail\StoreTripDetailRequest;
 use App\Http\Requests\TripDetail\UpdateTripDetailRequest;
 use App\Http\Resources\TripDetailResource;
 use App\Http\Services\TripDetailService;
-use App\Models\Dto\TripDetail\SearchTripDetailDto;
 use App\Models\Dto\TripDetail\TripDetailDto;
 use App\Models\Dto\TripDetail\UpdateTripDetailDto;
 use App\Models\TripDetail;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripDetailController extends Controller
@@ -66,5 +66,14 @@ class TripDetailController extends Controller
         $this->tripDetailService->delete($tripDetail->id);
 
         return response()->noContent(Response::HTTP_NO_CONTENT);
+    }
+
+    public function tag(TripDetailTagRequest $request)
+    {
+        $request = $request->validated();
+        $action = new TripDetailTagAction();
+        $action->handle($request['id'], $request['tagId'], $request['operation']);
+
+        return response()->noContent(Response::HTTP_CREATED);
     }
 }

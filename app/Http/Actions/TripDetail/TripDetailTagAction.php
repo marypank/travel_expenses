@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Actions\TripDetail;
-use App\Http\Actions\BaseTagActionInterface;
+use App\Http\Actions\BaseTagAction;
 
-class TripDetailTagAction implements BaseTagActionInterface
+class TripDetailTagAction extends BaseTagAction
 {
-    public function handle(int $id, int $tagId, ?string $operation)
+    protected function deleteAction()
     {
-        if (!in_array($operation, [self::ADD, self::DELETE])) {
-            return;
-        }
+        return new DeleteTagFromTripActionDetail();
+    }
 
-        $instns = $operation === self::ADD ? new AddTagToTripDetailAction() : new DeleteTagFromTripActionDetail();
-        $instns->handle($id, $tagId, null);
+    protected function addAction()
+    {
+        return new AddTagToTripDetailAction();
     }
 }

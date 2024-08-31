@@ -2,16 +2,14 @@
 
 namespace App\Http\Actions\Trip;
 
-use App\Http\Actions\BaseTagActionInterface;
+use App\Http\Actions\BaseDeleteTagAction;
+use App\Repositories\BaseRepository;
 use App\Repositories\TripRepository;
 
-class DeleteTagFromTripAction implements BaseTagActionInterface
+class DeleteTagFromTripAction extends BaseDeleteTagAction
 {
-    public function handle(int $id, int $tagId, ?string $operation)
+    protected function getRepository(): BaseRepository
     {
-        $tripRepo = new TripRepository();
-        $trip = $tripRepo->getById($id);
-
-        $trip->tags()->detach($tagId);
+        return new TripRepository();
     }
 }
