@@ -22,11 +22,11 @@ abstract class BaseAddTagAction
 
         if ($repo instanceof TripExpenseRepository) {
             if ($this->isRecordExpensesLimit($data->tags()->count())) {
-                throw new \Exception(self::ERROR_MESSAGE);
+                throw new \Exception(self::ERROR_MESSAGE); // todo: custom
             }
         } else {
             if ($this->isRecordLimit($data->tags()->count())) {
-                throw new \Exception(self::ERROR_MESSAGE);
+                throw new \Exception(self::ERROR_MESSAGE); // todo: custom
             }
         }
 
