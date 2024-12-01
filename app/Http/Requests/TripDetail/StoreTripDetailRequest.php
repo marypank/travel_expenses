@@ -15,7 +15,7 @@ class StoreTripDetailRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug' => Str::slug($this->title),
+            'slug' => $this->slug ?: Str::slug($this->title),
         ]);
     }
 

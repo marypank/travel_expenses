@@ -17,7 +17,7 @@ class UpdateTripRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         !$this->title ?: $this->merge([
-            'slug' => Str::slug($this->title),
+            'slug' => $this->slug ?: Str::slug($this->title),
         ]);
     }
 
