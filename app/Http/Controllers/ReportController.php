@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\Reports\TripReportService;
+use App\Models\Trip;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -12,7 +13,6 @@ class ReportController extends Controller
         //
     }
 
-    // todo: вместо id можно загрузить Trip $trip
     public function trip(int $id)
     {
         $result = $this->tripReportService->getSpreadsheet($id);
