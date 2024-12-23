@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enum\TripStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -29,6 +30,7 @@ class TripDetail extends Model
     protected $casts = [
         'date_to' => 'date',
         'date_from' => 'date',
+        'status' => TripStatusEnum::class,
     ];
 
     public function expenses(): HasMany

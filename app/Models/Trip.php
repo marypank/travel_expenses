@@ -27,7 +27,7 @@ class Trip extends Model
     protected $casts = [
         'date_to' => 'date',
         'date_from' => 'date',
-        'status' => TripStatusEnum::class
+        'status' => TripStatusEnum::class,
     ];
 
     public function expenses(): HasManyThrough
