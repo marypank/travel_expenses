@@ -14,12 +14,14 @@ class UpdateTripDto extends TripDtoBase
         ?string $title,
         ?string $slug,
         ?TripStatusEnum $status,
+        ?int $currencyId,
         ?Carbon $dateFrom,
         ?Carbon $dateTo)
     {
         $this->id = $id;
         $this->title = $title;
         $this->slug = $slug;
+        $this->currencyId = $currencyId;
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
         $this->status = $status;
@@ -30,6 +32,7 @@ class UpdateTripDto extends TripDtoBase
         string $title = null,
         string $slug = null,
         int $status = null,
+        int $currencyId = null,
         string $dateFrom = null,
         string $dateTo = null): UpdateTripDto
     {
@@ -43,7 +46,7 @@ class UpdateTripDto extends TripDtoBase
             $status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
         }
 
-        return new self($id, $title, $slug, $status, $dateFrom, $dateTo);
+        return new self($id, $title, $slug, $status, $currencyId, $dateFrom, $dateTo);
     }
 
     protected function defineFields(): array
@@ -55,6 +58,7 @@ class UpdateTripDto extends TripDtoBase
             self::DATE_FROM => $this->dateFrom ?? null,
             self::DATE_TO => $this->dateTo ?? null,
             self::STATUS => $this->status ?? null,
+            self::CURRENCY_ID => $this->currencyId ?? null,
         ];
     }
 }

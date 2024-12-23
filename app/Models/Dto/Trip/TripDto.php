@@ -15,6 +15,7 @@ class TripDto extends TripDtoBase
         string $slug,
         Carbon $dateFrom,
         Carbon $dateTo,
+        int $currencyId,
         TripStatusEnum $status)
     {
         $this->userId = $userId;
@@ -23,6 +24,7 @@ class TripDto extends TripDtoBase
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
         $this->status = $status;
+        $this->currencyId = $currencyId;
     }
 
     public static function create(
@@ -31,6 +33,7 @@ class TripDto extends TripDtoBase
         string $slug,
         string $dateFrom,
         string $dateTo,
+        int $currencyId,
         int $status = null): TripDto
     {
         $dateFrom = DateHelper::toCarbonDate($dateFrom);
@@ -40,7 +43,7 @@ class TripDto extends TripDtoBase
         $tripStatusService = new TripStatusService();
         $status = $status ? $tripStatusService->getByValue($status) : $tripStatusService->getDefault();
 
-        return new self($userId, $title, $slug, $dateFrom, $dateTo, $status);
+        return new self($userId, $title, $slug, $dateFrom, $dateTo, $currencyId, $status);
     }
 
     protected function defineFields(): array
@@ -52,6 +55,7 @@ class TripDto extends TripDtoBase
             self::DATE_FROM => $this->dateFrom,
             self::DATE_TO => $this->dateTo,
             self::STATUS => $this->status,
+            self::CURRENCY_ID => $this->currencyId,
         ];
     }
 }

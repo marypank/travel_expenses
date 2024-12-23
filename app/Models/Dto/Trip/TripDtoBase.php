@@ -9,13 +9,20 @@ use Carbon\Carbon;
 abstract class TripDtoBase extends BaseDto
 {
     protected const ID = 'id';
+
     protected const USER_ID = 'user_id';
+
     protected const TITLE = 'title';
+
     protected const SLUG = 'slug';
+
     protected const DATE_FROM = 'date_from';
+
     protected const DATE_TO = 'date_to';
+
     protected const STATUS = 'status';
 
+    protected const CURRENCY_ID = 'currency_id';
 
     protected int $id;
 
@@ -30,6 +37,8 @@ abstract class TripDtoBase extends BaseDto
     protected ?Carbon $dateTo = null;
 
     protected ?TripStatusEnum $status;
+
+    protected ?int $currencyId;
 
     public function setUserId(int $userId): self
     {
@@ -71,5 +80,10 @@ abstract class TripDtoBase extends BaseDto
     public function getStatus(): ?TripStatusEnum
     {
         return $this->status;
+    }
+
+    public function getCurrencyId(): ?int
+    {
+        return $this->currencyId;
     }
 }

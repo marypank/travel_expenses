@@ -29,6 +29,7 @@ class UpdateTripRequest extends FormRequest
             'slug' => ['string', 'min:16'],
             // 'budget' => ['decimal:2,4'],
             'status' => ['numeric', Rule::enum(TripStatusEnum::class)],
+            'currencyId' => ['decimal:2'],
             'dateFrom' => ['date'],
             'dateTo' => ['date', 'after_or_equal:dateFrom'],
         ];

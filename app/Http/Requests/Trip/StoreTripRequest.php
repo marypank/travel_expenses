@@ -30,6 +30,7 @@ class StoreTripRequest extends FormRequest
             'slug' => ['required', 'string', 'min:8'],
             'dateFrom' => ['required', 'date'],
             'dateTo' => ['required', 'date', 'after_or_equal:dateFrom'],
+            'currencyId' => ['required', 'decimal:2'],
             'status' => [Rule::enum(TripStatusEnum::class)],
         ];
     }
