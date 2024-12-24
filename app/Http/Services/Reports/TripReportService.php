@@ -3,8 +3,10 @@
 namespace App\Http\Services\Reports;
 
 use App\Http\Services\Api\CurrencyService;
+use App\Models\Dto\Trip\TripReportDto;
 use App\Models\Enum\TripStatusEnum;
 use App\Repositories\TripRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -25,76 +27,62 @@ class TripReportService
     public function getSpreadsheet(int $tripId)
     {
         // todo: сделать отчет в зависимости от языка пользователя, не забыть про TripStatusEnum
-        
-        // todo: сделать как модель
-        $mainData = [];
 
-        // todo: $mainCollection = new Collection();
-        // $mainCollection->put('info', []);
         $trip = $this->tripRepository->getById($tripId);
-        $mainData[$this->getTransliterateTitle($trip->title)] = [
-            'title' => $trip->title,
-            'dateFrom' => $trip->date_from->format('Y-m-d'),
-            'dateTo' => $trip->date_to->format('Y-m-d'),
-            'daysCount' => (int)$trip->date_from->diffInDays($trip->date_to),
-            'totalSum' => 0,
-            'status' => TripStatusEnum::RUS_NAMES[$trip->status->value],
-            'currency' => $this->currencyService->getById($trip->currency_id)->getName(),
-        ];
+        if ($trip) {
+            // todo: check after policy
+        }
+
+        $mainCollection = new Collection();
+        // todo: как по ключу посчитать и засунуть конечную сумму путешествия
+        $mainCollection->put($this->getTransliterateTitle($trip->title), new TripReportDto(
+            $trip->title,
+            $trip->date_from,
+            $trip->date_to,
+            $trip->status,
+            $this->currencyService->getById($trip->currency_id)->getName()
+        ));
         
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Info');
-
+        $sheet->setTitle('Main info');
 
         foreach($trip->details as $key => $details) {
-            /** TripDetails $details */
-            $mainData[$this->getTransliterateTitle($details->title)] = [
-                'title' => $details->title,
-                'dateFrom' => $details->date_from->format('Y-m-d'),
-                'dateTo' => $details->date_to->format('Y-m-d'),
-                'daysCount' => (int)$details->date_from->diffInDays($details->date_to),
-                'totalSum' => 0,
-                'status' => TripStatusEnum::RUS_NAMES[$details->status->value],
-                'country' => '', // todo: later
-                'city' => '', // todo: later
-            ];
+            $tripMainRepo = new TripReportDto(
+                $details->title,
+                $details->date_from,
+                $details->date_to,
+                $details->status,
+                // todo: add country and city later
+            );
 
             $workSheet = new Worksheet($spreadsheet, $this->getTransliterateTitle($details->title));
             $newSheet = $spreadsheet->addSheet($workSheet, 1);
 
             foreach ($details->expenses as $expenses) {
-                // $mainData[$this->getTransliterateTitle($details->title)]['totalSum'] = 1;
+                // $tripMainRepo->addSum();
             }
+
+            $mainCollection->put($this->getTransliterateTitle($details->title), $tripMainRepo);
         }
 
+        // todo: вынести
         $key = 1;
         $sheet->setCellValue('A' . $key, 'title');
         $sheet->setCellValue('B' . $key, 'date from');
         $sheet->setCellValue('C' . $key, 'date to');
         $sheet->setCellValue('D' . $key, 'days count');
-        $sheet->setCellValue('E' . $key, 'status');
-        $sheet->setCellValue('F' . $key, 'currency');
-        $sheet->setCellValue('G' . $key, 'total sum');
+        $sheet->setCellValue('E' . $key, 'total sum');
+        $sheet->setCellValue('F' . $key, 'status');
+        $sheet->setCellValue('G' . $key, 'currency');
         $sheet->setCellValue('H' . $key, 'country');
         $sheet->setCellValue('I' . $key, 'city');
         $key++;
 
-        // дни пофиксить. не включает 1 день как полный день, получается 0 (разница между датами)
-        // расширить ячейки
-        foreach ($mainData as $item) {
-            $sheet->setCellValue('A' . $key, $item['title']);
-            $sheet->setCellValue('B' . $key, $item['dateFrom']);
-            $sheet->setCellValue('C' . $key, $item['dateTo']);
-            $sheet->setCellValue('D' . $key, $item['daysCount']);
-            $sheet->setCellValue('E' . $key, $item['status']);
-            $sheet->setCellValue('F' . $key, $item['currency'] ?? '');
-            $sheet->setCellValue('G' . $key, $item['totalSum']);
-            $sheet->setCellValue('H' . $key, $item['country'] ?? '');
-            $sheet->setCellValue('I' . $key, $item['city'] ?? '');
-
+        $mainCollection->each(function (TripReportDto $item, string $title) use (&$key, $sheet) {
+            $sheet->fromArray($item->toArray(true), null, 'A' . $key);
             $key++;
-        }
+        });
 
         // todo: после УСПЕШНОГО скачивания отправлять запрос на удаление файла или сделать крон, который удалял каждый день файлы через какой-то период
         $writer = new Xlsx($spreadsheet);

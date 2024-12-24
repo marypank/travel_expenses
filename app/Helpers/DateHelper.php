@@ -28,4 +28,10 @@ class DateHelper
         return $date > $parentDate;
     }
 
+    public static function getDifferenceBetweenDays(Carbon $dateFrom, Carbon $dateTo): int
+    {
+        // todo: дни пофиксить. не включает 1 день как полный день (сделала пока +1), получается 0 (разница между датами)
+        return (int)$dateFrom->diffInDays($dateTo) + 1;
+    }
+
 }
