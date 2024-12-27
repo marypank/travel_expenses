@@ -4,7 +4,6 @@ namespace App\Http\Services\Reports;
 
 use App\Http\Services\Api\CurrencyService;
 use App\Models\Dto\Trip\TripReportDto;
-use App\Models\Enum\TripStatusEnum;
 use App\Repositories\TripRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -45,9 +44,12 @@ class TripReportService
         
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Main info');
+        $sheet->setTitle($this->getTransliterateTitle($trip->title));
 
-        foreach($trip->details as $key => $details) {
+        $tripDetails = $trip->details->sortBy(function ($detail) {
+            return $detail->date_to;
+        });
+        foreach($tripDetails as $key => $details) {
             $tripMainRepo = new TripReportDto(
                 $details->title,
                 $details->date_from,
