@@ -21,6 +21,7 @@ class Trip extends Model
         'date_to',
         'date_from',
         'status',
+        'currency_id',
     ];
 
     /** @var array $casts */
