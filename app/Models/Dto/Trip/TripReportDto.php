@@ -36,7 +36,7 @@ class TripReportDto extends BaseDto
             'dateFrom' => $this->dateFrom->format('Y-m-d'),
             'dateTo' => $this->dateTo->format('Y-m-d'),
             'daysCount' => DateHelper::getDifferenceBetweenDays($this->dateFrom, $this->dateTo),
-            'totalSum' => 0,
+            'totalSum' => $this->totalSum,
             'status' => TripStatusEnum::RUS_NAMES[$this->status->value],
             'currency' => $this->currency ?? '',
             'country' => $this->country ?? '', // todo: later

@@ -85,6 +85,7 @@ class TripExpenseService extends BaseService
     {
         $valute = $this->currencyService->getById($tripExpense->currency_id);
         
+        // todo: подумать надо ли ExpenseCurrency или CurrencyDto
         $tripExpense->currency = ExpenseCurrency::getCurrent($valute, $tripExpense->current_currency_exchange, $tripExpense->price);
 
         $tripExpense->withChildren = $withChildren;

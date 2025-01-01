@@ -37,6 +37,11 @@ class CurrencyDto extends BaseDto
         return $this->Nominal;
     }
 
+    public function getValue()
+    {
+        return $this->Value;
+    }
+
     protected function defineFields(): array
     {
         return [
