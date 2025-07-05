@@ -17,7 +17,7 @@ class CurrencyService
 
     private Collection $currencyData;
 
-    public function __construct(private CacheService $cacheService)
+    public function __construct(private readonly CacheService $cacheService)
     {
         $this->client = new Client();
         $this->currencyData = new Collection();
