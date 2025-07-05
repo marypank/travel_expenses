@@ -68,7 +68,7 @@ class CurrencyService
     {
         $this->currencyData = $this->currencyData->isEmpty() ? $this->all() : $this->currencyData;
 
-        return $this->currencyData->first(fn ($item) => $item['id'] === $id);
+        return $this->currencyData->first(fn ($item) => $item['id'] == $id) ?? [];
     }
 
     private function addRussianValute(Collection &$collection)
