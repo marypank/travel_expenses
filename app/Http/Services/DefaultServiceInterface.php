@@ -8,13 +8,33 @@ use Illuminate\Support\Collection;
 
 interface DefaultServiceInterface
 {
+    /**
+     * @return Collection
+     */
     public function all(): Collection;
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function getById(int $id): ?Model;
 
+    /**
+     * @param BaseDto $dto
+     * @return void
+     */
     public function create(BaseDto $dto): Model;
 
-    public function update(BaseDto $dto): Model;
+    /**
+     * @param Model $model
+     * @param BaseDto $dto
+     * @return void
+     */
+    public function update(Model $model, BaseDto $dto): Model;
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function delete(int $id): void;
 }

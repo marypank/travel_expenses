@@ -7,13 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 
 interface DefaultRepositoryInterface
 {
+    /**
+     * @return Collection
+     */
     public function all(): Collection;
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function getById(int $id): ?Model;
 
-    public function create(): Model;
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function create(array $data): Model;
 
-    public function update(): Model;
+    /**
+     * @param int $id
+     * @param array $data
+     * @return void
+     */
+    public function update(int $id, array $data): Model;
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function delete(int $id): void;
 }
