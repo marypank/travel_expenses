@@ -2,7 +2,17 @@
 
 namespace App\Repositories;
 
-class TripRepository
+use App\Models\Trip;
+
+class TripRepository extends BaseRepository
 {
-    //
+    public function model()
+    {
+        return new Trip();
+    }
+
+    public function getBySlug(string $slug): ?Trip
+    {
+        return $this->model()::where('slug', $slug)->first();
+    }
 }
