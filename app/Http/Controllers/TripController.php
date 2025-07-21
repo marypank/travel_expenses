@@ -2,32 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Trip\StoreTripRequest;
+use App\Http\Requests\Trip\UpdateTripRequest;
+use App\Http\Resources\TripResource;
+use App\Http\Services\TripService;
+use App\Models\Dto\TripDto;
+use App\Models\Dto\UpdateTripDto;
+use App\Models\Trip;
+use Symfony\Component\HttpFoundation\Response;
 
 class TripController extends Controller
 {
+    public function __construct(private readonly TripService $tripService)
+    {}
+
     public function index()
     {
-        //
+        return $this->tripService->all();
     }
 
-    public function store(Request $request)
+    public function store(StoreTripRequest $request)
     {
-        //
+        $dto = TripDto::create(...$request->validated());
+
+        try {
+            $dto->setUserId(auth()->user()->id);
+            $this->tripService->create($dto);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'data' => [],
+                'message' => $ex->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        return response()->noContent(Response::HTTP_CREATED);
     }
 
-    public function show(string $id)
+    public function show(Trip $trip)
     {
-        //
+        return new TripResource($trip);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateTripRequest $request, Trip $trip)
     {
-        //
+        $dto = UpdateTripDto::create($trip->id, ...$request->validated());
+
+        $trip = $this->tripService->update($trip, $dto);
+
+        return new TripResource($trip);
     }
 
-    public function destroy(string $id)
+    public function destroy(Trip $trip)
     {
-        //
+        $this->tripService->delete($trip->id);
+
+        return response()->noContent(Response::HTTP_NO_CONTENT);
     }
 }

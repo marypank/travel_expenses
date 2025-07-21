@@ -11,4 +11,14 @@ class DateHelper
     {
         return Carbon::parse($date);
     }
+
+    public static function isChildDateLess(Carbon $date, Carbon $parentDate): bool
+    {
+        return $date < $parentDate;
+    }
+
+    public static function isChildDateGreater(Carbon $date, Carbon $parentDate): bool
+    {
+        return $date > $parentDate;
+    }
 }
