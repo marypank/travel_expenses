@@ -18,7 +18,7 @@ class TripController extends Controller
 
     public function index()
     {
-        return $this->tripService->all();
+        return TripResource::collection($this->tripService->all());
     }
 
     public function store(StoreTripRequest $request)
