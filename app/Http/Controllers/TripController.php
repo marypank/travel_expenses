@@ -16,6 +16,36 @@ class TripController extends Controller
     public function __construct(private readonly TripService $tripService)
     {}
 
+    /**
+     * @OA\Get(
+     *     path="/api/trips",
+     *     description="Get all user trips",
+     *     tags={"Trips"},
+     *     security={{"bearer_token":{}}},
+     *     summary="Get all currencies",
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Trip")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated.",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal Server Error"
+     *      )
+     *    )
+     * )
+     */
     public function index()
     {
         return TripResource::collection($this->tripService->all());

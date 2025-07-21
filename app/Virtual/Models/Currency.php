@@ -17,20 +17,22 @@ class Currency
 {
     /**
      * @OA\Property(
-     *     format="int64",
+     *     format="string",
      *     description="id",
      *     title="id",
+     *     example="036",
      * )
      *
-     * @param int $id
+     * @param string $id
      */
-    private int $id;
+    private string $id;
 
     /**
      * @OA\Property(
      *     format="string",
      *     description="fullName",
      *     title="fullName",
+     *     example="Австралийский доллар",
      * )
      *
      * @param string $fullName
@@ -42,6 +44,7 @@ class Currency
      *     format="string",
      *     description="charName",
      *     title="charName",
+     *     example="AUD",
      * )
      *
      * @param string $charName
@@ -53,6 +56,7 @@ class Currency
      *     format="int64",
      *     description="nominal",
      *     title="nominal",
+     *     example=1,
      * )
      *
      * @param int $nominal
@@ -64,6 +68,7 @@ class Currency
      *     format="float32",
      *     description="value",
      *     title="value",
+     *     example=51.0225,
      * )
      *
      * @param float $value

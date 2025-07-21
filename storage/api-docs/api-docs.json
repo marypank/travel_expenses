@@ -91,6 +91,45 @@
                     }
                 ]
             }
+        },
+        "/api/trips": {
+            "get": {
+                "tags": [
+                    "Trips"
+                ],
+                "summary": "Get all currencies",
+                "description": "Get all user trips",
+                "operationId": "692b0f6b729af25639ef76046f8fba1f",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Trip"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated."
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -102,37 +141,107 @@
                     "id": {
                         "title": "id",
                         "description": "id",
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string",
+                        "format": "string",
+                        "example": "036"
                     },
                     "fullName": {
                         "title": "fullName",
                         "description": "fullName",
                         "type": "string",
-                        "format": "string"
+                        "format": "string",
+                        "example": "Австралийский доллар"
                     },
                     "charName": {
                         "title": "charName",
                         "description": "charName",
                         "type": "string",
-                        "format": "string"
+                        "format": "string",
+                        "example": "AUD"
                     },
                     "nominal": {
                         "title": "nominal",
                         "description": "nominal",
                         "type": "integer",
-                        "format": "int64"
+                        "format": "int64",
+                        "example": 1
                     },
                     "value": {
                         "title": "value",
                         "description": "value",
                         "type": "number",
-                        "format": "float32"
+                        "format": "float32",
+                        "example": 51.0225
                     }
                 },
                 "type": "object",
                 "xml": {
                     "name": "Currency"
+                }
+            },
+            "Trip": {
+                "title": "Trip model",
+                "description": "Trip model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "id",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "105"
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "title",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Дагестан"
+                    },
+                    "slug": {
+                        "title": "slug",
+                        "description": "slug",
+                        "type": "string",
+                        "format": "string",
+                        "example": "dagestan"
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "status",
+                        "type": "string",
+                        "format": "string",
+                        "enum": [
+                            "await",
+                            "in_progress",
+                            "finished",
+                            "cancel"
+                        ],
+                        "example": "await"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "description",
+                        "type": "string",
+                        "format": "string",
+                        "example": null
+                    },
+                    "dateFrom": {
+                        "title": "dateFrom",
+                        "description": "date from",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-10-11T00:00:00.000000Z"
+                    },
+                    "dateTo": {
+                        "title": "dateTo",
+                        "description": "date to",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2025-10-19T00:00:00.000000Z"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Trip"
                 }
             }
         },
@@ -147,6 +256,10 @@
         {
             "name": "Currencies",
             "description": "Currencies"
+        },
+        {
+            "name": "Trips",
+            "description": "Trips"
         }
     ]
 }
