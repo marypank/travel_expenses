@@ -3,6 +3,8 @@
 namespace App\Http\Requests\TripExpense;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Enum\SourceExpenseEnum;
+use Illuminate\Validation\Rule;
 
 class UpdateTripExpenseRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateTripExpenseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,13 @@ class UpdateTripExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['string'],
+            'description' => ['string', 'nullable'],
+            'payDate' => ['date'],
+            'price' => ['decimal:2'],
+            'currencyId' => ['numeric'],
+            'currencyExchangeRate' => ['decimal:2'],
+            'source' => [Rule::enum(SourceExpenseEnum::class)],
         ];
     }
 }

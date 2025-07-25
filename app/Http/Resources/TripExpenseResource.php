@@ -14,6 +14,16 @@ class TripExpenseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'tripId' => $this->trip_id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'payDate' => $this->pay_date,
+            'price' => $this->price,
+            'currencyId' => $this->currency_id,
+            'currencyExchangeRate' => $this->currency_exchange_rate,
+            'source' => mb_strtolower($this->source->name),
+        ];
     }
 }
