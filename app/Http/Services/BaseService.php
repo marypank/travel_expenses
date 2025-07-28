@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 
 abstract class BaseService implements DefaultServiceInterface
 {
+    // todo: возможно сделать так, чтобы ответ из репозитория автоматически переводился в дто, чтобы было проще работать с объектом
     public function __construct(public BaseRepository $mainRepository)
     {}
 

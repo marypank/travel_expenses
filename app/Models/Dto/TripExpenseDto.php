@@ -7,6 +7,7 @@ use App\Http\Services\Enum\SourceExpenseService;
 use App\Models\Enum\SourceExpenseEnum;
 use Carbon\Carbon;
 
+// todo: посмотреть можно ли сделать класс только readonly, а также сделать это с другими dto
 class TripExpenseDto extends TripExpenseDtoBase
 {
     private function __construct(

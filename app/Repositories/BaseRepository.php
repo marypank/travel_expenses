@@ -10,6 +10,7 @@ abstract class BaseRepository implements DefaultRepositoryInterface
     protected abstract function model();
 
     /**
+     * // todo: удалить all, он не общий, сделать его абстрактным
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function all(): Collection
