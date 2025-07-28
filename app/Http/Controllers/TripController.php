@@ -19,7 +19,7 @@ class TripController extends Controller
     // todo: изменить status и source не на name, а на обычное число
     /**
      * @OA\Get(
-     *     path="/api/trips",
+     *     path="/trips",
      *     description="Get all user trips",
      *     tags={"Trips"},
      *     security={{"bearer_token":{}}},
@@ -55,7 +55,7 @@ class TripController extends Controller
     /**
      * // todo: исключить из RequestBody Trip id, slug
      * @OA\Post(
-     *     path="/api/trips",
+     *     path="/trips",
      *     description="Create trip",
      *     tags={"Trips"},
      *     security={{"bearer_token":{}}},
@@ -104,7 +104,7 @@ class TripController extends Controller
     /**
      * // todo: переделать ответ с массива на один объект (swagger)
      * @OA\Get(
-     *     path="/api/trips/{id}",
+     *     path="/trips/{id}",
      *     description="Get single trip by id",
      *     tags={"Trips"},
      *     security={{"bearer_token":{}}},
@@ -150,7 +150,7 @@ class TripController extends Controller
      * // todo: исключить из RequestBody Trip id
      * // todo: переделать ответ с массива на один объект (swagger)
      * @OA\Patch(
-     *     path="/api/trips/{id}",
+     *     path="/trips/{id}",
      *     description="Update trip by id",
      *     tags={"Trips"},
      *     security={{"bearer_token":{}}},
@@ -158,7 +158,7 @@ class TripController extends Controller
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="Trip id to delete",
+     *         description="Trip id to update",
      *         required=true,
      *         @OA\Schema(
      *             type="integer",
@@ -201,7 +201,7 @@ class TripController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/trips/{id}",
+     *     path="/trips/{id}",
      *     tags={"Trips"},
      *     security={{"bearer_token":{}}},
      *     summary="Deletes a trip",
