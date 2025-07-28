@@ -2,7 +2,12 @@
 
 namespace App\Http\Services;
 
-class TagService
+use App\Repositories\TagRepository;
+
+class TagService extends BaseService
 {
-    //
+    public function __construct(public TagRepository $tagRepository)
+    {
+        parent::__construct($tagRepository);
+    }
 }
