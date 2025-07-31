@@ -14,7 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class TripController extends Controller
 {
     public function __construct(private readonly TripService $tripService)
-    {}
+    {
+        $this->authorizeResource(Trip::class);
+    }
 
     // todo: изменить status и source не на name, а на обычное число
     /**

@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 class TagController extends Controller
 {
     public function __construct(private readonly TagService $tagService)
-    {}
+    {
+        $this->authorizeResource(Tag::class);
+    }
 
     /**
      * @OA\Get(

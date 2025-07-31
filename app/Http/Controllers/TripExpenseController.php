@@ -9,13 +9,17 @@ use App\Http\Services\TripExpenseService;
 use App\Models\Dto\TripExpenseDto;
 use App\Models\Dto\UpdateTripExpenseDto;
 use App\Models\TripExpense;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class TripExpenseController extends Controller
 {
     public function __construct(private readonly TripExpenseService $tripExpenseService)
-    {}
+    {
+        $this->authorizeResource(TripExpense::class);
+    }
 
     /**
      * @OA\Get(
@@ -59,10 +63,12 @@ class TripExpenseController extends Controller
     public function index(Request $request)
     {
         if (isset($request['tripId'])) {
+            // todo: передача tripId не работает $this->authorize('viewAny', [(int)$request['tripId']]);
+
             return TripExpenseResource::collection($this->tripExpenseService->all($request['tripId']));
         }
 
-        return response()->json([]);
+        return response()->json(['data' => []]);
     }
 
     /**
@@ -102,6 +108,7 @@ class TripExpenseController extends Controller
         $dto = TripExpenseDto::create($request->validated());
 
         try {
+            // todo: добавить условие в сервисе, что поступающий tripId = tripId user, а не чужой трип
             $this->tripExpenseService->create($dto);
         } catch (\Exception $ex) {
             return response()->json([

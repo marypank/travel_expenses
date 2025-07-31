@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller as RoutingController;
+
 /**
  * @OA\Info(
  *     title="Travel expenses",
@@ -19,7 +22,7 @@ namespace App\Http\Controllers;
  *     )
  * )
  */
-abstract class Controller
+abstract class Controller extends RoutingController
 {
-    //
+    use AuthorizesRequests;
 }
