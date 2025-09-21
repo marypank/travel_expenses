@@ -4,7 +4,6 @@ namespace App\Models\Dto\Trip;
 
 use App\Helpers\DateHelper;
 use App\Http\Services\Enum\TripStatusEnumService;
-use App\Http\Services\Enum\TripStatusService;
 use App\Models\Enum\TripStatusEnum;
 use Carbon\Carbon;
 
