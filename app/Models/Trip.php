@@ -12,6 +12,8 @@ class Trip extends Model
     /** @var string $table */
     protected $table = 'trips';
 
+    public $timestamps = false;
+
     /** @var array $fillable */
     protected $fillable = [
         'user_id',
