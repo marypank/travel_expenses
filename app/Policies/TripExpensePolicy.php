@@ -63,4 +63,14 @@ class TripExpensePolicy
     {
         return $user->id === $tripExpense->trip->user_id;
     }
+
+    public function attach(User $user, TripExpense $tripExpense): bool
+    {
+        return $user->id === $tripExpense->trip->user_id;
+    }
+
+    public function detach(User $user, TripExpense $tripExpense): bool
+    {
+        return $user->id === $tripExpense->trip->user_id;
+    }
 }

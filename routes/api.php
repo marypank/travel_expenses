@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('/trips', TripController::class);
     Route::apiResource('/trip-expenses', TripExpenseController::class);
+    Route::post('/trip-expenses/{tripExpense}/attach-tag/{tag}', [TripExpenseController::class, 'attachTag']);
+    Route::post('/trip-expenses/{tripExpense}/detach-tag/{tag}', [TripExpenseController::class, 'detachTag']);
 
     Route::apiResource('/currencies', CurrencyController::class);
     Route::apiResource('/source-expenses', SourceExpenseController::class);
