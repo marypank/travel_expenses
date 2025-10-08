@@ -23,7 +23,7 @@ class TripExpenseResource extends JsonResource
             'price' => $this->price,
             'currencyId' => $this->currency_id,
             'currencyExchangeRate' => $this->currency_exchange_rate,
-            'source' => mb_strtolower($this->source->name),
+            'source' => $this->source,
         ];
     }
 }
