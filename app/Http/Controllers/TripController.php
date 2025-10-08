@@ -28,10 +28,7 @@ class TripController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="OK",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/TripResource")
-     *         ),
+     *         @OA\JsonContent(ref="#/components/schemas/TripResource"),
      *     ),
      *     @OA\Response(
      *          response=401,
