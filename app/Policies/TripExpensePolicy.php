@@ -13,7 +13,7 @@ class TripExpensePolicy
      */
     public function viewAny(User $user, int $tripId): bool
     {
-        return $user->tripIds->contains($tripId);
+        return $user->tripIds && $user->tripIds->contains($tripId);
     }
 
     /**
@@ -29,7 +29,7 @@ class TripExpensePolicy
      */
     public function create(User $user, int $tripId): bool
     {
-        return $user->tripIds->contains($tripId);
+        return $user->tripIds && $user->tripIds->contains($tripId);
     }
 
     /**
