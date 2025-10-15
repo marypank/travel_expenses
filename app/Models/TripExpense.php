@@ -22,6 +22,7 @@ class TripExpense extends Model
         'currency_exchange_rate',
         'source',
         'pay_date',
+        'image_url',
     ];
 
     /** @var array $casts */

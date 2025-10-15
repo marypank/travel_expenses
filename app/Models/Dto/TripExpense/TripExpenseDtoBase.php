@@ -5,6 +5,7 @@ namespace App\Models\Dto\TripExpense;
 use App\Models\Dto\BaseDto;
 use App\Models\Enum\SourceExpenseEnum;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 
 abstract class TripExpenseDtoBase extends BaseDto
 {
@@ -28,6 +29,8 @@ abstract class TripExpenseDtoBase extends BaseDto
 
     protected const PAY_DATE = 'pay_date';
 
+    protected const IMAGE_URL = 'image_url';
+
     protected int $id;
     
     protected ?int $tripId;
@@ -45,6 +48,10 @@ abstract class TripExpenseDtoBase extends BaseDto
     protected ?float $currencyExchangeRate;
 
     protected ?Carbon $payDate;
+
+    protected ?UploadedFile $imageFile;
+
+    protected ?string $imageUrl;
 
     public function getId(): ?int
     {
@@ -89,5 +96,17 @@ abstract class TripExpenseDtoBase extends BaseDto
     public function getCurrencyExchangeRate(): ?float
     {
         return $this->currencyExchangeRate;
+    }
+
+    public function getImageFile(): ?UploadedFile
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageUrl(string $imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+        
+        return $this;
     }
 }

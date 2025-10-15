@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class TripExpenseResource extends JsonResource
 {
@@ -24,6 +25,7 @@ class TripExpenseResource extends JsonResource
             'currencyId' => $this->currency_id,
             'currencyExchangeRate' => $this->currency_exchange_rate,
             'source' => $this->source,
+            'imageUrl' => url(Storage::url($this->image_url)),
         ];
     }
 }

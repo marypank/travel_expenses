@@ -7,6 +7,7 @@ use App\Http\Services\Enum\SourceExpenseEnumService;
 use App\Models\Dto\TripExpense\TripExpenseDtoBase;
 use App\Models\Enum\SourceExpenseEnum;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 
 class UpdateTripExpenseDto extends TripExpenseDtoBase
 {
@@ -18,7 +19,8 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
         ?float $price,
         ?int $currencyId,
         ?float $currencyExchangeRate,
-        ?SourceExpenseEnum $source
+        ?SourceExpenseEnum $source,
+        ?UploadedFile $imageFile
     )
     {
         $this->id = $id;
@@ -29,6 +31,7 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
         $this->currencyId = $currencyId;
         $this->currencyExchangeRate = $currencyExchangeRate;
         $this->source = $source;
+        $this->imageFile = $imageFile;
     }
 
     public static function create(int $tripExpenseId, array $data): UpdateTripExpenseDto
@@ -50,7 +53,8 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
             $data['price'] ?? null,
             $data['currencyId'] ?? null,
             $data['currencyExchangeRate'] ?? null,
-            $data['source'] ?? null
+            $data['source'] ?? null,
+            $data['imageFile'] ?? null
         );
     }
 
@@ -65,6 +69,7 @@ class UpdateTripExpenseDto extends TripExpenseDtoBase
             self::PRICE => $this->price,
             self::CURRENCY_ID => $this->currencyId,
             self::CURRENCY_EXCHANGE_RATE => $this->currencyExchangeRate,
+            self::IMAGE_URL => $this->imageUrl,
         ];
     }
 }

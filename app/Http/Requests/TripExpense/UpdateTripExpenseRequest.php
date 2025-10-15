@@ -31,6 +31,7 @@ class UpdateTripExpenseRequest extends FormRequest
             'currencyId' => ['numeric'],
             'currencyExchangeRate' => ['decimal:2'],
             'source' => [Rule::enum(SourceExpenseEnum::class)],
+            'imageFile' => ['file', 'image', 'mimes:jpeg,png,jpg', 'nullable'],
         ];
     }
 }

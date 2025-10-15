@@ -32,6 +32,7 @@ class StoreTripExpenseRequest extends FormRequest
             'currencyId' => ['required', 'numeric'],
             'currencyExchangeRate' => ['required', 'decimal:2'],
             'source' => [Rule::enum(SourceExpenseEnum::class)],
+            'imageFile' => ['file', 'image', 'mimes:jpeg,png,jpg'],
         ];
     }
 }
