@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('trip_expenses', function (Blueprint $table) {
-            $table->string('image_url', 2048)->nullable();
+            $table->string('image_url', 2048)->nullable()->after('currency_exchange_rate');
         });
     }
 
