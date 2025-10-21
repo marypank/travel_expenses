@@ -3,6 +3,7 @@
 namespace App\Virtual\Models;
 
 use DateTime;
+use Illuminate\Http\UploadedFile;
 use OpenApi\Annotations as OA;
 
 /**
@@ -122,4 +123,28 @@ class TripExpense
      * @param \DateTime $payDate
      */
     private \DateTime $payDate;
+
+    /**
+     * @OA\Property(
+     *     format="file",
+     *     description="image file",
+     *     title="imageFile",
+     *     example=null,
+     * )
+     *
+     * @param UploadedFile $imageFile
+     */
+    private UploadedFile $imageFile;
+
+    /**
+     * @OA\Property(
+     *     format="string",
+     *     description="imageUrl",
+     *     title="imageUrl",
+     *     example=null,
+     * )
+     *
+     * @param string $imageUrl
+     */
+    private string $imageUrl;
 }

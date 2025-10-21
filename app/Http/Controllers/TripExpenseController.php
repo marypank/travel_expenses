@@ -100,7 +100,8 @@ class TripExpenseController extends Controller
      *              @OA\Schema(ref="#/components/schemas/TripExpense"),
      *              @OA\Schema(
      *                  properties={
-     *                      @OA\Property(property="id", readOnly=true)
+     *                      @OA\Property(property="id", readOnly=true),
+     *                      @OA\Property(property="imageUrl", readOnly=true)
      *                  }
      *              )
      *         })
@@ -206,7 +207,8 @@ class TripExpenseController extends Controller
      *              @OA\Schema(
      *                  properties={
      *                      @OA\Property(property="id", readOnly=true),
-     *                      @OA\Property(property="tripId", readOnly=true)
+     *                      @OA\Property(property="tripId", readOnly=true),
+     *                      @OA\Property(property="imageUrl", readOnly=true)
      *                  }
      *              )
      *         })
