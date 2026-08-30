@@ -55,7 +55,7 @@ class TripExpenseDto extends TripExpenseDtoBase
             self::PRICE => $this->price,
             self::CURRENCY_ID => $this->currencyId,
             self::CURRENCY_EXCHANGE_RATE => $this->currencyExchangeRate,
-            self::IMAGE_URL => $this->imageUrl
+            // self::IMAGE_URL => $this->imageUrl
         ];
     }
 }
