@@ -147,4 +147,17 @@ class TripExpense
      * @param string $imageUrl
      */
     private string $imageUrl;
+
+    /**
+     * @OA\Property(
+     *     type="array",
+     *     items={"type": "integer"},
+     *     description="tags",
+     *     title="tags",
+     *     example="[]",
+     * )
+     *
+     * @param string $tags
+     */
+    private array $tags;
 }

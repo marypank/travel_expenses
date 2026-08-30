@@ -14,6 +14,8 @@ class TripExpenseRepository extends BaseRepository
 
     public function all(?int $tripId = null): Collection
     {
-        return $this->model()::where('trip_id', $tripId)->get();
+        return $this->model()::where('trip_id', $tripId)
+        ->with('tags')
+        ->get();
     }
 }

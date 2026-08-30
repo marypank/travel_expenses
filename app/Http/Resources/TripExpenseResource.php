@@ -26,6 +26,7 @@ class TripExpenseResource extends JsonResource
             'currencyExchangeRate' => $this->currency_exchange_rate,
             'source' => $this->source,
             'imageUrl' => url(Storage::url($this->image_url)),
+            'tagIds' => $this->tags->pluck('id')->values(),
         ];
     }
 }
